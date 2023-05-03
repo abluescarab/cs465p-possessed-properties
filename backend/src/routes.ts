@@ -11,7 +11,7 @@ async function error(reply, code, message) {
 }
 
 /**
- * Creates all routes for the Doggr app.
+ * Creates all routes for the Possessed Properties app.
  * @param app app instance
  * @param _options options to pass
  * @constructor
