@@ -2,19 +2,21 @@ import {
   Cascade,
   Collection,
   Entity,
+  ManyToOne,
   OneToMany,
   Property,
 } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";
 import { BaseEntity } from "./BaseEntity.js";
+import { User } from "./User.js";
 
-@Entity()
+@Entity({ tableName: "listings" })
 export class Listing extends BaseEntity {
   /**
    * Person who posted the listing.
    */
-  @Property()
-  owner!: string;
+  @ManyToOne()
+  owner!: User;
 
   /**
    * Name of the property.
@@ -48,7 +50,7 @@ export class Listing extends BaseEntity {
   description!: string;
 
   /**
-   * List price for purchases.
+   * List price for purchasing.
    */
   @Property()
   price!: number;
@@ -60,16 +62,22 @@ export class Listing extends BaseEntity {
   tags!: Array<string>;
 
   /**
+   * When the property was purchased and the listing closed.
+   */
+  @Property()
+  purchased_at: Date = null;
+
+  /**
+   * Who purchased the property and closed the listing.
+   */
+  @ManyToOne()
+  purchased_by?: User;
+
+  /**
    * Offers placed on the property.
    */
   @OneToMany(() => Offer, (offer) => offer.listing, { cascade: [Cascade.ALL] })
   offers!: Collection<Offer>;
-
-  /**
-   * Whether the listing is open, i.e., the property has not been purchased.
-   */
-  @Property()
-  open: boolean = true;
 
   // TODO: implement photo(s) field
 }

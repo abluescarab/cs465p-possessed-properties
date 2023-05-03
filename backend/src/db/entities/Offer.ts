@@ -1,21 +1,22 @@
 import { Entity, ManyToOne, Property } from "@mikro-orm/core";
+import type { Rel } from "@mikro-orm/core";
 import { User } from "./User.js";
 import { Listing } from "./Listing.js";
 import { BaseEntity } from "./BaseEntity.js";
 
-@Entity()
+@Entity({ tableName: "offers" })
 export class Offer extends BaseEntity {
   /**
-   * User who placed an offer.
+   * User who placed the offer.
    */
   @ManyToOne()
-  owner!: User;
+  buyer!: User;
 
   /**
-   * Listing an offer was placed for.
+   * Listing the offer was placed on.
    */
   @ManyToOne()
-  listing!: Listing;
+  listing!: Rel<Listing>;
 
   /**
    * Price offered on the listing.
