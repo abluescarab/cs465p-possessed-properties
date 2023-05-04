@@ -50,16 +50,28 @@ export class Listing extends BaseEntity {
   description!: string;
 
   /**
+   * The number of bedrooms on the property.
+   */
+  @Property()
+  bedrooms!: number;
+
+  /**
+   * The number of bathrooms on the property.
+   */
+  @Property()
+  bathrooms!: number;
+
+  /**
+   * The square footage (area) of the property.
+   */
+  @Property()
+  area!: number;
+
+  /**
    * List price for purchasing.
    */
   @Property()
   price!: number;
-
-  /**
-   * User-provided tags for sorting and searching for the listing.
-   */
-  @Property()
-  tags!: Array<string>;
 
   /**
    * When the property was purchased and the listing closed.
