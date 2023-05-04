@@ -19,5 +19,23 @@ export class ListingSeeder extends Seeder {
       area: 15000,
       price: 250000000,
     });
+
+    em.create(Listing, {
+      owner: 2,
+      name: "Amityville Horror House",
+      region: "New York",
+      country: "United States",
+      description:
+        "The site of Ronald DeFeo Jr.'s grisly sextuple murder in 1974, this " +
+        "gorgeous Dutch Colonial style home came to prominence when it was " +
+        "featured in Jay Anson's 1977 book, The Amityville Horror. At a " +
+        "spacious 3600 square feet, 5 bedrooms, and 4 bathrooms, this home " +
+        "is perfect for students living together! Note: not recommended to " +
+        "purchase this home if you have children, pets, or a lack of faith.",
+      bedrooms: 5,
+      bathrooms: 4,
+      area: 3600,
+      price: 984600,
+    });
   }
 }
