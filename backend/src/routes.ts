@@ -147,7 +147,35 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // SEARCH - find a listing
-  app.search("/listings", async (request, reply) => {});
+  app.search<{ Body: IListingRouteData }>(
+    "/listings",
+    async (request, reply) => {
+      const data = createBody(request.body, ["email"]);
+
+      try {
+        if (request.body.email !== undefined) {
+          const owner = await request.em.findOne(User, {
+            email: request.body.email,
+          });
+
+          if (owner !== null && owner.deleted_at === null) {
+            data["owner"] = owner;
+          }
+        }
+
+        const listings = await request.em.find(Listing, data);
+
+        if (listings.length == 0) {
+          return error(reply, 404, "No listings found");
+        }
+
+        console.log(listings);
+        return reply.send(listings);
+      } catch (err) {
+        return error(reply, 500, err.message);
+      }
+    }
+  );
 
   // POST - create a listing
   app.post<{ Body: IListingRouteData }>("/listings", async (request, reply) => {
