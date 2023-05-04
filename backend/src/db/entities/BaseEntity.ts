@@ -9,4 +9,7 @@ export class BaseEntity {
 
   @Property({ onUpdate: () => new Date() })
   updated_at = new Date();
+
+  @Property()
+  deleted_at?: Date = null;
 }

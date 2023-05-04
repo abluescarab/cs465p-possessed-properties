@@ -46,10 +46,4 @@ export class User extends BaseEntity {
     cascade: [Cascade.ALL],
   })
   purchased_properties!: Collection<Listing>;
-
-  /**
-   * When the user was deleted.
-   */
-  @Property()
-  deleted_at?: Date = null;
 }
