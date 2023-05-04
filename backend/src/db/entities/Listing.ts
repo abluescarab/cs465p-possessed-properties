@@ -6,6 +6,7 @@ import {
   OneToMany,
   Property,
 } from "@mikro-orm/core";
+import type { Rel } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";
 import { BaseEntity } from "./BaseEntity.js";
 import { User } from "./User.js";
@@ -16,7 +17,7 @@ export class Listing extends BaseEntity {
    * Person who posted the listing.
    */
   @ManyToOne()
-  owner!: User;
+  owner!: Rel<User>;
 
   /**
    * Name of the property.
@@ -83,7 +84,7 @@ export class Listing extends BaseEntity {
    * Who purchased the property and closed the listing.
    */
   @ManyToOne()
-  purchased_by?: User;
+  purchased_by?: Rel<User>;
 
   /**
    * Offers placed on the property.
