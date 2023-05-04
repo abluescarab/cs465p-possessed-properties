@@ -10,7 +10,7 @@ export class Offer extends BaseEntity {
    * User who placed the offer.
    */
   @ManyToOne()
-  buyer!: User;
+  buyer!: Rel<User>;
 
   /**
    * Listing the offer was placed on.

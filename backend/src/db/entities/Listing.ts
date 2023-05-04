@@ -77,7 +77,7 @@ export class Listing extends BaseEntity {
    * When the property was purchased and the listing closed.
    */
   @Property()
-  purchased_at: Date = null;
+  purchased_at?: Date = null;
 
   /**
    * Who purchased the property and closed the listing.

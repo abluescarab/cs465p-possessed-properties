@@ -45,7 +45,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
   // POST - create a user
   app.post<{ Body: IUserRouteData }>("/users", async (request, reply) => {
-    const { name, email } = request.body;
+    const { email, name } = request.body;
 
     try {
       const existing = await request.em.findOne(User, { email });
@@ -78,9 +78,9 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
     const user = await request.em.findOne(User, { email });
 
-    // if (user == null || user.deleted_at != null) {
-    //   return error(reply, 404, `User with email address ${email} not found`);
-    // }
+    if (user == null || user.deleted_at != null) {
+      return error(reply, 404, `User with email address ${email} not found`);
+    }
 
     user.name = name;
 
@@ -100,11 +100,11 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     try {
       const user = await request.em.findOne(User, { email });
 
-      // if (user == null || user.deleted_at != null) {
-      //   return error(reply, 404, `User with email address ${email} not found`);
-      // }
+      if (user == null || user.deleted_at != null) {
+        return error(reply, 404, `User with email address ${email} not found`);
+      }
 
-      // user.deleted_at = new Date();
+      user.deleted_at = new Date();
       await request.em.flush();
 
       console.log(user);
@@ -121,17 +121,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     return request.em.find(Listing, {});
   });
 
+  // SEARCH - find a listing
   app.search("/listings", async (request, reply) => {});
 
+  // POST - create a listing
   app.post<{ Body: IListingRouteData }>("/listings", async (request, reply) => {
     const data = request.body;
   });
 
+  // PUT - update a listing
   app.put<{ Body: IListingRouteData }>(
     "/listings",
     async (request, reply) => {}
   );
 
+  // DELETE - mark a listing as deleted
   app.delete("/listings", async (request, reply) => {});
   // endregion
 
@@ -141,12 +145,16 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     return request.em.find(Offer, {});
   });
 
+  // SEARCH - find an offer
   app.search("/offers", async (request, reply) => {});
 
+  // POST - create an offer
   app.post("/offers", async (request, reply) => {});
 
+  // PUT - update an offer
   app.put("/offers", async (request, reply) => {});
 
+  // DELETE - mark an offer as deleted
   app.delete("/offers", async (request, reply) => {});
   // endregion
 
