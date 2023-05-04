@@ -21,11 +21,13 @@ async function error(reply, code, message) {
  * @param remove entries to remove
  */
 function createBody(body, remove: Array<string>) {
-  const data = body;
+  const data = {};
 
-  remove.forEach((s) => {
-    delete data[s];
-  });
+  for (const [key, value] of Object.entries(body)) {
+    if (!remove.includes(key)) {
+      data[key] = value;
+    }
+  }
 
   return data;
 }
