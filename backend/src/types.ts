@@ -10,5 +10,8 @@ export interface IListingRouteData {
   region?: string;
   country?: string;
   description?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  area?: number;
   price?: number;
 }

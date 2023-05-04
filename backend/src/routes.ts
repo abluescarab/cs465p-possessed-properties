@@ -204,10 +204,47 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // PUT - update a listing
-  app.put<{ Body: IListingRouteData }>(
-    "/listings",
-    async (request, reply) => {}
-  );
+  app.put<{
+    Body: {
+      name: string;
+      description: string;
+      bedrooms: number;
+      bathrooms: number;
+      price: number;
+    };
+  }>("/listings", async (request, reply) => {
+    const { name, description, bedrooms, bathrooms, price } = request.body;
+
+    try {
+      const listing = await request.em.findOne(Listing, { name });
+
+      if (listing === null) {
+        return error(reply, 404, `Listing with name ${name} not found`);
+      }
+
+      if (description !== undefined) {
+        listing.description = description;
+      }
+
+      if (bedrooms !== undefined) {
+        listing.bedrooms = bedrooms;
+      }
+
+      if (bathrooms !== undefined) {
+        listing.bathrooms = bathrooms;
+      }
+
+      if (price !== undefined) {
+        listing.price = price;
+      }
+
+      await request.em.flush();
+      console.log(listing);
+      return reply.send(listing);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
+  });
 
   // DELETE - mark a listing as deleted
   app.delete("/listings", async (request, reply) => {});
