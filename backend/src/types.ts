@@ -11,5 +11,4 @@ export interface IListingRouteData {
   country?: string;
   description?: string;
   price?: number;
-  tags?: Array<string>;
 }
