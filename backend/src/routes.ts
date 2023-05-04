@@ -181,7 +181,26 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
   // POST - create a listing
   app.post<{ Body: IListingRouteData }>("/listings", async (request, reply) => {
-    const data = request.body;
+    const data = createBody(request.body, ["email"]);
+    const { email } = request.body;
+
+    try {
+      const owner = await request.em.findOne(User, { email });
+
+      if (owner === null || owner.deleted_at !== null) {
+        return error(reply, 404, `User with email address ${email} not found`);
+      } else {
+        data["owner"] = owner;
+      }
+
+      const listing = await request.em.create(Listing, data);
+      await request.em.flush();
+
+      console.log("Created new listing: ", listing);
+      return reply.send(listing);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
   });
 
   // PUT - update a listing
