@@ -23,6 +23,7 @@ export class ListingSeeder extends Seeder {
     em.create(Listing, {
       owner: 2,
       name: "Amityville Horror House",
+      address: "108 Ocean Ave, Amityville",
       region: "New York",
       country: "United States",
       description:
