@@ -4,7 +4,7 @@ export interface IUserRouteData {
 }
 
 export interface IListingRouteData {
-  owner: string;
+  email?: string;
   name?: string;
   address?: string;
   region?: string;
