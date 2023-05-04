@@ -167,11 +167,12 @@
         },
         "description": {
           "name": "description",
-          "type": "varchar(255)",
+          "type": "varchar(1000)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 1000,
           "mappedType": "string"
         },
         "bedrooms": {
@@ -233,6 +234,15 @@
       "name": "listings",
       "schema": "public",
       "indexes": [
+        {
+          "columnNames": [
+            "name"
+          ],
+          "composite": false,
+          "keyName": "listings_name_unique",
+          "primary": false,
+          "unique": true
+        },
         {
           "keyName": "listings_pkey",
           "columnNames": [
