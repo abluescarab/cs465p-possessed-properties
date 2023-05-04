@@ -4,9 +4,30 @@ import { Listing } from "./db/entities/Listing.js";
 import { Offer } from "./db/entities/Offer.js";
 import { IListingRouteData, IUserRouteData } from "./types.js";
 
+/**
+ * Replies with a specified error and prints it to the console.
+ * @param reply reply object
+ * @param code status code
+ * @param message message to send
+ */
 async function error(reply, code, message) {
   console.log(message);
   return reply.status(code).send({ message: message });
+}
+
+/**
+ * Creates a new request body, removing provided entries.
+ * @param body body to copy
+ * @param remove entries to remove
+ */
+function createBody(body, remove: Array<string>) {
+  const data = body;
+
+  remove.forEach((s) => {
+    delete data[s];
+  });
+
+  return data;
 }
 
 /**
