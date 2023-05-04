@@ -76,18 +76,22 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   app.put<{ Body: IUserRouteData }>("/users", async (request, reply) => {
     const { email, name } = request.body;
 
-    const user = await request.em.findOne(User, { email });
+    try {
+      const user = await request.em.findOne(User, { email });
 
-    if (user == null || user.deleted_at != null) {
-      return error(reply, 404, `User with email address ${email} not found`);
+      if (user == null || user.deleted_at != null) {
+        return error(reply, 404, `User with email address ${email} not found`);
+      }
+
+      user.name = name;
+
+      // persist object changes to database
+      await request.em.flush();
+      console.log(user);
+      return reply.send(user);
+    } catch (err) {
+      return error(reply, 500, err.message);
     }
-
-    user.name = name;
-
-    // persist object changes to database
-    await request.em.flush();
-    console.log(user);
-    return reply.send(user);
   });
 
   // DELETE - mark user as deleted
