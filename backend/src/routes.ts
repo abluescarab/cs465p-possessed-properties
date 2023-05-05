@@ -357,7 +357,31 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // POST - create an offer
-  app.post("/offers", async (request, reply) => {});
+  app.post<{ Body: IOfferRouteData }>("/offers", async (request, reply) => {
+    const { buyer_email, listing_name, price } = request.body;
+
+    try {
+      const buyer = await request.em.findOne(User, { email: buyer_email });
+
+      if (buyer === null) {
+        return error(reply, 404, `User with email ${buyer_email} not found`);
+      }
+
+      const listing = await request.em.findOne(Listing, { name: listing_name });
+
+      if (listing === null) {
+        return error(reply, 404, `Listing with name ${listing_name} not found`);
+      }
+
+      const offer = await request.em.create(Offer, { buyer, listing, price });
+      await request.em.flush();
+
+      console.log(offer);
+      return reply.send(offer);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
+  });
 
   // PUT - update an offer
   app.put("/offers", async (request, reply) => {});
