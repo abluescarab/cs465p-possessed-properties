@@ -247,7 +247,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // DELETE - mark a listing as deleted
-  app.delete("/listings", async (request, reply) => {});
+  app.delete<{ Body: { name: string } }>(
+    "/listings",
+    async (request, reply) => {
+      const { name } = request.body;
+
+      try {
+        const listing = await request.em.findOne(Listing, { name });
+
+        if (listing === null) {
+        }
+      } catch (err) {
+        return error(reply, 500, err.message);
+      }
+    }
+  );
   // endregion
 
   // region Offer Functionality
