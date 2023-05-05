@@ -56,7 +56,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     try {
       const user = await request.em.findOne(User, { email });
 
-      if (user == null || user.deleted_at != null) {
+      if (user === null || user.deleted_at !== null) {
         return error(reply, 404, `User with email address ${email} not found`);
       }
 
@@ -73,7 +73,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     try {
       const existing = await request.em.findOne(User, { email });
 
-      if (existing != null) {
+      if (existing !== null) {
         return error(
           reply,
           500,
@@ -82,8 +82,8 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       }
 
       const user = await request.em.create(User, {
-        name,
         email,
+        name,
       });
 
       await request.em.flush();
@@ -102,7 +102,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     try {
       const user = await request.em.findOne(User, { email });
 
-      if (user == null || user.deleted_at != null) {
+      if (user === null || user.deleted_at !== null) {
         return error(reply, 404, `User with email address ${email} not found`);
       }
 
@@ -127,7 +127,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     try {
       const user = await request.em.findOne(User, { email });
 
-      if (user == null || user.deleted_at != null) {
+      if (user === null || user.deleted_at !== null) {
         return error(reply, 404, `User with email address ${email} not found`);
       }
 
@@ -381,7 +381,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //     const owner = await request.em.findOne(User, { email });
   //     const match = await request.em.create(Match, { owner, matchee });
   //
-  //     if (matchee == null || matchee.deleted_at != null) {
+  //     if (matchee === null || matchee.deleted_at !== null) {
   //       return error(
   //         reply,
   //         404,
@@ -389,7 +389,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //       );
   //     }
   //
-  //     if (owner == null || owner.deleted_at != null) {
+  //     if (owner === null || owner.deleted_at !== null) {
   //       return error(reply, 404, `User with email address ${email} not found`);
   //     }
   //
@@ -412,7 +412,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //   try {
   //     const theReceiver = await request.em.findOne(User, { email: receiver });
   //
-  //     if (theReceiver == null || theReceiver.deleted_at != null) {
+  //     if (theReceiver === null || theReceiver.deleted_at !== null) {
   //       return error(
   //         reply,
   //         404,
@@ -440,7 +440,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //   try {
   //     const theSender = await request.em.findOne(User, { email: sender });
   //
-  //     if (theSender == null || theSender.deleted_at != null) {
+  //     if (theSender === null || theSender.deleted_at !== null) {
   //       return error(reply, 404, `User with email address ${sender} not found`);
   //     }
   //
@@ -473,11 +473,11 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //     const theSender = await request.em.findOne(User, { email: sender });
   //     const theReceiver = await request.em.findOne(User, { email: receiver });
   //
-  //     if (theSender == null || theSender.deleted_at != null) {
+  //     if (theSender === null || theSender.deleted_at !== null) {
   //       return error(reply, 404, `User with email address ${sender} not found`);
   //     }
   //
-  //     if (theReceiver == null || theReceiver.deleted_at != null) {
+  //     if (theReceiver === null || theReceiver.deleted_at !== null) {
   //       return error(
   //         reply,
   //         404,
@@ -509,7 +509,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //     messageId: messageId,
   //   });
   //
-  //   if (theMessage == null || theMessage.deleted_at != null) {
+  //   if (theMessage === null || theMessage.deleted_at !== null) {
   //     return error(reply, 404, `Message with ID ${messageId} not found`);
   //   }
   //
@@ -528,7 +528,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //   const { messageId, password } = request.body;
   //
   //   try {
-  //     if (password != process.env.ADMIN_PASS) {
+  //     if (password !== process.env.ADMIN_PASS) {
   //       const err = "Failed to delete message: Invalid admin password";
   //       console.error(err);
   //       return reply.status(401).send({ message: err });
@@ -536,7 +536,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //
   //     const message = await request.em.findOne(Message, { messageId });
   //
-  //     if (message == null || message.deleted_at != null) {
+  //     if (message === null || message.deleted_at !== null) {
   //       return error(reply, 404, `Message with ID ${messageId} not found`);
   //     }
   //
@@ -559,7 +559,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //   const { sender, password } = request.body;
   //
   //   try {
-  //     if (password != process.env.ADMIN_PASS) {
+  //     if (password !== process.env.ADMIN_PASS) {
   //       const err = "Failed to delete messages: Invalid admin password";
   //       console.error(err);
   //       return reply.status(401).send({ message: err });
@@ -567,7 +567,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   //
   //     const theSender = await request.em.findOne(User, { email: sender });
   //
-  //     if (theSender == null || theSender.deleted_at != null) {
+  //     if (theSender === null || theSender.deleted_at !== null) {
   //       return error(reply, 404, `User with email address ${sender} not found`);
   //     }
   //
