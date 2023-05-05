@@ -306,7 +306,55 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // SEARCH - find an offer
-  app.search("/offers", async (request, reply) => {});
+  app.search<{
+    Body: { buyer_email?: string; listing_name?: string; price?: number };
+  }>("/offers", async (request, reply) => {
+    const data = createBody(request.body, ["buyer_email", "listing_name"]);
+    const { buyer_email, listing_name } = request.body;
+
+    try {
+      if (buyer_email !== undefined) {
+        const buyer = await request.em.findOne(User, { email: buyer_email });
+
+        if (buyer === null || buyer.deleted_at !== null) {
+          return error(
+            reply,
+            404,
+            `Listing with buyer ${buyer_email} not found`
+          );
+        } else {
+          data["buyer"] = buyer;
+        }
+      }
+
+      if (listing_name !== undefined) {
+        const listing = await request.em.findOne(Listing, {
+          name: listing_name,
+        });
+
+        if (listing === null || listing.deleted_at !== null) {
+          return error(
+            reply,
+            404,
+            `Listing with name ${listing_name} not found`
+          );
+        } else {
+          data["listing"] = listing;
+        }
+      }
+
+      const offers = await request.em.find(Offer, data);
+
+      if (offers.length === 0) {
+        return error(reply, 404, `No offers found`);
+      }
+
+      console.log(offers);
+      return reply.send(offers);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
+  });
 
   // POST - create an offer
   app.post("/offers", async (request, reply) => {});
