@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { User } from "./db/entities/User.js";
 import { Listing } from "./db/entities/Listing.js";
 import { Offer } from "./db/entities/Offer.js";
-import { IListingRouteData, IUserRouteData } from "./types.js";
+import { IOfferRouteData, IUserRouteData } from "./types.js";
 
 /**
  * Replies with a specified error and prints it to the console.
@@ -149,46 +149,74 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // SEARCH - find a listing
-  app.search<{ Body: IListingRouteData }>(
-    "/listings",
-    async (request, reply) => {
-      const data = createBody(request.body, ["email"]);
-
-      try {
-        if (request.body.email !== undefined) {
-          const owner = await request.em.findOne(User, {
-            email: request.body.email,
-          });
-
-          if (owner !== null && owner.deleted_at === null) {
-            data["owner"] = owner;
-          }
-        }
-
-        const listings = await request.em.find(Listing, data);
-
-        if (listings.length == 0) {
-          return error(reply, 404, "No listings found");
-        }
-
-        console.log(listings);
-        return reply.send(listings);
-      } catch (err) {
-        return error(reply, 500, err.message);
-      }
-    }
-  );
-
-  // POST - create a listing
-  app.post<{ Body: IListingRouteData }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["email"]);
-    const { email } = request.body;
+  app.search<{
+    Body: {
+      owner_email?: string;
+      name?: string;
+      address?: string;
+      region?: string;
+      country?: string;
+      description?: string;
+      bedrooms?: number;
+      bathrooms?: number;
+      area?: number;
+      price?: number;
+    };
+  }>("/listings", async (request, reply) => {
+    const data = createBody(request.body, ["owner_email"]);
+    const { owner_email } = request.body;
 
     try {
-      const owner = await request.em.findOne(User, { email });
+      if (owner_email !== undefined) {
+        const owner = await request.em.findOne(User, {
+          email: owner_email,
+        });
+
+        if (owner !== null && owner.deleted_at === null) {
+          data["owner"] = owner;
+        }
+      }
+
+      const listings = await request.em.find(Listing, data);
+
+      if (listings.length === 0) {
+        return error(reply, 404, "No listings found");
+      }
+
+      console.log(listings);
+      return reply.send(listings);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
+  });
+
+  // POST - create a listing
+  app.post<{
+    Body: {
+      owner_email: string;
+      name: string;
+      address?: string;
+      region: string;
+      country: string;
+      description: string;
+      bedrooms: number;
+      bathrooms: number;
+      area: number;
+      price: number;
+    };
+  }>("/listings", async (request, reply) => {
+    const data = createBody(request.body, ["email"]);
+    const { owner_email } = request.body;
+
+    try {
+      const owner = await request.em.findOne(User, { email: owner_email });
 
       if (owner === null || owner.deleted_at !== null) {
-        return error(reply, 404, `User with email address ${email} not found`);
+        return error(
+          reply,
+          404,
+          `User with email address ${owner_email} not found`
+        );
       } else {
         data["owner"] = owner;
       }
@@ -255,8 +283,15 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       try {
         const listing = await request.em.findOne(Listing, { name });
 
-        if (listing === null) {
+        if (listing === null || listing.deleted_at !== null) {
+          return error(reply, 404, `Listing with name ${name} not found`);
         }
+
+        listing.deleted_at = new Date();
+        await request.em.flush();
+
+        console.log(listing);
+        return reply.send(listing);
       } catch (err) {
         return error(reply, 500, err.message);
       }
