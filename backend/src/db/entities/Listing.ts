@@ -24,7 +24,6 @@ export class Listing extends BaseEntity {
    * Name of the property.
    */
   @Property()
-  @Unique()
   name!: string;
 
   /**

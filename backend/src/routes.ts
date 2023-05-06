@@ -209,17 +209,33 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { owner_email } = request.body;
 
     try {
-      const owner = await request.em.findOne(User, { email: owner_email });
+      const result = await find(
+        request,
+        reply,
+        User,
+        { email: owner_email },
+        {
+          errorMessage: `User with email ${owner_email} not found`,
+          dataObject: data,
+          dataName: "owner",
+        }
+      );
 
-      if (owner === null || owner.deleted_at !== null) {
-        return error(
-          reply,
-          404,
-          `User with email address ${owner_email} not found`
-        );
-      } else {
-        data["owner"] = owner;
+      if (!result.success) {
+        return result.reply;
       }
+
+      // const owner = await request.em.findOne(User, { email: owner_email });
+      //
+      // if (owner === null || owner.deleted_at !== null) {
+      //   return error(
+      //     reply,
+      //     404,
+      //     `User with email ${owner_email} not found`
+      //   );
+      // } else {
+      //   data["owner"] = owner;
+      // }
 
       const listing = await request.em.create(Listing, data);
       await request.em.flush();
@@ -227,13 +243,14 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       console.log("Created new listing: ", listing);
       return reply.send(listing);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
   // PUT - update a listing
   app.put<{
     Body: {
+      owner_email: string;
       name: string;
       description: string;
       bedrooms: number;
@@ -241,12 +258,19 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       price: number;
     };
   }>("/listings", async (request, reply) => {
-    const { name, description, bedrooms, bathrooms, price } = request.body;
+    const { owner_email, name, description, bedrooms, bathrooms, price } =
+      request.body;
 
     try {
-      const listing = await request.em.findOne(Listing, { name });
+      const owner = await request.em.findOne(User, { email: owner_email });
 
-      if (listing === null) {
+      if (owner === null || owner.deleted_at !== null) {
+        return error(reply, 404, `User with email ${owner_email} not found`);
+      }
+
+      const listing = await request.em.findOne(Listing, { owner, name });
+
+      if (listing === null || listing.deleted_at !== null) {
         return error(reply, 404, `Listing with name ${name} not found`);
       }
 
@@ -275,13 +299,19 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // DELETE - mark a listing as deleted
-  app.delete<{ Body: { name: string } }>(
+  app.delete<{ Body: { owner_email: string; name: string } }>(
     "/listings",
     async (request, reply) => {
-      const { name } = request.body;
+      const { owner_email, name } = request.body;
 
       try {
-        const listing = await request.em.findOne(Listing, { name });
+        const owner = await request.em.findOne(User, { email: owner_email });
+
+        if (owner === null || owner.deleted_at !== null) {
+          return error(reply, 404, `User with email ${owner_email} not found`);
+        }
+
+        const listing = await request.em.findOne(Listing, { owner, name });
 
         if (listing === null || listing.deleted_at !== null) {
           return error(reply, 404, `Listing with name ${name} not found`);
