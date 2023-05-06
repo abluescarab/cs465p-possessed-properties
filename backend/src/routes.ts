@@ -3,6 +3,8 @@ import { User } from "./db/entities/User.js";
 import { Listing } from "./db/entities/Listing.js";
 import { Offer } from "./db/entities/Offer.js";
 import { IOfferRouteData, IUserRouteData } from "./types.js";
+import { BaseEntity } from "./db/entities/BaseEntity.js";
+import { HttpStatus } from "./status_codes.js";
 
 /**
  * Replies with a specified error and prints it to the console.
@@ -13,6 +15,34 @@ import { IOfferRouteData, IUserRouteData } from "./types.js";
 async function error(reply, code, message) {
   console.log(message);
   return reply.status(code).send({ message: message });
+}
+
+async function find<T extends typeof BaseEntity>(
+  request,
+  reply,
+  type: T,
+  mapping,
+  options?: { errorMessage?: string; dataObject?; dataName?: string }
+): Promise<{ success: boolean; reply: any; entity: any }> {
+  const entity = await request.em.findOne(type, mapping);
+  const { errorMessage, dataObject, dataName } = options;
+
+  if (entity === null || entity.deleted_at !== null) {
+    return {
+      success: false,
+      entity: null,
+      reply:
+        errorMessage !== undefined
+          ? await error(reply, HttpStatus.NOT_FOUND, errorMessage)
+          : reply,
+    };
+  }
+
+  if (dataObject !== undefined) {
+    dataObject[dataName] = entity;
+  }
+
+  return { success: true, entity: entity, reply: reply };
 }
 
 /**
@@ -54,15 +84,22 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { email } = request.body;
 
     try {
-      const user = await request.em.findOne(User, { email });
+      const result = await find(
+        request,
+        reply,
+        User,
+        { email },
+        { errorMessage: `User with email ${email} not found` }
+      );
 
-      if (user === null || user.deleted_at !== null) {
-        return error(reply, 404, `User with email address ${email} not found`);
+      if (!result.success) {
+        return result.reply;
       }
 
-      return reply.send(user);
+      console.log(result.entity);
+      return reply.send(result.entity);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -76,8 +113,8 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       if (existing !== null) {
         return error(
           reply,
-          500,
-          `User with email address ${email} already exists`
+          HttpStatus.CONFLICT,
+          `User with email ${email} already exists`
         );
       }
 
@@ -91,7 +128,11 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       console.log("Created new user: ", user);
       return reply.send(user);
     } catch (err) {
-      return error(reply, 500, `Failed to create new user: ${err.message}`);
+      return error(
+        reply,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        `Failed to create new user: ${err.message}`
+      );
     }
   });
 
@@ -100,20 +141,26 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { email, name } = request.body;
 
     try {
-      const user = await request.em.findOne(User, { email });
+      const result = await find(
+        request,
+        reply,
+        User,
+        { email },
+        { errorMessage: `User with email ${email} not found` }
+      );
 
-      if (user === null || user.deleted_at !== null) {
-        return error(reply, 404, `User with email address ${email} not found`);
+      if (!result.success) {
+        return result.reply;
       }
 
-      user.name = name;
+      result.entity.name = name;
 
       // persist object changes to database
       await request.em.flush();
-      console.log(user);
-      return reply.send(user);
+      console.log(result.entity);
+      return reply.send(result.entity);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -125,19 +172,25 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
     // TODO: require admin access
     try {
-      const user = await request.em.findOne(User, { email });
+      const result = await find(
+        request,
+        reply,
+        User,
+        { email },
+        { errorMessage: `User with email ${email} not found` }
+      );
 
-      if (user === null || user.deleted_at !== null) {
-        return error(reply, 404, `User with email address ${email} not found`);
+      if (!result.success) {
+        return result.reply;
       }
 
-      user.deleted_at = new Date();
+      result.entity.deleted_at = new Date();
       await request.em.flush();
 
-      console.log(user);
-      return reply.send(user);
+      console.log(result.entity);
+      return reply.send(result.entity);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
   // endregion
@@ -180,13 +233,13 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       const listings = await request.em.find(Listing, data);
 
       if (listings.length === 0) {
-        return error(reply, 404, "No listings found");
+        return error(reply, HttpStatus.NOT_FOUND, "No listings found");
       }
 
       console.log(listings);
       return reply.send(listings);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -230,7 +283,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       // if (owner === null || owner.deleted_at !== null) {
       //   return error(
       //     reply,
-      //     404,
+      //     HttpStatus.NOT_FOUND,
       //     `User with email ${owner_email} not found`
       //   );
       // } else {
@@ -265,13 +318,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       const owner = await request.em.findOne(User, { email: owner_email });
 
       if (owner === null || owner.deleted_at !== null) {
-        return error(reply, 404, `User with email ${owner_email} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `User with email ${owner_email} not found`
+        );
       }
 
       const listing = await request.em.findOne(Listing, { owner, name });
 
       if (listing === null || listing.deleted_at !== null) {
-        return error(reply, 404, `Listing with name ${name} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `Listing with name ${name} not found`
+        );
       }
 
       if (description !== undefined) {
@@ -294,7 +355,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       console.log(listing);
       return reply.send(listing);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -308,13 +369,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         const owner = await request.em.findOne(User, { email: owner_email });
 
         if (owner === null || owner.deleted_at !== null) {
-          return error(reply, 404, `User with email ${owner_email} not found`);
+          return error(
+            reply,
+            HttpStatus.NOT_FOUND,
+            `User with email ${owner_email} not found`
+          );
         }
 
         const listing = await request.em.findOne(Listing, { owner, name });
 
         if (listing === null || listing.deleted_at !== null) {
-          return error(reply, 404, `Listing with name ${name} not found`);
+          return error(
+            reply,
+            HttpStatus.NOT_FOUND,
+            `Listing with name ${name} not found`
+          );
         }
 
         listing.deleted_at = new Date();
@@ -323,7 +392,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         console.log(listing);
         return reply.send(listing);
       } catch (err) {
-        return error(reply, 500, err.message);
+        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
       }
     }
   );
@@ -349,7 +418,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         if (buyer === null || buyer.deleted_at !== null) {
           return error(
             reply,
-            404,
+            HttpStatus.NOT_FOUND,
             `Listing with buyer ${buyer_email} not found`
           );
         } else {
@@ -365,7 +434,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         if (listing === null || listing.deleted_at !== null) {
           return error(
             reply,
-            404,
+            HttpStatus.NOT_FOUND,
             `Listing with name ${listing_name} not found`
           );
         } else {
@@ -376,13 +445,13 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       const offers = await request.em.find(Offer, data);
 
       if (offers.length === 0) {
-        return error(reply, 404, `No offers found`);
+        return error(reply, HttpStatus.NOT_FOUND, `No offers found`);
       }
 
       console.log(offers);
       return reply.send(offers);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -394,13 +463,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       const buyer = await request.em.findOne(User, { email: buyer_email });
 
       if (buyer === null) {
-        return error(reply, 404, `User with email ${buyer_email} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `User with email ${buyer_email} not found`
+        );
       }
 
       const listing = await request.em.findOne(Listing, { name: listing_name });
 
       if (listing === null) {
-        return error(reply, 404, `Listing with name ${listing_name} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `Listing with name ${listing_name} not found`
+        );
       }
 
       const offer = await request.em.create(Offer, { buyer, listing, price });
@@ -409,7 +486,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       console.log(offer);
       return reply.send(offer);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -421,13 +498,21 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       const buyer = await request.em.findOne(User, { email: buyer_email });
 
       if (buyer === null || buyer.deleted_at !== null) {
-        return error(reply, 404, `User with email ${buyer_email} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `User with email ${buyer_email} not found`
+        );
       }
 
       const listing = await request.em.findOne(Listing, { name: listing_name });
 
       if (listing === null || listing.deleted_at !== null) {
-        return error(reply, 404, `Listing with name ${listing_name} not found`);
+        return error(
+          reply,
+          HttpStatus.NOT_FOUND,
+          `Listing with name ${listing_name} not found`
+        );
       }
 
       const offer = await request.em.findOne(Offer, { buyer, listing });
@@ -435,7 +520,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       if (offer === null || offer.deleted_at !== null) {
         return error(
           reply,
-          404,
+          HttpStatus.NOT_FOUND,
           `User with email ${buyer_email} has not made an offer on listing with name ${listing_name}`
         );
       }
@@ -446,7 +531,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       console.log(offer);
       return reply.send(offer);
     } catch (err) {
-      return error(reply, 500, err.message);
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
 
@@ -460,7 +545,11 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         const buyer = await request.em.findOne(User, { email: buyer_email });
 
         if (buyer === null || buyer.deleted_at !== null) {
-          return error(reply, 404, `User with email ${buyer_email} not found`);
+          return error(
+            reply,
+            HttpStatus.NOT_FOUND,
+            `User with email ${buyer_email} not found`
+          );
         }
 
         const listing = await request.em.findOne(Listing, {
@@ -470,7 +559,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         if (listing === null || listing.deleted_at !== null) {
           return error(
             reply,
-            404,
+            HttpStatus.NOT_FOUND,
             `Listing with name ${listing_name} not found`
           );
         }
@@ -480,7 +569,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         if (offer === null || offer.deleted_at !== null) {
           return error(
             reply,
-            404,
+            HttpStatus.NOT_FOUND,
             `User with email ${buyer_email} has not made an offer on listing with name ${listing_name}`
           );
         }
@@ -491,7 +580,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         console.log(offer);
         return reply.send(offer);
       } catch (err) {
-        return error(reply, 404, err.message);
+        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
       }
     }
   );
