@@ -384,7 +384,41 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   });
 
   // PUT - update an offer
-  app.put("/offers", async (request, reply) => {});
+  app.put<{ Body: IOfferRouteData }>("/offers", async (request, reply) => {
+    const { buyer_email, listing_name, price } = request.body;
+
+    try {
+      const buyer = await request.em.findOne(User, { email: buyer_email });
+
+      if (buyer === null || buyer.deleted_at !== null) {
+        return error(reply, 404, `User with email ${buyer_email} not found`);
+      }
+
+      const listing = await request.em.findOne(Listing, { name: listing_name });
+
+      if (listing === null || listing.deleted_at !== null) {
+        return error(reply, 404, `Listing with name ${listing_name} not found`);
+      }
+
+      const offer = await request.em.findOne(Offer, { buyer, listing });
+
+      if (offer === null || offer.deleted_at !== null) {
+        return error(
+          reply,
+          404,
+          `User with email ${buyer_email} has not made an offer on listing with name ${listing_name}`
+        );
+      }
+
+      offer.price = price;
+
+      await request.em.flush();
+      console.log(offer);
+      return reply.send(offer);
+    } catch (err) {
+      return error(reply, 500, err.message);
+    }
+  });
 
   // DELETE - mark an offer as deleted
   app.delete("/offers", async (request, reply) => {});
