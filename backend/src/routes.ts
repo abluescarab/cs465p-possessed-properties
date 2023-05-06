@@ -17,6 +17,19 @@ async function error(reply, code, message) {
   return reply.status(code).send({ message: message });
 }
 
+/**
+ * Find an entity, check if it exists, and add it to a data collection
+ * (if provided).
+ * @param request request to query
+ * @param reply reply to send to
+ * @param type type of entity
+ * @param mapping entity properties
+ * @param options optional parameters
+ * @param options.errorMessage error message to display if entity is missing or
+ *  deleted
+ * @param options.dataObject data collection to add the entity to
+ * @param options.dataName data collection key to assign the entity to
+ */
 async function find<T extends typeof BaseEntity>(
   request,
   reply,
