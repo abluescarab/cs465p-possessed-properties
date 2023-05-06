@@ -5,7 +5,6 @@ import {
   ManyToOne,
   OneToMany,
   Property,
-  Unique,
 } from "@mikro-orm/core";
 import type { Rel } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";

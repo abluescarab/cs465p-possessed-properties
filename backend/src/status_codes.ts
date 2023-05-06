@@ -16,6 +16,10 @@ export enum HttpStatus {
    */
   UNAUTHORIZED = 401,
   /**
+   * The server understands the request, but refuses to handle it.
+   */
+  FORBIDDEN = 403,
+  /**
    * The resource was not found.
    */
   NOT_FOUND = 404,

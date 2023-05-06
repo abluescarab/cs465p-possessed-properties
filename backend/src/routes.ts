@@ -18,44 +18,71 @@ async function error(reply, code, message) {
 }
 
 /**
- * Find an entity, check if it exists, and add it to a data collection
- * (if provided).
- * @param request request to query
+ * Find an entity, check if it exists, and return it
+ * @param request query request
  * @param reply reply to send to
  * @param type type of entity
  * @param mapping entity properties
- * @param options optional parameters
- * @param options.errorMessage error message to display if entity is missing or
+ * @param errorMessage error message to display if entity is missing or
  *  deleted
- * @param options.dataObject data collection to add the entity to
- * @param options.dataName data collection key to assign the entity to
  */
 async function find<T extends typeof BaseEntity>(
   request,
   reply,
   type: T,
   mapping,
-  options?: { errorMessage?: string; dataObject?; dataName?: string }
-): Promise<{ success: boolean; reply: any; entity: any }> {
+  errorMessage?: string
+): Promise<{ success: boolean; entity: any }> {
   const entity = await request.em.findOne(type, mapping);
-  const { errorMessage, dataObject, dataName } = options;
 
   if (entity === null || entity.deleted_at !== null) {
+    if (errorMessage !== undefined) {
+      await error(reply, HttpStatus.NOT_FOUND, errorMessage);
+    }
+
     return {
       success: false,
       entity: null,
-      reply:
-        errorMessage !== undefined
-          ? await error(reply, HttpStatus.NOT_FOUND, errorMessage)
-          : reply,
     };
   }
 
-  if (dataObject !== undefined) {
-    dataObject[dataName] = entity;
-  }
+  return { success: true, entity: entity };
+}
 
-  return { success: true, entity: entity, reply: reply };
+/**
+ * Find a user and their owned listing.
+ * @param request query request
+ * @param reply reply to send to
+ * @param user_email listing owner email address
+ * @param listing_name name of the listing
+ */
+async function findUserAndListing(
+  request,
+  reply,
+  user_email: string,
+  listing_name: string
+): Promise<{ success: boolean; user: User; listing: Listing }> {
+  const user = await find(
+    request,
+    reply,
+    User,
+    { email: user_email },
+    `User with email ${user_email} not found`
+  );
+
+  const listing = await find(
+    request,
+    reply,
+    Listing,
+    { owner: user.entity, name: listing_name },
+    `Listing with name ${listing_name} not found`
+  );
+
+  return {
+    success: user.success && listing.success,
+    user: user.entity,
+    listing: listing.entity,
+  };
 }
 
 /**
@@ -97,20 +124,20 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { email } = request.body;
 
     try {
-      const result = await find(
+      const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        { errorMessage: `User with email ${email} not found` }
+        `User with email ${email} not found`
       );
 
-      if (!result.success) {
-        return result.reply;
+      if (!success) {
+        return reply;
       }
 
-      console.log(result.entity);
-      return reply.send(result.entity);
+      console.log(user);
+      return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
@@ -154,24 +181,24 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { email, name } = request.body;
 
     try {
-      const result = await find(
+      const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        { errorMessage: `User with email ${email} not found` }
+        `User with email ${email} not found`
       );
 
-      if (!result.success) {
-        return result.reply;
+      if (!success) {
+        return reply;
       }
 
-      result.entity.name = name;
+      user.name = name;
 
       // persist object changes to database
       await request.em.flush();
-      console.log(result.entity);
-      return reply.send(result.entity);
+      console.log(user);
+      return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
@@ -185,23 +212,23 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
     // TODO: require admin access
     try {
-      const result = await find(
+      const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        { errorMessage: `User with email ${email} not found` }
+        `User with email ${email} not found`
       );
 
-      if (!result.success) {
-        return result.reply;
+      if (!success) {
+        return reply;
       }
 
-      result.entity.deleted_at = new Date();
+      user.deleted_at = new Date();
       await request.em.flush();
 
-      console.log(result.entity);
-      return reply.send(result.entity);
+      console.log(user);
+      return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
@@ -234,11 +261,11 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
 
     try {
       if (owner_email !== undefined) {
-        const owner = await request.em.findOne(User, {
+        const { success, entity: owner } = await find(request, reply, User, {
           email: owner_email,
         });
 
-        if (owner !== null && owner.deleted_at === null) {
+        if (success) {
           data["owner"] = owner;
         }
       }
@@ -271,37 +298,33 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       price: number;
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["email"]);
-    const { owner_email } = request.body;
+    const data = createBody(request.body, ["owner_email"]);
+    const { owner_email, name } = request.body;
 
     try {
-      const result = await find(
+      const { success, entity: owner } = await find(
         request,
         reply,
         User,
         { email: owner_email },
-        {
-          errorMessage: `User with email ${owner_email} not found`,
-          dataObject: data,
-          dataName: "owner",
-        }
+        `User with email ${owner_email} not found`
       );
 
-      if (!result.success) {
-        return result.reply;
+      if (success) {
+        data["owner"] = owner;
+      } else {
+        return reply;
       }
 
-      // const owner = await request.em.findOne(User, { email: owner_email });
-      //
-      // if (owner === null || owner.deleted_at !== null) {
-      //   return error(
-      //     reply,
-      //     HttpStatus.NOT_FOUND,
-      //     `User with email ${owner_email} not found`
-      //   );
-      // } else {
-      //   data["owner"] = owner;
-      // }
+      const existing = await request.em.findOne(Listing, { owner, name });
+
+      if (existing !== null) {
+        return error(
+          reply,
+          HttpStatus.CONFLICT,
+          `User with email ${owner_email} already has a listing with name ${name}`
+        );
+      }
 
       const listing = await request.em.create(Listing, data);
       await request.em.flush();
@@ -328,23 +351,46 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
       request.body;
 
     try {
-      const owner = await request.em.findOne(User, { email: owner_email });
+      const { success, listing } = await findUserAndListing(
+        request,
+        reply,
+        owner_email,
+        name
+      );
 
-      if (owner === null || owner.deleted_at !== null) {
-        return error(
-          reply,
-          HttpStatus.NOT_FOUND,
-          `User with email ${owner_email} not found`
-        );
+      if (!success) {
+        return reply;
       }
 
-      const listing = await request.em.findOne(Listing, { owner, name });
+      // const owner = await find(
+      //   request,
+      //   reply,
+      //   User,
+      //   { email: owner_email },
+      //   { errorMessage: `User with email ${owner_email} not found` }
+      // );
+      //
+      // if (!owner.success) {
+      //   return reply;
+      // }
+      //
+      // const listing = await find(
+      //   request,
+      //   reply,
+      //   Listing,
+      //   { owner: owner.entity, name },
+      //   { errorMessage: `Listing with name ${name} not found` }
+      // );
+      //
+      // if (!listing.success) {
+      //   return reply;
+      // }
 
-      if (listing === null || listing.deleted_at !== null) {
+      if (listing.purchased_at !== null) {
         return error(
           reply,
-          HttpStatus.NOT_FOUND,
-          `Listing with name ${name} not found`
+          HttpStatus.FORBIDDEN,
+          `Listing with name ${name} has been purchased and is not modifiable`
         );
       }
 
@@ -378,24 +424,25 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     async (request, reply) => {
       const { owner_email, name } = request.body;
 
+      // TODO: require authentication (?)
       try {
-        const owner = await request.em.findOne(User, { email: owner_email });
+        const { success, listing } = await findUserAndListing(
+          request,
+          reply,
+          owner_email,
+          name
+        );
 
-        if (owner === null || owner.deleted_at !== null) {
-          return error(
-            reply,
-            HttpStatus.NOT_FOUND,
-            `User with email ${owner_email} not found`
-          );
+        if (!success) {
+          return reply;
         }
 
-        const listing = await request.em.findOne(Listing, { owner, name });
-
-        if (listing === null || listing.deleted_at !== null) {
+        // TODO: test
+        if (listing.purchased_at !== null) {
           return error(
             reply,
-            HttpStatus.NOT_FOUND,
-            `Listing with name ${name} not found`
+            HttpStatus.FORBIDDEN,
+            `Listing with name ${name} has been purchased and is not modifiable`
           );
         }
 
@@ -421,41 +468,45 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
   app.search<{
     Body: { buyer_email?: string; listing_name?: string; price?: number };
   }>("/offers", async (request, reply) => {
-    const data = createBody(request.body, ["buyer_email", "listing_name"]);
-    const { buyer_email, listing_name } = request.body;
+    const data = {};
+    const { buyer_email, listing_name, price } = request.body;
+    let listings = null;
 
     try {
       if (buyer_email !== undefined) {
-        const buyer = await request.em.findOne(User, { email: buyer_email });
+        const { success, entity: buyer } = await find(request, reply, User, {
+          email: buyer_email,
+        });
 
-        if (buyer === null || buyer.deleted_at !== null) {
-          return error(
-            reply,
-            HttpStatus.NOT_FOUND,
-            `Listing with buyer ${buyer_email} not found`
-          );
-        } else {
+        if (success) {
           data["buyer"] = buyer;
+        } else {
+          return error(reply, HttpStatus.NOT_FOUND, "No offers found");
         }
       }
 
       if (listing_name !== undefined) {
-        const listing = await request.em.findOne(Listing, {
-          name: listing_name,
-        });
+        listings = await request.em.find(Listing, { name: listing_name });
 
-        if (listing === null || listing.deleted_at !== null) {
-          return error(
-            reply,
-            HttpStatus.NOT_FOUND,
-            `Listing with name ${listing_name} not found`
-          );
-        } else {
-          data["listing"] = listing;
+        if (listings.length === 0) {
+          return error(reply, HttpStatus.NOT_FOUND, "No offers found");
         }
       }
 
-      const offers = await request.em.find(Offer, data);
+      if (price !== undefined) {
+        data["price"] = price;
+      }
+
+      let offers = [];
+
+      if (listings?.length > 0) {
+        for (const listing of listings) {
+          const dataListing = Object.assign({}, { listing }, data);
+          offers = offers.concat(await request.em.find(Offer, dataListing));
+        }
+      } else {
+        offers = offers.concat(await request.em.find(Offer, data));
+      }
 
       if (offers.length === 0) {
         return error(reply, HttpStatus.NOT_FOUND, `No offers found`);
@@ -473,27 +524,36 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
     const { buyer_email, listing_name, price } = request.body;
 
     try {
-      const buyer = await request.em.findOne(User, { email: buyer_email });
+      const buyer = await find(
+        request,
+        reply,
+        User,
+        { email: buyer_email },
+        `User with email ${buyer_email} not found`
+      );
 
-      if (buyer === null) {
-        return error(
-          reply,
-          HttpStatus.NOT_FOUND,
-          `User with email ${buyer_email} not found`
-        );
+      if (!buyer.success) {
+        return reply;
       }
 
-      const listing = await request.em.findOne(Listing, { name: listing_name });
+      const listing = await find(
+        request,
+        reply,
+        Listing,
+        { name: listing_name },
+        `Listing with name ${listing_name} not found`
+      );
 
-      if (listing === null) {
-        return error(
-          reply,
-          HttpStatus.NOT_FOUND,
-          `Listing with name ${listing_name} not found`
-        );
+      if (!listing.success) {
+        return reply;
       }
 
-      const offer = await request.em.create(Offer, { buyer, listing, price });
+      const offer = await request.em.create(Offer, {
+        buyer: buyer.entity,
+        listing: listing.entity,
+        price,
+      });
+
       await request.em.flush();
 
       console.log(offer);

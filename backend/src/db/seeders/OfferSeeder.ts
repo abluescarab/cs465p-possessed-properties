@@ -9,5 +9,11 @@ export class OfferSeeder extends Seeder {
       listing: 1,
       price: 150000,
     });
+
+    em.create(Offer, {
+      buyer: 3,
+      listing: 1,
+      price: 200000,
+    });
   }
 }
