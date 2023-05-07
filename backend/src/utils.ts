@@ -2,6 +2,7 @@ import { User } from "./db/entities/User.js";
 import { Listing } from "./db/entities/Listing.js";
 import { HttpStatus } from "./status_codes.js";
 import { BaseEntity } from "./db/entities/BaseEntity.js";
+import { OfferStatus } from "./types.js";
 
 /**
  * Replies with a specified error and prints it to the console.
@@ -97,4 +98,23 @@ export function createBody(body, remove: Array<string>) {
   }
 
   return data;
+}
+
+/**
+ * Gets the HTTP request text for an {@link OfferStatus}.
+ * @param type type of {@link OfferStatus}
+ */
+export function httpStatus(type: OfferStatus) {
+  switch (type) {
+    case OfferStatus.OPEN:
+      return "open";
+    case OfferStatus.CLOSED:
+      return "close";
+    case OfferStatus.ACCEPTED:
+      return "accept";
+    case OfferStatus.REJECTED:
+      return "reject";
+    default:
+      return null;
+  }
 }

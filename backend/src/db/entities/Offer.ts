@@ -3,6 +3,7 @@ import type { Rel } from "@mikro-orm/core";
 import { User } from "./User.js";
 import { Listing } from "./Listing.js";
 import { BaseEntity } from "./BaseEntity.js";
+import { OfferStatus } from "../../types.js";
 
 @Entity({ tableName: "offers" })
 export class Offer extends BaseEntity {
@@ -25,8 +26,15 @@ export class Offer extends BaseEntity {
   price!: number;
 
   /**
-   * When the offer was accepted.
+   * The current status of the offer.
+   * @see {@link OfferStatus} for available statuses.
    */
   @Property()
-  accepted_at?: Date = null;
+  status?: OfferStatus = OfferStatus.OPEN;
+
+  /**
+   * When the offer was closed, i.e., has any {@link OfferStatus} other than open.
+   */
+  @Property()
+  closed_at?: Date = null;
 }

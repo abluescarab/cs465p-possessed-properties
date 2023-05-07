@@ -1,9 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { Offer } from "../db/entities/Offer.js";
-import { error, find } from "../utils.js";
+import { error, find, httpStatus } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
+import { OfferStatus } from "../types.js";
 
 export function createOfferRoutes(app: FastifyInstance) {
   // region GET - get all offers
@@ -116,10 +117,10 @@ export function createOfferRoutes(app: FastifyInstance) {
   // endregion
 
   // region PUT - update an offer
-  app.put<{ Body: { id: number; price?: number; accepted?: boolean } }>(
+  app.put<{ Body: { id: number; price?: number; status?: string } }>(
     "/offers",
     async (request, reply) => {
-      const { id, price, accepted } = request.body;
+      const { id, price, status } = request.body;
 
       try {
         const { success, entity: offer } = await find(
@@ -134,7 +135,7 @@ export function createOfferRoutes(app: FastifyInstance) {
           return reply;
         }
 
-        if (offer.accepted_at !== null) {
+        if (offer.closed_at !== null) {
           return error(
             reply,
             HttpStatus.FORBIDDEN,
@@ -146,8 +147,22 @@ export function createOfferRoutes(app: FastifyInstance) {
           offer.price = price;
         }
 
-        if (accepted !== undefined) {
-          offer.accepted_at = new Date();
+        switch (status) {
+          case httpStatus(OfferStatus.CLOSED):
+            offer.status = OfferStatus.CLOSED;
+            break;
+          case httpStatus(OfferStatus.ACCEPTED):
+            offer.status = OfferStatus.ACCEPTED;
+            break;
+          case httpStatus(OfferStatus.REJECTED):
+            offer.status = OfferStatus.REJECTED;
+            break;
+          default:
+            return error(reply, HttpStatus.BAD_REQUEST, `Unknown status type`);
+        }
+
+        if (offer.status !== OfferStatus.OPEN) {
+          offer.closed_at = new Date();
         }
 
         await request.em.flush();
@@ -177,7 +192,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         return reply;
       }
 
-      if (offer.accepted_at !== null) {
+      if (offer.closed_at !== null) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
