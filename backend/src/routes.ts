@@ -316,15 +316,15 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
         return reply;
       }
 
-      const existing = await request.em.findOne(Listing, { owner, name });
-
-      if (existing !== null) {
-        return error(
-          reply,
-          HttpStatus.CONFLICT,
-          `User with email ${owner_email} already has a listing with name ${name}`
-        );
-      }
+      // const existing = await request.em.findOne(Listing, { owner, name });
+      //
+      // if (existing !== null) {
+      //   return error(
+      //     reply,
+      //     HttpStatus.CONFLICT,
+      //     `User with email ${owner_email} already has a listing with name ${name}`
+      //   );
+      // }
 
       const listing = await request.em.create(Listing, data);
       await request.em.flush();

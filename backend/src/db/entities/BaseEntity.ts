@@ -1,9 +1,6 @@
-import { PrimaryKey, Property } from "@mikro-orm/core";
+import { Property } from "@mikro-orm/core";
 
 export class BaseEntity {
-  @PrimaryKey()
-  id!: number;
-
   @Property()
   created_at = new Date();
 

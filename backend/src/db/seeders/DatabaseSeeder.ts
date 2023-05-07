@@ -1,11 +1,10 @@
 import { Seeder } from "@mikro-orm/seeder";
 import { EntityManager } from "@mikro-orm/postgresql";
 import { UserSeeder } from "./UserSeeder.js";
-import { OfferSeeder } from "./OfferSeeder.js";
 import { ListingSeeder } from "./ListingSeeder.js";
 
 export class DatabaseSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
-    return this.call(em, [UserSeeder, ListingSeeder, OfferSeeder]);
+    return this.call(em, [UserSeeder, ListingSeeder]);
   }
 }

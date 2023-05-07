@@ -16,13 +16,13 @@ export class Listing extends BaseEntity {
   /**
    * Person who posted the listing.
    */
-  @ManyToOne()
+  @ManyToOne({ primary: true })
   owner!: Rel<User>;
 
   /**
    * Name of the property.
    */
-  @Property()
+  @Property({ primary: true })
   name!: string;
 
   /**
