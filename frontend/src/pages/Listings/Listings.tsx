@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./Listing.scss";
+import "./Listings.scss";
 import { Link } from "react-router-dom";
 
-const Listing: React.FC = () => {
+const Listings: React.FC = () => {
   return (
     <div className={"listing-div"}>
       Listing...
@@ -13,4 +13,4 @@ const Listing: React.FC = () => {
   );
 };
 
-export default Listing;
+export default Listings;
