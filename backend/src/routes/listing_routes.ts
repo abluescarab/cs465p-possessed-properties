@@ -1,16 +1,17 @@
 import { FastifyInstance } from "fastify";
 import { Listing } from "../db/entities/Listing.js";
-import { createBody, error, find, findUserAndListing } from "../utils.js";
+import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 
 export function createListingRoutes(app: FastifyInstance) {
-  // GET - get all listings
+  // region GET - get all listings
   app.get("/listings", async (request) => {
     return request.em.find(Listing, {});
   });
+  // endregion
 
-  // SEARCH - find a listing
+  // region SEARCH - find a listing
   app.search<{
     Body: {
       owner_email?: string;
@@ -51,8 +52,9 @@ export function createListingRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 
-  // POST - create a listing
+  // region POST - create a listing
   app.post<{
     Body: {
       owner_email: string;
@@ -94,63 +96,55 @@ export function createListingRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 
-  // PUT - update a listing
+  // region PUT - update a listing
   app.put<{
     Body: {
-      owner_email: string;
-      name: string;
-      description: string;
-      bedrooms: number;
-      bathrooms: number;
-      price: number;
+      id: number;
+      name?: string;
+      description?: string;
+      bedrooms?: number;
+      bathrooms?: number;
+      area?: number;
+      price?: number;
+      buyer_email?: string;
     };
   }>("/listings", async (request, reply) => {
-    const { owner_email, name, description, bedrooms, bathrooms, price } =
-      request.body;
+    const {
+      id,
+      name,
+      description,
+      bedrooms,
+      bathrooms,
+      area,
+      price,
+      buyer_email,
+    } = request.body;
 
     try {
-      const { success, listing } = await findUserAndListing(
+      const { success, entity: listing } = await find(
         request,
         reply,
-        owner_email,
-        name
+        Listing,
+        { id },
+        `Listing with ID ${id} not found`
       );
 
       if (!success) {
         return reply;
       }
 
-      // const owner = await find(
-      //   request,
-      //   reply,
-      //   User,
-      //   { email: owner_email },
-      //   { errorMessage: `User with email ${owner_email} not found` }
-      // );
-      //
-      // if (!owner.success) {
-      //   return reply;
-      // }
-      //
-      // const listing = await find(
-      //   request,
-      //   reply,
-      //   Listing,
-      //   { owner: owner.entity, name },
-      //   { errorMessage: `Listing with name ${name} not found` }
-      // );
-      //
-      // if (!listing.success) {
-      //   return reply;
-      // }
-
       if (listing.purchased_at !== null) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
-          `Listing with name ${name} has been purchased and is not modifiable`
+          `Listing with ID ${id} has been purchased and is not modifiable`
         );
+      }
+
+      if (name !== undefined) {
+        listing.name = name;
       }
 
       if (description !== undefined) {
@@ -165,8 +159,32 @@ export function createListingRoutes(app: FastifyInstance) {
         listing.bathrooms = bathrooms;
       }
 
+      if (area !== undefined) {
+        listing.area = area;
+      }
+
       if (price !== undefined) {
         listing.price = price;
+      }
+
+      if (buyer_email !== undefined) {
+        const { success, entity: buyer } = await find(
+          request,
+          reply,
+          User,
+          { email: buyer_email },
+          `User with email ${buyer_email} not found`
+        );
+
+        if (!success) {
+          return reply;
+        }
+
+        buyer.purchased_properties.add(listing);
+        listing.purchased_by = buyer;
+        listing.purchased_at = new Date();
+
+        // TODO: close/reject all offers
       }
 
       await request.em.flush();
@@ -176,43 +194,43 @@ export function createListingRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 
-  // DELETE - mark a listing as deleted
-  app.delete<{ Body: { owner_email: string; name: string } }>(
-    "/listings",
-    async (request, reply) => {
-      const { owner_email, name } = request.body;
+  // region DELETE - mark a listing as deleted
+  app.delete<{ Body: { id: number } }>("/listings", async (request, reply) => {
+    const { id } = request.body;
 
-      // TODO: require authentication (?)
-      try {
-        const { success, listing } = await findUserAndListing(
-          request,
-          reply,
-          owner_email,
-          name
-        );
+    // TODO: require authentication (?)
+    try {
+      const { success, entity: listing } = await find(
+        request,
+        reply,
+        Listing,
+        { id },
+        `Listing with ID ${id} not found`
+      );
 
-        if (!success) {
-          return reply;
-        }
-
-        // TODO: test
-        if (listing.purchased_at !== null) {
-          return error(
-            reply,
-            HttpStatus.FORBIDDEN,
-            `Listing with name ${name} has been purchased and is not modifiable`
-          );
-        }
-
-        listing.deleted_at = new Date();
-        await request.em.flush();
-
-        console.log(listing);
-        return reply.send(listing);
-      } catch (err) {
-        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
+      if (!success) {
+        return reply;
       }
+
+      // TODO: test
+      if (listing.purchased_at !== null) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `Listing with ID ${id} has been purchased and is not modifiable`
+        );
+      }
+
+      listing.deleted_at = new Date();
+      await request.em.flush();
+
+      console.log(listing);
+      return reply.send(listing);
+    } catch (err) {
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
-  );
+  });
+  // endregion
 }

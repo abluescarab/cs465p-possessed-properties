@@ -5,12 +5,13 @@ import { HttpStatus } from "../status_codes.js";
 import { IUserRouteData } from "../types.js";
 
 export function createUserRoutes(app: FastifyInstance) {
-  // GET - get all users
+  // region GET - get all users
   app.get("/users", async (request) => {
     return request.em.find(User, {});
   });
+  // endregion
 
-  // SEARCH - find a user
+  // region SEARCH - find a user
   app.search("/users", async (request, reply) => {
     const { email } = request.body;
 
@@ -33,8 +34,9 @@ export function createUserRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 
-  // POST - create a user
+  // region POST - create a user
   app.post<{ Body: IUserRouteData }>("/users", async (request, reply) => {
     const { email, name } = request.body;
 
@@ -66,8 +68,9 @@ export function createUserRoutes(app: FastifyInstance) {
       );
     }
   });
+  // endregion
 
-  // PUT - update a user
+  // region PUT - update a user
   app.put<{ Body: IUserRouteData }>("/users", async (request, reply) => {
     const { email, name } = request.body;
 
@@ -94,8 +97,9 @@ export function createUserRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 
-  // DELETE - mark user as deleted
+  // region DELETE - mark user as deleted
   app.delete<{
     Body: { email: string };
   }>("/users", async (request, reply) => {
@@ -124,4 +128,5 @@ export function createUserRoutes(app: FastifyInstance) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
 }

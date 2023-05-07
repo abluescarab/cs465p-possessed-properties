@@ -5,7 +5,6 @@ import {
   ManyToOne,
   OneToMany,
   Property,
-  Unique,
 } from "@mikro-orm/core";
 import type { Rel } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";
@@ -24,7 +23,6 @@ export class Listing extends BaseEntity {
    * Name of the property.
    */
   @Property()
-  @Unique()
   name!: string;
 
   /**
