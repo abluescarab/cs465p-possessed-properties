@@ -23,4 +23,10 @@ export class Offer extends BaseEntity {
    */
   @Property()
   price!: number;
+
+  /**
+   * When the offer was accepted.
+   */
+  @Property()
+  accepted_at?: Date = null;
 }

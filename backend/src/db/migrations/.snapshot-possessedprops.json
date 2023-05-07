@@ -350,6 +350,16 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
+        },
+        "accepted_at": {
+          "name": "accepted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "offers",

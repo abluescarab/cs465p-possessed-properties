@@ -70,9 +70,9 @@ export function createOfferRoutes(app: FastifyInstance) {
 
   // region POST - create an offer
   app.post<{
-    Body: { buyer_email: string; listing_name: string; price: number };
+    Body: { buyer_email: string; listing_id: number; price: number };
   }>("/offers", async (request, reply) => {
-    const { buyer_email, listing_name, price } = request.body;
+    const { buyer_email, listing_id, price } = request.body;
 
     try {
       const buyer = await find(
@@ -91,8 +91,8 @@ export function createOfferRoutes(app: FastifyInstance) {
         request,
         reply,
         Listing,
-        { name: listing_name },
-        `Listing with name ${listing_name} not found`
+        { id: listing_id },
+        `Listing with ID ${listing_id} not found`
       );
 
       if (!listing.success) {
@@ -137,8 +137,8 @@ export function createOfferRoutes(app: FastifyInstance) {
         offer.price = price;
 
         await request.em.flush();
-        console.log(offer.entity);
-        return reply.send(offer.entity);
+        console.log(offer);
+        return reply.send(offer);
       } catch (err) {
         return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
       }
