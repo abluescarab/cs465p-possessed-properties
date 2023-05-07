@@ -505,7 +505,7 @@ async function AppRoutes(app: FastifyInstance, _options = {}) {
           offers = offers.concat(await request.em.find(Offer, dataListing));
         }
       } else {
-        offers = offers.concat(await request.em.find(Offer, data));
+        offers = await request.em.find(Offer, data);
       }
 
       if (offers.length === 0) {
