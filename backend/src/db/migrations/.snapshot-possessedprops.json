@@ -91,23 +91,14 @@
     },
     {
       "columns": {
-        "owner_id": {
-          "name": "owner_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
           "mappedType": "integer"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
         },
         "created_at": {
           "name": "created_at",
@@ -138,6 +129,24 @@
           "nullable": true,
           "length": 6,
           "mappedType": "datetime"
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
         },
         "address": {
           "name": "address",
@@ -236,12 +245,20 @@
       "schema": "public",
       "indexes": [
         {
-          "keyName": "listings_pkey",
           "columnNames": [
-            "owner_id",
             "name"
           ],
-          "composite": true,
+          "composite": false,
+          "keyName": "listings_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "listings_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
           "primary": true,
           "unique": true
         }
@@ -277,32 +294,14 @@
     },
     {
       "columns": {
-        "buyer_id": {
-          "name": "buyer_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
           "mappedType": "integer"
-        },
-        "listing_owner_id": {
-          "name": "listing_owner_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "listing_name": {
-          "name": "listing_name",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
         },
         "created_at": {
           "name": "created_at",
@@ -334,6 +333,24 @@
           "length": 6,
           "mappedType": "datetime"
         },
+        "buyer_id": {
+          "name": "buyer_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "listing_id": {
+          "name": "listing_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
         "price": {
           "name": "price",
           "type": "int",
@@ -350,11 +367,9 @@
         {
           "keyName": "offers_pkey",
           "columnNames": [
-            "buyer_id",
-            "listing_owner_id",
-            "listing_name"
+            "id"
           ],
-          "composite": true,
+          "composite": false,
           "primary": true,
           "unique": true
         }
@@ -373,16 +388,14 @@
           "referencedTableName": "public.users",
           "updateRule": "cascade"
         },
-        "offers_listing_owner_id_listing_name_foreign": {
-          "constraintName": "offers_listing_owner_id_listing_name_foreign",
+        "offers_listing_id_foreign": {
+          "constraintName": "offers_listing_id_foreign",
           "columnNames": [
-            "listing_owner_id",
-            "listing_name"
+            "listing_id"
           ],
           "localTableName": "public.offers",
           "referencedColumnNames": [
-            "owner_id",
-            "name"
+            "id"
           ],
           "referencedTableName": "public.listings",
           "updateRule": "cascade"

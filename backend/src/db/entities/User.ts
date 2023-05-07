@@ -3,7 +3,6 @@ import {
   Collection,
   Entity,
   OneToMany,
-  PrimaryKey,
   Property,
   Unique,
 } from "@mikro-orm/core";
@@ -13,12 +12,6 @@ import { BaseEntity } from "./BaseEntity.js";
 
 @Entity({ tableName: "users" })
 export class User extends BaseEntity {
-  /**
-   * Unique ID assigned to this user.
-   */
-  @PrimaryKey()
-  id!: number;
-
   /**
    * Unique email address which acts as a login username.
    */
