@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "docs:generate": "rimraf ./doc/ && typedoc --options typedoc.json",
-    "cypress:run": "pnpm cypress open"
+    "cypress:run": "pnpm cypress open",
+    "sass:watch": "sass -w src/theme:src/assets/css"
   },
   "dependencies": {
     "react": "^18.2.0",
