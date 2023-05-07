@@ -116,10 +116,10 @@ export function createOfferRoutes(app: FastifyInstance) {
   // endregion
 
   // region PUT - update an offer
-  app.put<{ Body: { id: number; price: number } }>(
+  app.put<{ Body: { id: number; price?: number; accepted?: boolean } }>(
     "/offers",
     async (request, reply) => {
-      const { id, price } = request.body;
+      const { id, price, accepted } = request.body;
 
       try {
         const { success, entity: offer } = await find(
@@ -134,7 +134,21 @@ export function createOfferRoutes(app: FastifyInstance) {
           return reply;
         }
 
-        offer.price = price;
+        if (offer.accepted_at !== null) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            `Offer with ID ${id} has been accepted and is not modifiable`
+          );
+        }
+
+        if (price !== undefined) {
+          offer.price = price;
+        }
+
+        if (accepted !== undefined) {
+          offer.accepted_at = new Date();
+        }
 
         await request.em.flush();
         console.log(offer);
@@ -161,6 +175,14 @@ export function createOfferRoutes(app: FastifyInstance) {
 
       if (!success) {
         return reply;
+      }
+
+      if (offer.accepted_at !== null) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `Offer with ID ${id} has been accepted and is not modifiable`
+        );
       }
 
       offer.deleted_at = new Date();
