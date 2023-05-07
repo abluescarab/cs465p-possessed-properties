@@ -1,0 +1,31 @@
+.listing {
+  border-radius: var(--border-radius);
+  box-shadow: var(--border-color) 0 2px 4px 0px;
+  margin: var(--padding-md);
+
+  .listing-image {
+
+  }
+
+  .listing-body {
+    padding: var(--padding-lg);
+
+    .listing-price {
+
+    }
+
+    .listing-info {
+      display: flex;
+      gap: var(--padding-sm);
+
+      .listing-info-item:not(:last-child) {
+        border-right: 1px solid var(--border-color);
+        padding-right: var(--padding-sm);
+      }
+    }
+
+    .listing-name {
+
+    }
+  }
+}

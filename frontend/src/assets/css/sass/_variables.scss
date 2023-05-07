@@ -1,0 +1,11 @@
+:root {
+  --background-color: #fff;
+  --color: #000;
+  --border-color: rgba(0, 0, 0, 0.3);
+
+  --padding-sm: calc(var(--padding-md) / 2);
+  --padding-md: 10px;
+  --padding-lg: calc(var(--padding-md) * 2);
+  --padding-xl: calc(var(--padding-md) * 4);
+
+}

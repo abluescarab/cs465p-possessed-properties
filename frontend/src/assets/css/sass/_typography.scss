@@ -1,0 +1,47 @@
+@mixin noto($style, $weight) {
+  @font-face {
+    font-family: 'Noto Sans';
+    font-style: $style;
+    font-weight: $weight;
+
+    @if $style == "normal" {
+      @if $weight == "normal" {
+        src: url("../../fonts/NotoSans-Regular.ttf");
+      }
+      @else {
+        src: url("../../fonts/NotoSans-Bold.ttf");
+      }
+    }
+    @else {
+      @if $weight == "normal" {
+        src: url("../../fonts/NotoSans-Italic.ttf");
+      }
+      @else {
+        src: url("../../fonts/NotoSans-BoldItalic.ttf");
+      }
+    }
+  }
+}
+
+@include noto("normal", "bold");
+@include noto("italic", "normal");
+@include noto("italic", "bold");
+@include noto("normal", "normal");
+
+#root {
+  font-family: 'Noto Sans', 'sans-serif';
+  font-weight: normal;
+  font-style: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.large {
+  font-size: 1.25em;
+}
+
+.small {
+  font-size: 0.75em;
+}
