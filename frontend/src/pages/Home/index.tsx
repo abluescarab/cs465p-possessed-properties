@@ -7,10 +7,12 @@ import SearchBar from "@/components/SearchBar";
 const Home: React.FC = () => {
   return (
     <>
-      <section>
-        <h2>Find your dream haunted home today.</h2>
-      </section>
-      <section>
+      <section id={"intro"}>
+        <h2>
+          <span className={"text-shadow-dark"}>
+            Find your haunted dream home today.
+          </span>
+        </h2>
         <SearchBar />
       </section>
       <section>

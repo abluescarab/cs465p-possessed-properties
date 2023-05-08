@@ -69,3 +69,8 @@
   -moz-font-feature-settings: "liga";
   -moz-osx-font-smoothing: grayscale;
 }
+
+.text-shadow-dark {
+    color: white;
+    text-shadow:  0 0 6px var(--color);
+}
