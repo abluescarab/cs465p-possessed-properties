@@ -5,10 +5,18 @@ import { Link } from "react-router-dom";
 const Navigation = () => {
   return (
     <nav>
-      <img src={reactLogo} alt={""} />
-      <Link to={"/"}>Home</Link>
-      <Link to={"/listings"}>Listings</Link>
-      <Link to={"/profile"}>Profile</Link>
+      <div className={"nav-col"}>
+        <Link to={"/buy"}>Buy</Link>
+        <Link to={"/sell"}>Sell</Link>
+      </div>
+      <div className={"nav-col"}>
+        <Link to={"/"} className={"flex"}>
+          <img src={reactLogo} alt={""} />
+        </Link>
+      </div>
+      <div className={"nav-col"}>
+        <Link to={"/profile"}>Profile</Link>
+      </div>
     </nav>
   );
 };

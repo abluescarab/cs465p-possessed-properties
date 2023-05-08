@@ -8,6 +8,9 @@ const Home: React.FC = () => {
   return (
     <>
       <section>
+        <h2>Find your dream haunted home today.</h2>
+      </section>
+      <section>
         <SearchBar />
       </section>
       <section>

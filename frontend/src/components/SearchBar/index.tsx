@@ -7,7 +7,11 @@ const SearchBar = () => {
     <Card className={"search"}>
       <CardContent>
         <form>
-          <input type={"text"} name={"search"} placeholder={"Search..."} />
+          <input
+            type={"text"}
+            name={"search"}
+            placeholder={"Search for listings..."}
+          />
           <button type={"submit"}>
             <span className={"material-symbols-rounded"}>search</span>
           </button>
