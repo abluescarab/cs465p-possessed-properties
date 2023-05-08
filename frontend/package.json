@@ -13,10 +13,11 @@
     "sass:watch": "sass -w src/theme:src/assets/css"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typedoc": "^0.24.7",
-    "react-router-dom": "6"
+    "react-router-dom": "6",
+    "typedoc": "^0.24.7"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.2.0",
