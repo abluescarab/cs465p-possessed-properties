@@ -8,11 +8,11 @@ import {
 } from "@mikro-orm/core";
 import type { Rel } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";
-import { BaseEntity } from "./BaseEntity.js";
+import { ProjectBaseEntity } from "./ProjectBaseEntity.js";
 import { User } from "./User.js";
 
 @Entity({ tableName: "listings" })
-export class Listing extends BaseEntity {
+export class Listing extends ProjectBaseEntity {
   /**
    * Person who posted the listing.
    */

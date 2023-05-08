@@ -1,7 +1,7 @@
 import { User } from "./db/entities/User.js";
 import { Listing } from "./db/entities/Listing.js";
 import { HttpStatus } from "./status_codes.js";
-import { BaseEntity } from "./db/entities/BaseEntity.js";
+import { ProjectBaseEntity } from "./db/entities/ProjectBaseEntity.js";
 import { OfferStatus } from "./types.js";
 
 /**
@@ -24,7 +24,7 @@ export async function error(reply, code, message) {
  * @param errorMessage error message to display if entity is missing or
  *  deleted
  */
-export async function find<T extends typeof BaseEntity>(
+export async function find<T extends typeof ProjectBaseEntity>(
   request,
   reply,
   type: T,

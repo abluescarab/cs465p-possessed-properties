@@ -22,6 +22,8 @@
     "migration:up": "pnpm mikro-orm-esm migration:up",
     "migration:down": "pnpm mikro-orm-esm migration:down",
     "migration:list": "pnpm mikro-orm-esm migration:list",
+    "migration:fresh": "pnpm mikro-orm-esm migration:fresh",
+    "migration:fresh:seed": "pnpm mikro-orm-esm migration:fresh --seed",
     "docs:generate": "rimraf ./doc/ && typedoc --options typedoc.json --plugin typedoc-plugin-merge-modules"
   },
   "scriptsComments": {
@@ -53,6 +55,7 @@
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "mikro": "^0.1.0",
+    "mikro-orm-soft-delete": "^0.1.0",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8",
     "rimraf": "^5.0.0",

@@ -2,11 +2,11 @@ import { Entity, ManyToOne, Property } from "@mikro-orm/core";
 import type { Rel } from "@mikro-orm/core";
 import { User } from "./User.js";
 import { Listing } from "./Listing.js";
-import { BaseEntity } from "./BaseEntity.js";
+import { ProjectBaseEntity } from "./ProjectBaseEntity.js";
 import { OfferStatus } from "../../types.js";
 
 @Entity({ tableName: "offers" })
-export class Offer extends BaseEntity {
+export class Offer extends ProjectBaseEntity {
   /**
    * User who placed the offer.
    */

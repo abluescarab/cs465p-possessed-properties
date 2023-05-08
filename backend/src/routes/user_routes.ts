@@ -7,7 +7,7 @@ import { IUserRouteData } from "../types.js";
 export function createUserRoutes(app: FastifyInstance) {
   // region GET - get all users
   app.get("/users", async (request) => {
-    return request.em.find(User, {});
+    return request.em.find(User, {}, { filters: false });
   });
   // endregion
 
@@ -119,7 +119,8 @@ export function createUserRoutes(app: FastifyInstance) {
         return reply;
       }
 
-      user.deleted_at = new Date();
+      // user.deleted_at = new Date();
+      await request.em.remove(user);
       await request.em.flush();
 
       console.log(user);

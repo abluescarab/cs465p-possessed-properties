@@ -7,7 +7,7 @@ import { HttpStatus } from "../status_codes.js";
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
   app.get("/listings", async (request) => {
-    return request.em.find(Listing, {});
+    return request.em.find(Listing, {}, { filters: false });
   });
   // endregion
 
@@ -223,7 +223,8 @@ export function createListingRoutes(app: FastifyInstance) {
         );
       }
 
-      listing.deleted_at = new Date();
+      // listing.deleted_at = new Date();
+      await request.em.remove(listing);
       await request.em.flush();
 
       console.log(listing);

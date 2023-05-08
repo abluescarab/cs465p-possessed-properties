@@ -8,10 +8,10 @@ import {
 } from "@mikro-orm/core";
 import { Listing } from "./Listing.js";
 import { Offer } from "./Offer.js";
-import { BaseEntity } from "./BaseEntity.js";
+import { ProjectBaseEntity } from "./ProjectBaseEntity.js";
 
 @Entity({ tableName: "users" })
-export class User extends BaseEntity {
+export class User extends ProjectBaseEntity {
   /**
    * Unique email address which acts as a login username.
    */

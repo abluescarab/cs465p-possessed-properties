@@ -9,7 +9,7 @@ import { OfferStatus } from "../types.js";
 export function createOfferRoutes(app: FastifyInstance) {
   // region GET - get all offers
   app.get("/offers", async (request) => {
-    return request.em.find(Offer, {});
+    return request.em.find(Offer, {}, { filters: false });
   });
   // endregion
 
@@ -200,7 +200,8 @@ export function createOfferRoutes(app: FastifyInstance) {
         );
       }
 
-      offer.deleted_at = new Date();
+      // offer.deleted_at = new Date();
+      await request.em.remove(offer);
       await request.em.flush();
 
       console.log(offer);
