@@ -35,11 +35,12 @@
   src: url("../fonts/Material-Symbols-Rounded.woff2") format("woff2");
 }
 
-#root {
-  font-family: "Noto Sans", "sans-serif";
+:root {
+  font-family: "Noto Sans", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: var(--font-md);
+  line-height: 1.5;
 }
 
 .bold {

@@ -1,10 +1,6 @@
 @use "sass";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
   color: var(--color);
   background-color: var(--background-color);
@@ -47,6 +43,10 @@ h2 {
   font-size: var(--font-xl);
   text-align: center;
   width: 100%;
+}
+
+input {
+  font-family: "Noto Sans", sans-serif;
 }
 
 button {
