@@ -1,4 +1,4 @@
-import "./Navigation.scss";
+import "./SearchBar.scss";
 import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 

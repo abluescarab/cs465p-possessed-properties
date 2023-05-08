@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Home.scss";
 import Listing from "@/components/Listing/Listing.tsx";
-import SearchBar from "@/components/SearchBar/Navigation.tsx";
+import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 import Carousel from "@/components/Carousel/Carousel.tsx";
 
 const Home: React.FC = () => {

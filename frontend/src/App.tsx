@@ -1,5 +1,5 @@
 import "@css/App.scss";
-import { Route, Routes } from "react-router";
+import { Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home/Home.tsx";
 import Search from "@/pages/Search/Search.tsx";
 import Profile from "@/pages/Profile/Profile.tsx";
