@@ -1,7 +1,7 @@
 nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  padding: var(--padding-lg);
+  padding: var(--padding-md) var(--padding-lg);
 
   .nav-col {
     display: flex;

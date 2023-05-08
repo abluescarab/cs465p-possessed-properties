@@ -1,5 +1,5 @@
 import "./index.scss";
-import reactLogo from "@images/react.svg";
+import banner from "/banner.png";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -11,7 +11,7 @@ const Navigation = () => {
       </div>
       <div className={"nav-col"}>
         <Link to={"/"} className={"flex"}>
-          <img src={reactLogo} alt={""} />
+          <img src={banner} alt={""} height={75} />
         </Link>
       </div>
       <div className={"nav-col"}>
