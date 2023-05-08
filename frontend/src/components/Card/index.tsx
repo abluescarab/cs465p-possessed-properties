@@ -1,7 +1,6 @@
 import "./index.scss";
 import React from "react";
 
-// TODO: add className
 interface CardProps {
   className?: string;
   children?: React.ReactNode;
