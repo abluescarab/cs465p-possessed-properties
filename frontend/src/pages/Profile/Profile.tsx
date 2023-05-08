@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./index.scss";
+import "./Profile.scss";
 import { Link } from "react-router-dom";
 
 const Profile: React.FC = () => {

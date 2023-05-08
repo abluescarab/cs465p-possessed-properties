@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./Navigation.scss";
 import banner from "/banner.png";
 import { Link } from "react-router-dom";
 

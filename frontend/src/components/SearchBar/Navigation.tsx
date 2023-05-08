@@ -1,5 +1,5 @@
-import "./index.scss";
-import Card from "@/components/Card";
+import "./Navigation.scss";
+import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 
 const SearchBar = () => {

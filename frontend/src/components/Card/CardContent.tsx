@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./Card.scss";
 import React from "react";
 
 interface CardContentProps {

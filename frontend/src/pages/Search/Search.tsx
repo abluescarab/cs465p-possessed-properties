@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./index.scss";
+import "./Search.scss";
 import { Link } from "react-router-dom";
 
 const Search: React.FC = () => {
