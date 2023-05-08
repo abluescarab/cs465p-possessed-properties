@@ -6,7 +6,7 @@ nav {
   .nav-col {
     display: flex;
     align-items: center;
-    gap: var(--padding-md);
+    gap: var(--padding-lg);
 
     &:last-child {
       justify-content: end;
