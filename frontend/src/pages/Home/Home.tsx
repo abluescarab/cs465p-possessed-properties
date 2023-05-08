@@ -3,12 +3,13 @@ import React from "react";
 import "./Home.scss";
 import { Link } from "react-router-dom";
 import Listing from "@/components/Listing/Listing.tsx";
+import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 
 const Home: React.FC = () => {
   return (
     <>
       <section>
-        <p>Hello world</p>
+        <SearchBar />
       </section>
       <section>
         <Link to={"/listing"}>to listing</Link>

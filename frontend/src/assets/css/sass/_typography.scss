@@ -1,35 +1,42 @@
 @mixin noto($style, $weight) {
   @font-face {
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     font-style: $style;
     font-weight: $weight;
 
     @if $style == "normal" {
       @if $weight == "normal" {
-        src: url("../../fonts/NotoSans-Regular.ttf");
+        src: url("../fonts/NotoSans-Regular.ttf");
       }
       @else {
-        src: url("../../fonts/NotoSans-Bold.ttf");
+        src: url("../fonts/NotoSans-Bold.ttf");
       }
     }
     @else {
       @if $weight == "normal" {
-        src: url("../../fonts/NotoSans-Italic.ttf");
+        src: url("../fonts/NotoSans-Italic.ttf");
       }
       @else {
-        src: url("../../fonts/NotoSans-BoldItalic.ttf");
+        src: url("../fonts/NotoSans-BoldItalic.ttf");
       }
     }
   }
 }
 
-@include noto("normal", "bold");
-@include noto("italic", "normal");
-@include noto("italic", "bold");
-@include noto("normal", "normal");
+@include noto(normal, bold);
+@include noto(italic, normal);
+@include noto(italic, bold);
+@include noto(normal, normal);
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 100 700;
+  src: url("../fonts/Material-Symbols-Rounded.woff2") format("woff2");
+}
 
 #root {
-  font-family: 'Noto Sans', 'sans-serif';
+  font-family: "Noto Sans", "sans-serif";
   font-weight: normal;
   font-style: normal;
 }
@@ -44,4 +51,20 @@
 
 .small {
   font-size: 0.75em;
+}
+
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded", "sans-serif";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: "liga";
+  -moz-osx-font-smoothing: grayscale;
 }

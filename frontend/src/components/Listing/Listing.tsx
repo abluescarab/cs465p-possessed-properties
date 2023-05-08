@@ -1,10 +1,14 @@
 import "./Listing.scss";
+import Card from "@/components/Card/Card.tsx";
+import CardContent from "@/components/Card/CardContent.tsx";
 
 const Listing = () => {
+  // TODO: add className "listing"
+  // TODO: add ".listing-body"
   return (
-    <article className={"listing"}>
+    <Card>
       <img src={""} className={"listing-image"} alt={"Blank image"} />
-      <div className={"listing-body"}>
+      <CardContent>
         <p className={"listing-price bold large"}>$000,000,000</p>
         <div className={"listing-info"}>
           <div className={"listing-info-item"}>
@@ -18,8 +22,8 @@ const Listing = () => {
           </div>
         </div>
         <p className={"listing-name"}>Listing Name</p>
-      </div>
-    </article>
+      </CardContent>
+    </Card>
   );
 };
 
