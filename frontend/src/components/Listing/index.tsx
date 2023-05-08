@@ -1,13 +1,13 @@
-import "./Listing.scss";
-import Card from "@/components/Card/Card.tsx";
+import "./index.scss";
+import propertyImage from "@images/property.png";
+import Card from "@/components/Card";
 import CardContent from "@/components/Card/CardContent.tsx";
+import CardImage from "@/components/Card/CardImage.tsx";
 
 const Listing = () => {
-  // TODO: add className "listing"
-  // TODO: add ".listing-body"
   return (
-    <Card>
-      <img src={""} className={"listing-image"} alt={"Blank image"} />
+    <Card className={"listing"}>
+      <CardImage src={propertyImage} alt={"Dracula's Castle"} />
       <CardContent>
         <p className={"listing-price bold large"}>$000,000,000</p>
         <div className={"listing-info"}>

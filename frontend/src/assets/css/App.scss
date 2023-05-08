@@ -7,7 +7,6 @@ html {
 
 body {
   background-color: var(--background-color);
-  height: 100%;
   color: var(--color);
 }
 
@@ -17,7 +16,6 @@ body {
 }
 
 #container {
-  width: 100%;
   height: 100%;
-  padding: var(--padding-xl);
+  padding: var(--padding-lg) var(--padding-xl);
 }

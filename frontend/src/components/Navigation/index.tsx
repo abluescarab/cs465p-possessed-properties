@@ -1,4 +1,4 @@
-import "./Navigation.scss";
+import "./index.scss";
 import reactLogo from "@images/react.svg";
 import { Link } from "react-router-dom";
 

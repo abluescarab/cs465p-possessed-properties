@@ -1,0 +1,23 @@
+.listing {
+  margin: var(--padding-md);
+  overflow: hidden;
+
+  .listing-price {
+
+  }
+
+  .listing-info {
+    display: flex;
+    flex-flow: row;
+    gap: var(--padding-sm);
+
+    .listing-info-item:not(:last-child) {
+      border-right: 1px solid var(--border-color);
+      padding-right: var(--padding-sm);
+    }
+  }
+
+  .listing-name {
+
+  }
+}

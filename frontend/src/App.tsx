@@ -1,10 +1,10 @@
 import "@css/App.scss";
 import { Route, Routes } from "react-router";
-import Home from "@/pages/Home/Home.tsx";
-import Search from "@/pages/Search/Search.tsx";
-import Profile from "@/pages/Profile/Profile.tsx";
-import Listings from "@/pages/Listings/Listings.tsx";
-import Navigation from "@/components/Navigation/Navigation.tsx";
+import Home from "@/pages/Home";
+import Search from "@/pages/Search";
+import Profile from "@/pages/Profile";
+import Listings from "@/pages/Listings";
+import Navigation from "@/components/Navigation";
 
 function App() {
   return (

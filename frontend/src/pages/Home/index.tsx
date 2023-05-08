@@ -1,18 +1,14 @@
 import React from "react";
 
-import "./Home.scss";
-import { Link } from "react-router-dom";
-import Listing from "@/components/Listing/Listing.tsx";
-import SearchBar from "@/components/SearchBar/SearchBar.tsx";
+import "./index.scss";
+import Listing from "@/components/Listing";
+import SearchBar from "@/components/SearchBar";
 
 const Home: React.FC = () => {
   return (
     <>
       <section>
         <SearchBar />
-      </section>
-      <section>
-        <Link to={"/listing"}>to listing</Link>
       </section>
       <section>
         <Listing />
