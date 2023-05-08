@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { createUserRoutes } from "./routes/user_routes.js";
-import { createListingRoutes } from "./routes/listing_routes.js";
-import { createOfferRoutes } from "./routes/offer_routes.js";
+import { createUserRoutes } from "./user_routes.js";
+import { createListingRoutes } from "./listing_routes.js";
+import { createOfferRoutes } from "./offer_routes.js";
 
 /**
  * Creates all routes for the Possessed Properties app.
