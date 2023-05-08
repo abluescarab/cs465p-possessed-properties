@@ -13,7 +13,7 @@ const SearchBar = () => {
             placeholder={"Search for listings..."}
           />
           <button type={"submit"}>
-            <span className={"material-symbols-rounded"}>search</span>
+            <span className={"material-symbols-rounded dark"}>search</span>
           </button>
         </form>
       </CardContent>

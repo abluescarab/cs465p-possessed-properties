@@ -35,14 +35,6 @@
   src: url("../fonts/Material-Symbols-Rounded.woff2") format("woff2");
 }
 
-:root {
-  font-family: "Noto Sans", sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: var(--font-md);
-  line-height: 1.5;
-}
-
 .bold {
   font-weight: bold;
 }
@@ -69,9 +61,17 @@
   direction: ltr;
   -moz-font-feature-settings: "liga";
   -moz-osx-font-smoothing: grayscale;
+
+  &.dark {
+    color: var(--color);
+  }
+
+  &.light {
+    color: var(--color-light);
+  }
 }
 
 .text-shadow-dark {
-    color: white;
+    color: var(--color-light);
     text-shadow:  0 0 6px var(--color);
 }

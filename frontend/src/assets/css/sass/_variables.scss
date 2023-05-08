@@ -1,20 +1,26 @@
 :root {
+  // colors
   --background-color: #fff;
   --color: #000;
+  --color-light: #fff;
   --border-color: rgba(0, 0, 0, 0.3);
 
+  // padding
   --padding-sm: calc(var(--padding-md) / 2);
   --padding-md: 10px;
   --padding-lg: calc(var(--padding-md) * 2);
   --padding-xl: calc(var(--padding-md) * 4);
 
+  // font sizes
   --font-sm: 10pt;
   --font-md: 12pt;
   --font-lg: 14pt;
   --font-xl: 20pt;
 
+  // misc
   --border-radius: 4px;
 
   // element-specific
+  --card-color: var(--background-color);
   --card-content-padding: var(--padding-lg);
 }
