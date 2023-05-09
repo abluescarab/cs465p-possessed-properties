@@ -6,18 +6,18 @@
 
     @if $style == "normal" {
       @if $weight == "normal" {
-        src: url("../fonts/NotoSans-Regular.ttf");
+        src: url("../assets/fonts/NotoSans-Regular.ttf");
       }
       @else {
-        src: url("../fonts/NotoSans-Bold.ttf");
+        src: url("../assets/fonts/NotoSans-Bold.ttf");
       }
     }
     @else {
       @if $weight == "normal" {
-        src: url("../fonts/NotoSans-Italic.ttf");
+        src: url("../assets/fonts/NotoSans-Italic.ttf");
       }
       @else {
-        src: url("../fonts/NotoSans-BoldItalic.ttf");
+        src: url("../assets/fonts/NotoSans-BoldItalic.ttf");
       }
     }
   }
@@ -32,7 +32,7 @@
   font-family: "Material Symbols Rounded";
   font-style: normal;
   font-weight: 100 700;
-  src: url("../fonts/Material-Symbols-Rounded.woff2") format("woff2");
+  src: url("../assets/fonts/Material-Symbols-Rounded.woff2") format("woff2");
 }
 
 .bold {

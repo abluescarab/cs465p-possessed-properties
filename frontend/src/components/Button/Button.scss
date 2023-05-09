@@ -1,0 +1,23 @@
+@use "../../theme/abstracts/mixins" as *;
+
+button {
+  padding: var(--padding-md);
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--color);
+  @include box-shadow;
+
+  &:hover {
+    @include box-shadow(true);
+  }
+
+  &.primary {
+    background-color: var(--primary-color);
+    color: var(--primary-color-contrast);
+  }
+
+  &.secondary {
+    background-color: var(--secondary-color);
+    color: var(--secondary-color-contrast);
+  }
+}

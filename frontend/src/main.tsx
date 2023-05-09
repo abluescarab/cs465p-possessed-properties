@@ -7,7 +7,7 @@ import Home from "@/pages/Home/Home.tsx";
 import Listings from "@/pages/Listings/Listings.tsx";
 import Search from "@/pages/Search/Search.tsx";
 import Profile from "@/pages/Profile/Profile.tsx";
-import ErrorPage from "@/pages/Error/ErrorPage.tsx";
+import ErrorPage from "@/pages/ErrorPage/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {

@@ -1,5 +1,6 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 import "./ErrorPage.scss";
+import Button from "@/components/Button/Button.tsx";
 
 const ErrorPage = () => {
   const error: any = useRouteError();
@@ -15,7 +16,9 @@ const ErrorPage = () => {
         </em>
       </p>
       <p>
-        <button onClick={() => navigate(-1)}>Go back</button>
+        <Button onClick={() => navigate(-1)} color={"primary"}>
+          Go back
+        </Button>
       </p>
     </div>
   );

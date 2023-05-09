@@ -2,8 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["src/*"],
-      "@css/*": ["src/assets/css/*"],
-      "@images/*": ["src/assets/images/*"]
+      "@css/*": ["src/theme/*"],
+      "@images/*": ["src/assets/images/*"],
     },
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
