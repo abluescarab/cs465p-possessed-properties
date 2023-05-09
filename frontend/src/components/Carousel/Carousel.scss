@@ -7,8 +7,8 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
-  margin: 0 var(--padding-xl);
   padding: var(--carousel-margin) 0;
+  max-width: calc(var(--listing-width) * 3 + var(--listing-margin) * 9);
 
   .carousel {
     display: flex;
@@ -16,6 +16,8 @@
     position: relative;
     max-width: calc(100% - var(--padding-xl) * 2);
     margin: 0 calc(var(--icon-button-size) / 2);
+    left: 0;
+    transition: left 250ms;
   }
 
   .carousel-controls button {

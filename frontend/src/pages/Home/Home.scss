@@ -23,3 +23,12 @@
     z-index: -1;
   }
 }
+
+#trending {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+}
