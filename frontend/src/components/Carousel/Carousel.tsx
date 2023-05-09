@@ -6,7 +6,19 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ children = null }) => {
-  return <div className={"carousel"}>{children}</div>;
+  return (
+    <div className={"carousel-container"}>
+      <div className={"carousel-controls"}>
+        <button className={"material-symbols-rounded left-button"}>
+          chevron_left
+        </button>
+        <button className={"material-symbols-rounded right-button"}>
+          chevron_right
+        </button>
+      </div>
+      <div className={"carousel"}>{children}</div>
+    </div>
+  );
 };
 
 export default Carousel;

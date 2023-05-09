@@ -1,5 +1,5 @@
 .search {
-  width: 100%;
+  max-width: 500px;
 
   .card-content form {
     display: flex;
@@ -24,6 +24,7 @@
       padding: 0;
       margin: 0;
       flex: 0;
+      box-shadow: none;
     }
   }
 }

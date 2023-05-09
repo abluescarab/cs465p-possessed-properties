@@ -17,6 +17,7 @@ const Home: React.FC = () => {
         <SearchBar />
       </section>
       <section id={"trending"}>
+        <h2>Trending Properties</h2>
         <Carousel>
           <Listing />
           <Listing />
@@ -24,7 +25,6 @@ const Home: React.FC = () => {
           <Listing />
         </Carousel>
       </section>
-      <section></section>
     </>
   );
 };

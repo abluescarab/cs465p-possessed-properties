@@ -1,0 +1,13 @@
+@use "../mixins" as *;
+
+button {
+  padding: var(--padding-md);
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--color);
+  @include box-shadow;
+
+  &:hover {
+    @include box-shadow(true);
+  }
+}

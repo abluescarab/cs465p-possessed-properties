@@ -1,6 +1,8 @@
 .listing {
+  position: relative;
   margin: var(--padding-md);
   overflow: hidden;
+  min-width: 250px;
 
   .listing-price {
 
