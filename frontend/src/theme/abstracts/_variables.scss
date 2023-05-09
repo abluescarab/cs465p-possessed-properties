@@ -5,20 +5,12 @@
   --padding-lg: calc(var(--padding-md) * 2);
   --padding-xl: calc(var(--padding-md) * 4);
 
-  // font sizes
-  --font-sm: 10pt;
-  --font-md: 12pt;
-  --font-lg: 14pt;
-  --font-xl: 20pt;
-
   // misc
   --border-radius: 4px;
 
   // element-specific
-  --card-color: var(--background-color);
+  --icon-button-size: 50px;
   --card-content-padding: var(--padding-lg);
-
   --nav-height: 90px;
-
   --listing-margin: var(--padding-md);
 }

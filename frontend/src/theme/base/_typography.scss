@@ -1,26 +1,10 @@
-@mixin noto($style, $weight) {
-  @font-face {
-    font-family: "Noto Sans";
-    font-style: $style;
-    font-weight: $weight;
+@use "../abstracts/mixins" as *;
 
-    @if $style == "normal" {
-      @if $weight == "normal" {
-        src: url("../assets/fonts/NotoSans-Regular.ttf");
-      }
-      @else {
-        src: url("../assets/fonts/NotoSans-Bold.ttf");
-      }
-    }
-    @else {
-      @if $weight == "normal" {
-        src: url("../assets/fonts/NotoSans-Italic.ttf");
-      }
-      @else {
-        src: url("../assets/fonts/NotoSans-BoldItalic.ttf");
-      }
-    }
-  }
+:root {
+  --font-sm: 10pt;
+  --font-md: 12pt;
+  --font-lg: 14pt;
+  --font-xl: 20pt;
 }
 
 @include noto(normal, bold);
