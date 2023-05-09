@@ -1,8 +1,16 @@
 .listing {
   position: relative;
-  margin: var(--padding-md);
+  margin: 0 var(--listing-margin);
   overflow: hidden;
   min-width: 250px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   .listing-price {
 

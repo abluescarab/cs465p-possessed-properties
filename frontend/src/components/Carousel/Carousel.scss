@@ -1,32 +1,35 @@
 .carousel-container {
+  --carousel-margin: var(--padding-sm);
+
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--dark-background-color);
   border-radius: var(--border-radius);
   overflow: hidden;
-  max-width: calc(1000px - var(--padding-xl) * 2);
+  max-width: 100vw;
   position: relative;
-  margin: 0 auto;
 
   .carousel {
     display: flex;
     flex-flow: row nowrap;
     overflow: hidden;
     position: relative;
+    max-width: calc(100% - var(--padding-xl) * 2);
+    margin: 0 auto;
+    padding: var(--carousel-margin);
   }
 
   .carousel-controls button {
-    border-radius: 50%;
     position: absolute;
     z-index: 1;
-    top: 47.5%;
+    top: 46%;
   }
 
   .left-button {
-    left: 25px;
+    left: calc(var(--listing-margin) + var(--carousel-margin));
   }
 
   .right-button {
-    right: 25px;
+    right: calc(var(--listing-margin) + var(--carousel-margin));
   }
 }

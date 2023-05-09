@@ -2,8 +2,8 @@
 
 .card {
   --card-image-height: 150px;
-  background-color: var(--card-color);
 
+  background-color: var(--card-color);
   border-radius: var(--border-radius);
   @include box-shadow;
 

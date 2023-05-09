@@ -19,9 +19,12 @@
 
   // misc
   --border-radius: 4px;
-  --nav-height: 90px;
 
   // element-specific
   --card-color: var(--background-color);
   --card-content-padding: var(--padding-lg);
+
+  --nav-height: 90px;
+
+  --listing-margin: var(--padding-md);
 }
