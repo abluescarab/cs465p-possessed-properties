@@ -23,6 +23,8 @@ const Home: React.FC = () => {
           <Listing />
           <Listing />
           <Listing />
+          <Listing />
+          <Listing />
         </Carousel>
       </section>
     </>

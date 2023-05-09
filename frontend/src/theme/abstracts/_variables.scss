@@ -1,3 +1,7 @@
+// @media variables
+$window-sm: 600px;
+$window-md: 875px;
+
 :root {
   // padding
   --padding-sm: calc(var(--padding-md) / 2);

@@ -1,21 +1,23 @@
+@use "../../theme/abstracts/variables" as *;
+
+@mixin width($listings) {
+  max-width: calc((var(--listing-width) + var(--listing-margin) * 2) * $listings + (var(--icon-button-size)));
+}
+
 .carousel-container {
   --carousel-margin: var(--padding-sm);
 
-  display: flex;
-  flex-flow: column nowrap;
   background-color: var(--dark-background-color);
-  border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
-  padding: var(--carousel-margin) 0;
-  max-width: calc(var(--listing-width) * 3 + var(--listing-margin) * 9);
+  @include width(3);
 
   .carousel {
     display: flex;
     flex-flow: row nowrap;
     position: relative;
-    max-width: calc(100% - var(--padding-xl) * 2);
     margin: 0 calc(var(--icon-button-size) / 2);
+    padding: var(--carousel-margin) 0;
     left: 0;
     transition: left 250ms;
   }
@@ -32,5 +34,17 @@
 
   .right-button {
     right: 1px;
+  }
+}
+
+@media screen and (max-width: $window-sm) {
+  .carousel-container {
+    @include width(1);
+  }
+}
+
+@media screen and (min-width: $window-sm) and (max-width: $window-md) {
+  .carousel-container {
+    @include width(2);
   }
 }
