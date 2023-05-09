@@ -8,6 +8,7 @@
   overflow: hidden;
   position: relative;
   margin: 0 var(--padding-xl);
+  padding: var(--carousel-margin) 0;
 
   .carousel {
     display: flex;
