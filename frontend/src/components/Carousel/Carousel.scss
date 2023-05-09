@@ -3,10 +3,10 @@
   flex-flow: column nowrap;
   background-color: var(--dark-background-color);
   border-radius: var(--border-radius);
-  padding: var(--padding-xl);
   overflow: hidden;
-  max-width: calc(100vw - var(--padding-xl) * 2);
+  max-width: calc(1000px - var(--padding-xl) * 2);
   position: relative;
+  margin: 0 auto;
 
   .carousel {
     display: flex;

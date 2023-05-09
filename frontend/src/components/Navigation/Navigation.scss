@@ -1,7 +1,12 @@
 nav {
+  height: var(--nav-height);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  padding: var(--padding-md) var(--padding-lg);
+  padding: 0 var(--padding-lg);
+
+  img {
+    height: calc(var(--nav-height) - var(--padding-lg));
+  }
 
   .nav-col {
     display: flex;

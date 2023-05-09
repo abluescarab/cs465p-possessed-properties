@@ -1,0 +1,7 @@
+footer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: var(--nav-height);
+  padding: var(--padding-md) var(--padding-lg);
+}

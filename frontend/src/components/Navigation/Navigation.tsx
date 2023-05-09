@@ -11,7 +11,7 @@ const Navigation = () => {
       </div>
       <div className={"nav-col"}>
         <Link to={"/"} className={"flex"}>
-          <img src={banner} alt={""} height={75} />
+          <img src={banner} alt={"Possessed Properties banner"} />
         </Link>
       </div>
       <div className={"nav-col"}>
