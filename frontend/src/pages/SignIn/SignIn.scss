@@ -1,0 +1,14 @@
+.sign-in {
+  .input-line {
+    display: flex;
+    flex-flow: column nowrap;
+
+    button {
+      flex: 1;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--padding-lg);
+    }
+  }
+}
