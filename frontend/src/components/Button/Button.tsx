@@ -6,6 +6,7 @@ export interface ButtonProps {
   color?: "primary" | "secondary";
   className?: string;
   onClick?: MouseEventHandler;
+  type: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,9 +14,10 @@ const Button: React.FC<ButtonProps> = ({
   children = null,
   className = "",
   onClick = null,
+  type = "button",
 }) => {
   return (
-    <button onClick={onClick} className={`${color} ${className}`}>
+    <button onClick={onClick} className={`${color} ${className}`} type={type}>
       {children}
     </button>
   );
