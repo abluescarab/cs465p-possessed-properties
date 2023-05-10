@@ -1,4 +1,5 @@
 @use "main";
+@use "abstracts/mixins" as *;
 
 :root {
   font-family: "Noto Sans", sans-serif;
@@ -54,8 +55,15 @@ h2 {
 
 input {
   font-family: "Noto Sans", sans-serif;
+  font-size: var(--font-md);
+  background-color: var(--background-color);
   color: var(--color);
-  font-size: var(--font-lg);
+  border: 0;
+  padding: var(--padding-md);
+
+  &::placeholder {
+    font-style: italic;
+  }
 }
 
 button {

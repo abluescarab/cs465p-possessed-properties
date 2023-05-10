@@ -2,25 +2,18 @@
   max-width: 750px;
   width: 100%;
 
-  .card-content form {
+  form {
     display: flex;
     flex-flow: row;
-    align-items: end;
+    align-items: center;
 
     input {
-      background: none;
-      border: 0;
       flex: 1;
-      outline: 0;
-
-      &::placeholder {
-        font-style: italic;
-      }
+      padding: 0;
     }
 
     button {
       display: flex;
-      align-items: center;
       background: none;
       padding: 0;
       margin: 0;
