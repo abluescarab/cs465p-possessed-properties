@@ -25,7 +25,11 @@
   .card-content {
     padding: var(--padding-lg);
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
     flex: 1;
+
+    & > * {
+      flex: 0 0 100%;
+    }
   }
 }

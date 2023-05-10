@@ -1,0 +1,23 @@
+@use "../abstracts/mixins" as *;
+
+.flex {
+  display: flex;
+}
+
+.box-shadow {
+  @include box-shadow;
+  border-radius: var(--border-radius);
+}
+
+.box-shadow-hover {
+  @include box-shadow;
+  border-radius: var(--border-radius);
+
+  &:hover {
+    @include box-shadow(true);
+  }
+}
+
+.underline {
+  border-bottom: 1px solid var(--border-color);
+}
