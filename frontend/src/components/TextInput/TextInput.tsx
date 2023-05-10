@@ -8,7 +8,6 @@ interface TextInputProps {
   name: string;
   label?: string;
   placeholder?: string;
-  style?: "shadow" | "hover-shadow" | "underline" | "none";
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -18,26 +17,7 @@ const TextInput: React.FC<TextInputProps> = ({
   name,
   label = "",
   placeholder = "",
-  style = "shadow",
 }) => {
-  const getClasses = () => {
-    const classes = [];
-
-    if (className) {
-      classes.push(className);
-    }
-
-    if (style === "shadow") {
-      classes.push("box-shadow");
-    } else if (style === "hover-shadow") {
-      classes.push("box-shadow-hover");
-    } else if (style === "underline") {
-      classes.push("underline");
-    }
-
-    return classes.join(" ");
-  };
-
   return (
     <>
       {id && label ? (
@@ -48,7 +28,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <input
         type={type}
         id={id}
-        className={getClasses()}
+        className={className}
         name={name}
         placeholder={placeholder}
       />

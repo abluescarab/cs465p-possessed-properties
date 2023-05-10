@@ -12,7 +12,6 @@ const SearchBar = () => {
           <TextInput
             name={"search"}
             placeholder={"Search for listings..."}
-            style={"none"}
             className={"large"}
           />
           <Button type={"submit"}>
