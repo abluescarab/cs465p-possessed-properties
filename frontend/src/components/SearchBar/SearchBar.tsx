@@ -2,6 +2,7 @@ import "./SearchBar.scss";
 import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
+import Button from "@/components/Button/Button.tsx";
 
 const SearchBar = () => {
   return (
@@ -14,9 +15,9 @@ const SearchBar = () => {
             style={"none"}
             className={"large"}
           />
-          <button type={"submit"}>
+          <Button type={"submit"}>
             <span className={"material-symbols-rounded dark"}>search</span>
-          </button>
+          </Button>
         </form>
       </CardContent>
     </Card>
