@@ -59,6 +59,7 @@ input {
   background-color: var(--background-color);
   color: var(--color);
   border: 0;
+  outline: 0;
   padding: var(--padding-md);
 
   &::placeholder {
