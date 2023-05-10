@@ -15,7 +15,7 @@ const Navigation = () => {
         </Link>
       </div>
       <div className={"nav-col"}>
-        <Link to={"/profile"}>Profile</Link>
+        <Link to={"/signin"}>Sign in</Link>
       </div>
     </nav>
   );

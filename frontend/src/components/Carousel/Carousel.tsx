@@ -1,5 +1,5 @@
 import "./Carousel.scss";
-import React, { Children, useRef, useState } from "react";
+import React, { Children, useState } from "react";
 import IconButton from "@/components/IconButton/IconButton.tsx";
 
 interface CarouselProps {
