@@ -6,7 +6,7 @@ export interface ButtonProps {
   color?: "primary" | "secondary";
   className?: string;
   onClick?: MouseEventHandler;
-  type: "button" | "submit" | "reset";
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
