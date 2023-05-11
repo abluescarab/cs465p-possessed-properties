@@ -1,12 +1,13 @@
 import "./Carousel.scss";
 import React, { Children, useState } from "react";
 import IconButton from "@/components/IconButton/IconButton.tsx";
+import ComponentBase from "@/components/ComponentBase.tsx";
 
-interface CarouselProps {
-  children?: React.ReactNode;
-}
-
-const Carousel: React.FC<CarouselProps> = ({ children = null }) => {
+const Carousel: ComponentBase = ({
+  id = "",
+  className = "",
+  children = null,
+}) => {
   const [left, setLeft] = useState(0);
 
   const style = {
@@ -26,7 +27,7 @@ const Carousel: React.FC<CarouselProps> = ({ children = null }) => {
   };
 
   return (
-    <div className={"carousel-container"}>
+    <div id={id} className={`carousel-container ${className}`}>
       <div className={"carousel-controls"}>
         <IconButton
           className={"left-button"}

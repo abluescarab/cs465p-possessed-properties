@@ -5,11 +5,6 @@
 
   background-color: var(--card-color);
   border-radius: var(--border-radius);
-  @include box-shadow;
-
-  &:hover {
-    @include box-shadow(true);
-  }
 
   .card-image {
     flex: 0;

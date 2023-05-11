@@ -1,23 +1,30 @@
 import "./Button.scss";
 import React, { MouseEventHandler } from "react";
+import ComponentBase, {
+  ComponentBaseProps,
+} from "@/components/ComponentBase.tsx";
 
-export interface ButtonProps {
-  children?: React.ReactNode;
+export interface ButtonProps extends ComponentBaseProps {
   color?: "primary" | "secondary";
-  className?: string;
   onClick?: MouseEventHandler;
   type?: "button" | "submit" | "reset";
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button: ComponentBase<ButtonProps> = ({
+  id = "",
+  className = "",
   color = "",
   children = null,
-  className = "",
   onClick = null,
   type = "button",
 }) => {
   return (
-    <button onClick={onClick} className={`${color} ${className}`} type={type}>
+    <button
+      id={id}
+      onClick={onClick}
+      className={`${color} ${className}`}
+      type={type}
+    >
       {children}
     </button>
   );

@@ -1,22 +1,26 @@
 import "./IconButton.scss";
 import Button from "@/components/Button/Button.tsx";
 import React, { MouseEventHandler } from "react";
+import ComponentBase, {
+  ComponentBaseProps,
+} from "@/components/ComponentBase.tsx";
 
-interface IconButtonProps {
+interface IconButtonProps extends ComponentBaseProps {
   color?: "primary" | "secondary";
-  className?: string;
   icon: string;
   onClick?: MouseEventHandler;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
-  color = "",
+const IconButton: ComponentBase<IconButtonProps> = ({
+  id = "",
   className = "",
+  color = "",
   icon,
   onClick = null,
 }) => {
   return (
     <Button
+      id={id}
       className={`icon-button material-symbols-rounded ${color} ${className}`}
       onClick={onClick}
     >

@@ -6,7 +6,7 @@ import CardImage from "@/components/Card/CardImage.tsx";
 
 const Listing = () => {
   return (
-    <Card className={"listing"}>
+    <Card className={"listing"} shadow={"hover"}>
       <CardImage src={propertyImage} alt={"Dracula's Castle"} />
       <CardContent>
         <p className={"listing-price bold large"}>$000,000,000</p>

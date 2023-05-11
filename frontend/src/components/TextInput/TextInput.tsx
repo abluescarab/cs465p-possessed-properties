@@ -1,18 +1,19 @@
 import "./TextInput.scss";
 import React from "react";
+import ComponentBase, {
+  ComponentBaseProps,
+} from "@/components/ComponentBase.tsx";
 
-interface TextInputProps {
-  className?: string;
-  id?: string;
+interface TextInputProps extends ComponentBaseProps {
   type?: string;
   name: string;
   label?: string;
   placeholder?: string;
 }
 
-const TextInput: React.FC<TextInputProps> = ({
-  className = "",
+const TextInput: ComponentBase<TextInputProps> = ({
   id = "",
+  className = "",
   type = "text",
   name,
   label = "",

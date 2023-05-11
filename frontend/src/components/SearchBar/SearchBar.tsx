@@ -6,7 +6,7 @@ import Button from "@/components/Button/Button.tsx";
 
 const SearchBar = () => {
   return (
-    <Card className={"search"}>
+    <Card className={"search"} shadow={"hover"}>
       <CardContent>
         <form>
           <TextInput
