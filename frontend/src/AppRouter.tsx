@@ -8,6 +8,7 @@ import Profile from "@/pages/Profile/Profile.tsx";
 import React from "react";
 import SignIn from "@/pages/SignIn/SignIn.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
+import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword.tsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const AppRouter = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/forgotpassword",
+        element: <ForgotPassword />,
       },
     ],
   },

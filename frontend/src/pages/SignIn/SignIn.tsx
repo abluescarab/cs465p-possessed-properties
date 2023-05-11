@@ -3,6 +3,7 @@ import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   return (
@@ -38,6 +39,16 @@ const SignIn = () => {
             </form>
           </CardContent>
         </Card>
+      </section>
+      <section className={"account-links"}>
+        <p className={"center-text small"}>
+          No account?&nbsp;<Link to={"/signup"}>Sign up</Link>
+        </p>
+        <p>
+          <Link className={"center-text small"} to={"/forgotpassword"}>
+            Forgot your password?
+          </Link>
+        </p>
       </section>
     </>
   );
