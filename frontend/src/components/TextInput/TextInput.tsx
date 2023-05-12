@@ -10,6 +10,7 @@ interface TextInputProps extends ComponentBaseProps {
   label?: string;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  autoComplete?: "on" | "off";
 }
 
 const TextInput: ComponentBase<TextInputProps> = ({
@@ -20,6 +21,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
   label = "",
   placeholder = "",
   onChange = null,
+  autoComplete = "on",
 }) => {
   return (
     <>
@@ -35,6 +37,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        autoComplete={autoComplete}
       />
     </>
   );

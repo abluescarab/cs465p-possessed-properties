@@ -53,6 +53,7 @@ const SearchBar = () => {
               placeholder={"Search for listings..."}
               className={"font-lg"}
               onChange={search}
+              autoComplete={"off"}
             />
             <Button type={"submit"}>
               <span className={"material-symbols-rounded dark"}>search</span>
