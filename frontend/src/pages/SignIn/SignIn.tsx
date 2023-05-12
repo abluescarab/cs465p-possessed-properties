@@ -46,7 +46,7 @@ const SignIn = () => {
           </CardContent>
         </Card>
       </section>
-      <section className={"account-links"}>
+      <section className={"auth-links"}>
         <p className={"center-text font-sm"}>
           No account?&nbsp;<Link to={"/signup"}>Sign up</Link>
         </p>
