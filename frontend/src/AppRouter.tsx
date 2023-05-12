@@ -9,6 +9,7 @@ import React from "react";
 import SignIn from "@/pages/SignIn/SignIn.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
 import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword.tsx";
+import { listingLoader } from "@/Loaders.tsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -21,8 +22,9 @@ const AppRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/listings",
+        path: "/listings/:listingId",
         element: <Listings />,
+        loader: listingLoader,
       },
       {
         path: "/search",
