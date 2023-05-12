@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-      <section id={"intro"}>
+      <section id={"intro"} className={"home"}>
         <h2>
           <span className={"text-shadow-dark"}>
             Find your haunted dream home today.
@@ -20,7 +20,7 @@ const Home = () => {
         </h2>
         <SearchBar />
       </section>
-      <section id={"trending"}>
+      <section id={"trending"} className={"home"}>
         <h2>Trending Properties</h2>
         <Carousel>
           <Listing />
