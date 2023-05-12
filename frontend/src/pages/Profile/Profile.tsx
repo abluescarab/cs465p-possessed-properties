@@ -6,7 +6,7 @@ import { setTitle } from "@/utils.tsx";
 const Profile = () => {
   useEffect(() => {
     setTitle("Profile");
-  });
+  }, []);
 
   return (
     <div className={"profile-div"}>

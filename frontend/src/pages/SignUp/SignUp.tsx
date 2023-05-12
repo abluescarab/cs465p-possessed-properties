@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
   useEffect(() => {
     setTitle("Sign Up");
-  });
+  }, []);
 
   return (
     <>

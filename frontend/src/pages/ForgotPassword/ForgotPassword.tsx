@@ -10,7 +10,7 @@ import { setTitle } from "@/utils.tsx";
 const ForgotPassword = () => {
   useEffect(() => {
     setTitle("Forgot Password");
-  });
+  }, []);
 
   return (
     <section>

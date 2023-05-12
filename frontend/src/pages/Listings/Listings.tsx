@@ -6,7 +6,7 @@ import { setTitle } from "@/utils.tsx";
 const Listings = () => {
   useEffect(() => {
     setTitle("Listings");
-  });
+  }, []);
 
   return (
     <div className={"listing-div"}>

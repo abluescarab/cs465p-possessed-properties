@@ -10,7 +10,7 @@ const ErrorPage = () => {
 
   useEffect(() => {
     setTitle("Error");
-  });
+  }, []);
 
   return (
     <div id={"error-page"}>

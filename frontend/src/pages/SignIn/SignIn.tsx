@@ -10,7 +10,7 @@ import { setTitle } from "@/utils.tsx";
 const SignIn = () => {
   useEffect(() => {
     setTitle("Sign In");
-  });
+  }, []);
 
   return (
     <>

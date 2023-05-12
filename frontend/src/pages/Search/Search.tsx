@@ -6,7 +6,7 @@ import { setTitle } from "@/utils.tsx";
 const Search = () => {
   useEffect(() => {
     setTitle("Search");
-  });
+  }, []);
 
   return (
     <div className={"search-div"}>

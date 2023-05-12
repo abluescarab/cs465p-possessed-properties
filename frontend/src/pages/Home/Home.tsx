@@ -8,7 +8,7 @@ import { resetTitle } from "@/utils.tsx";
 const Home = () => {
   useEffect(() => {
     resetTitle();
-  });
+  }, []);
 
   return (
     <>
