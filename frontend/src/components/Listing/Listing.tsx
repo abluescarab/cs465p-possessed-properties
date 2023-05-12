@@ -9,7 +9,7 @@ const Listing = () => {
     <Card className={"listing"} shadow={"hover"}>
       <CardImage src={propertyImage} alt={"Dracula's Castle"} />
       <CardContent>
-        <p className={"listing-price bold large"}>$000,000,000</p>
+        <p className={"listing-price bold font-lg"}>$000,000,000</p>
         <div className={"listing-info"}>
           <div className={"listing-info-item"}>
             <span className={"bold"}>00</span> bds

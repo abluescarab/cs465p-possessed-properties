@@ -41,11 +41,11 @@ const SignIn = () => {
         </Card>
       </section>
       <section className={"account-links"}>
-        <p className={"center-text small"}>
+        <p className={"center-text font-sm"}>
           No account?&nbsp;<Link to={"/signup"}>Sign up</Link>
         </p>
         <p>
-          <Link className={"center-text small"} to={"/forgotpassword"}>
+          <Link className={"center-text font-sm"} to={"/forgotpassword"}>
             Forgot your password?
           </Link>
         </p>

@@ -12,7 +12,7 @@ const SearchBar = () => {
           <TextInput
             name={"search"}
             placeholder={"Search for listings..."}
-            className={"large"}
+            className={"font-lg"}
           />
           <Button type={"submit"}>
             <span className={"material-symbols-rounded dark"}>search</span>

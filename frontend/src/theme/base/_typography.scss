@@ -23,12 +23,12 @@
   font-weight: bold;
 }
 
-.large {
-  font-size: 1.25em;
+.font-lg {
+  font-size: var(--font-lg);
 }
 
-.small {
-  font-size: 0.75em;
+.font-sm {
+  font-size: var(--font-sm);
 }
 
 .center-text {
