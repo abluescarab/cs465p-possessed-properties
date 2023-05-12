@@ -1,6 +1,6 @@
 footer {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
   height: var(--nav-height);
   padding: var(--padding-md) var(--padding-lg);

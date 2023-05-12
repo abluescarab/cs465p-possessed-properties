@@ -16,7 +16,7 @@ const Card: ComponentBase<CardProps> = ({
   shadow = "normal",
 }) => {
   return (
-    <article
+    <section
       id={id}
       className={`card ${className} ${getClasses(className, {
         prop: shadow,
@@ -27,7 +27,7 @@ const Card: ComponentBase<CardProps> = ({
       })}`}
     >
       {children}
-    </article>
+    </section>
   );
 };
 

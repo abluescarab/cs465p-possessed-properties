@@ -5,7 +5,7 @@
 
   form {
     display: flex;
-    flex-flow: row;
+    flex-flow: row nowrap;
     align-items: center;
 
     input {
@@ -24,15 +24,15 @@
   }
 
   .search-results {
-    margin-top: calc(var(--border-radius) * -1);
-    display: none;
     background-color: var(--background-color);
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
+    border-top: 1px solid var(--border-color);
+    display: none;
+    margin-top: calc(var(--border-radius) * -1);
     position: absolute;
     width: 100%;
     z-index: 1;
-    border-top: 1px solid var(--border-color);
 
     &.open {
       display: flex;

@@ -14,7 +14,7 @@
 
   .listing-card-info {
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     gap: var(--padding-sm);
 
     .listing-card-info-item:not(:last-child) {

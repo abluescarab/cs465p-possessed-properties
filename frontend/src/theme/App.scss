@@ -2,3 +2,10 @@
   width: 100vw;
   height: 100vh;
 }
+
+section, article {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+}
