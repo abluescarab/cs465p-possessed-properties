@@ -2,8 +2,14 @@ import "./Home.scss";
 import Listing from "@/components/Listing/Listing.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 import Carousel from "@/components/Carousel/Carousel.tsx";
+import { useEffect } from "react";
+import { resetTitle } from "@/utils.tsx";
 
 const Home = () => {
+  useEffect(() => {
+    resetTitle();
+  });
+
   return (
     <>
       <section id={"intro"}>

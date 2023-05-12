@@ -4,8 +4,14 @@ import CardContent from "@/components/Card/CardContent.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { setTitle } from "@/utils.tsx";
 
 const SignIn = () => {
+  useEffect(() => {
+    setTitle("Sign In");
+  });
+
   return (
     <>
       <section>

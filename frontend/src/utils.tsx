@@ -1,3 +1,5 @@
+const siteTitle = "Possessed Properties";
+
 export function getClasses(
   className?: string,
   ...extras: { prop: string; mappings: { value: string; cssClass: string }[] }[]
@@ -18,4 +20,12 @@ export function getClasses(
   }
 
   return classes.join(" ");
+}
+
+export function resetTitle() {
+  document.title = siteTitle;
+}
+
+export function setTitle(pageTitle: string) {
+  document.title = `${pageTitle} | ${siteTitle}`;
 }

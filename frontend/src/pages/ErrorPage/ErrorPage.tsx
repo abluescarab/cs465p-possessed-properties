@@ -1,10 +1,16 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 import "./ErrorPage.scss";
 import Button from "@/components/Button/Button.tsx";
+import { useEffect } from "react";
+import { setTitle } from "@/utils.tsx";
 
 const ErrorPage = () => {
   const error: any = useRouteError();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle("Error");
+  });
 
   return (
     <div id={"error-page"}>
