@@ -15,7 +15,7 @@ const SignIn = () => {
   return (
     <>
       <section>
-        <Card className={"sign-in"}>
+        <Card className={"auth"}>
           <CardContent>
             <form>
               <div className={"input-line"}>
