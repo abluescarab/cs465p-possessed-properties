@@ -14,6 +14,7 @@ export function createListingRoutes(app: FastifyInstance) {
   // region SEARCH - find a listing
   app.search<{
     Body: {
+      id?: number;
       owner_email?: string;
       name?: string;
       address?: string;
@@ -27,9 +28,20 @@ export function createListingRoutes(app: FastifyInstance) {
     };
   }>("/listings", async (request, reply) => {
     const data = createBody(request.body, ["owner_email"]);
-    const { owner_email } = request.body;
+    const { id, owner_email } = request.body;
 
     try {
+      if (id !== undefined) {
+        const listing = await request.em.findOne(Listing, { id });
+
+        if (!listing) {
+          return error(reply, HttpStatus.NOT_FOUND, "No listings found");
+        }
+
+        console.log(listing);
+        return reply.send(listing);
+      }
+
       if (owner_email !== undefined) {
         const { success, entity: owner } = await find(request, reply, User, {
           email: owner_email,
