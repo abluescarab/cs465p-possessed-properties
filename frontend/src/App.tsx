@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <Navigation />
-      <div id={"container"}>
+      <main id={"container"}>
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </>
   );
