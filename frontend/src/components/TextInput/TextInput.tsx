@@ -1,5 +1,5 @@
 import "./TextInput.scss";
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
@@ -9,6 +9,7 @@ interface TextInputProps extends ComponentBaseProps {
   name: string;
   label?: string;
   placeholder?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 const TextInput: ComponentBase<TextInputProps> = ({
@@ -18,6 +19,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
   name,
   label = "",
   placeholder = "",
+  onChange = null,
 }) => {
   return (
     <>
@@ -32,6 +34,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
         className={className}
         name={name}
         placeholder={placeholder}
+        onChange={onChange}
       />
     </>
   );
