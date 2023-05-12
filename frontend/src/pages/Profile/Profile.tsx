@@ -1,9 +1,7 @@
-import React from "react";
-
 import "./Profile.scss";
 import { Link } from "react-router-dom";
 
-const Profile: React.FC = () => {
+const Profile = () => {
   return (
     <div className={"profile-div"}>
       Profile...
