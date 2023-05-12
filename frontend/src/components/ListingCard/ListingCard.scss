@@ -1,4 +1,4 @@
-.listing {
+.listing-card {
   position: relative;
   margin: 0 var(--listing-margin);
   overflow: hidden;
@@ -12,22 +12,14 @@
     margin-right: 0;
   }
 
-  .listing-price {
-
-  }
-
-  .listing-info {
+  .listing-card-info {
     display: flex;
     flex-flow: row;
     gap: var(--padding-sm);
 
-    .listing-info-item:not(:last-child) {
+    .listing-card-info-item:not(:last-child) {
       border-right: 1px solid var(--border-color);
       padding-right: var(--padding-sm);
     }
-  }
-
-  .listing-name {
-
   }
 }
