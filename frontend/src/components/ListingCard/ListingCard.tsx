@@ -1,10 +1,10 @@
-import "./Listing.scss";
+import "./ListingCard.scss";
 import propertyImage from "@images/property.png";
 import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 import CardImage from "@/components/Card/CardImage.tsx";
 
-const Listing = () => {
+const ListingCard = () => {
   return (
     <Card className={"listing"} shadow={"hover"}>
       <CardImage src={propertyImage} alt={"Dracula's Castle"} />
@@ -27,4 +27,4 @@ const Listing = () => {
   );
 };
 
-export default Listing;
+export default ListingCard;

@@ -1,5 +1,5 @@
 import "./Home.scss";
-import Listing from "@/components/Listing/Listing.tsx";
+import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 import Carousel from "@/components/Carousel/Carousel.tsx";
 import { useEffect } from "react";
@@ -23,12 +23,12 @@ const Home = () => {
       <section id={"trending"} className={"home"}>
         <h2>Trending Properties</h2>
         <Carousel>
-          <Listing />
-          <Listing />
-          <Listing />
-          <Listing />
-          <Listing />
-          <Listing />
+          <ListingCard />
+          <ListingCard />
+          <ListingCard />
+          <ListingCard />
+          <ListingCard />
+          <ListingCard />
         </Carousel>
       </section>
     </>
