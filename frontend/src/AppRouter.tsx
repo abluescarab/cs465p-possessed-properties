@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "@/App.tsx";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage.tsx";
 import Home from "@/pages/Home/Home.tsx";
-import Listings from "@/pages/Listings/Listings.tsx";
+import Listing from "@/pages/Listing/Listing.tsx";
 import Search from "@/pages/Search/Search.tsx";
 import Profile from "@/pages/Profile/Profile.tsx";
 import React from "react";
@@ -23,7 +23,7 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: "/listings/:listingId",
-        element: <Listings />,
+        element: <Listing />,
         loader: listingLoader,
       },
       {

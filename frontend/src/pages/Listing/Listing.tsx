@@ -1,11 +1,13 @@
-import "./Listings.scss";
-import { Link } from "react-router-dom";
+import "./Listing.scss";
+import { Link, useLoaderData } from "react-router-dom";
 import { useEffect } from "react";
 import { setTitle } from "@/utils.tsx";
 
-const Listings = () => {
+const Listing = () => {
+  const listing: any = useLoaderData();
+
   useEffect(() => {
-    setTitle("Listings");
+    setTitle("Listing");
   }, []);
 
   return (
@@ -17,4 +19,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default Listing;
