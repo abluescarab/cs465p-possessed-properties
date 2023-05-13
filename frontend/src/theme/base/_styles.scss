@@ -10,12 +10,8 @@
 }
 
 .box-shadow-hover {
-  @include box-shadow;
+  @include box-shadow(true);
   border-radius: var(--border-radius);
-
-  &:hover {
-    @include box-shadow(true);
-  }
 }
 
 .underline {

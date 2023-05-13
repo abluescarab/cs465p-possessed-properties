@@ -36,9 +36,15 @@ html {
 
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
+}
+
+section, article {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
 }
 
 p {

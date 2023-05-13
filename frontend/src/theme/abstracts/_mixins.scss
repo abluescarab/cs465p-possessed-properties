@@ -1,10 +1,12 @@
 @mixin box-shadow($hover: false) {
+  box-shadow: var(--shadow-color) 0 1px 2px 0px;
+
   @if($hover) {
-    box-shadow: var(--shadow-color) 0 2px 4px 0px;
-  }
-  @else {
-    box-shadow: var(--shadow-color) 0 1px 2px 0px;
-    transition: box-shadow 500ms;
+    transition: box-shadow 250ms;
+
+    &:hover {
+      box-shadow: var(--shadow-color) 0 2px 4px 0px;
+    }
   }
 }
 
