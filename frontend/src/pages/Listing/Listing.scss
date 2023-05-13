@@ -1,5 +1,11 @@
 .listing {
   margin: 0 var(--padding-xl);
+  display: flex;
+  gap: var(--padding-md);
+
+  h2 {
+    margin-bottom: 0;
+  }
 
   .listing-image {
     align-self: center;
@@ -7,5 +13,18 @@
 
   .listing-info {
     border: 1px solid var(--border-color);
+    padding: var(--padding-lg);
+  }
+
+  .listing-actions {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padding-lg);
+    justify-content: end;
+    align-items: center;
+
+    button {
+      width: 125px;
+    }
   }
 }
