@@ -2,6 +2,7 @@
   margin: 0 var(--padding-xl);
   display: flex;
   gap: var(--padding-md);
+  max-width: calc((var(--listing-width) + var(--listing-margin) * 2) * 3 + (var(--icon-button-size)))
 
   h2 {
     margin-bottom: 0;
