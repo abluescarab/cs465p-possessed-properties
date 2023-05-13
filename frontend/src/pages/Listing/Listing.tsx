@@ -14,13 +14,14 @@ const Listing = () => {
 
   return (
     <article className={"listing"}>
+      <div className={"listing-crumbs"}></div>
       <div className={"listing-image"}>
         <img src={propertyImage} alt={`Image of ${listing.name}`} />
       </div>
       <h2 className={"listing-name"}>{listing.name}</h2>
       <div className={"listing-info"}>{listing.description}</div>
       <div className={"listing-actions"}>
-        <p>
+        <p className={"font-lg"}>
           <span className={"bold"}>List Price:&nbsp;</span>
           <span className={"listing-price"}>
             ${listing.price.toLocaleString()}
