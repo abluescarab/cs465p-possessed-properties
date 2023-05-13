@@ -10,8 +10,8 @@ export async function listingLoader({ params }) {
       id: params.listingId,
     },
   }).then((response) => {
-    console.log(response.data[0]);
-    data = response.data[0];
+    console.log(response.data);
+    data = response.data;
     return data;
   });
 
