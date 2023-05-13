@@ -5,6 +5,8 @@ import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
 
+// TODO: change page name to listing name
+
 const Listing = () => {
   const listing: any = useLoaderData();
 
