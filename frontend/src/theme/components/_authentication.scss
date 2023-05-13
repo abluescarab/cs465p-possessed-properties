@@ -1,5 +1,6 @@
 .auth {
-  width: 400px;
+  max-width: 400px;
+  margin: var(--padding-lg);
 
   .input-line {
     display: flex;

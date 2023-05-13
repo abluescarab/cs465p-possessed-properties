@@ -10,6 +10,10 @@
 
   .listing-image {
     align-self: center;
+
+    img {
+      width: 100%;
+    }
   }
 
   .listing-info {

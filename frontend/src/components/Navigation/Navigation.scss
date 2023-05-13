@@ -1,3 +1,5 @@
+@use "../../theme/abstracts/variables" as *;
+
 nav {
   height: var(--nav-height);
   display: grid;
@@ -17,4 +19,8 @@ nav {
       justify-content: end;
     }
   }
+}
+
+@media screen and (max-width: $window-sm) {
+  // TODO: make navbar hamburger menu in small windows
 }
