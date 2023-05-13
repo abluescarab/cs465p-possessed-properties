@@ -38,5 +38,25 @@ export class ListingSeeder extends Seeder {
       area: 3600,
       price: 984600,
     });
+
+    em.create(Listing, {
+      owner: 3,
+      name: "Winchester Mystery House",
+      address: "525 S Winchester Blvd, San Jose",
+      region: "California",
+      country: "United States",
+      description:
+        "This sprawling, winding property belonged to the wife of firearms " +
+        "tycoon William Winchester, Sarah Winchester. Rumor has it that Sarah " +
+        "continued adding to the house for almost 40 years due to her belief " +
+        "that if she stopped building, she would die. With a gorgeous " +
+        "Victorian Gothic style, this property is recommended for only the " +
+        "most courageous buyer. Note that those with vision difficulties may " +
+        "find it impossible to navigate the house.",
+      bedrooms: 40,
+      bathrooms: 13,
+      area: 24000,
+      price: 50000000,
+    });
   }
 }
