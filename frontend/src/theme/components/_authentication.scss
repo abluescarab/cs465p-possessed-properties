@@ -1,6 +1,11 @@
 .auth {
   max-width: 400px;
-  margin: var(--padding-lg);
+  width: calc(100% - var(--padding-xl) * 2);
+  margin: 0 var(--padding-xl);
+
+  p {
+    margin-bottom: var(--padding-md);
+  }
 
   .input-line {
     display: flex;
@@ -14,12 +19,6 @@
     &:not(:last-child) {
       margin-bottom: var(--padding-lg);
     }
-  }
-
-  p {
-    display: flex;
-    width: 100%;
-    margin-bottom: var(--padding-md);
   }
 }
 
