@@ -11,6 +11,7 @@ const SearchBar = () => {
   const [listings, setListings] = useState([]);
   const resultsDiv = useRef(null);
 
+  // TODO: use SEARCH instead of GET
   async function fetchListings(searchTerm: string) {
     const { data } = await axios.get("http://localhost:8080/listings");
     const listingItems = [];
