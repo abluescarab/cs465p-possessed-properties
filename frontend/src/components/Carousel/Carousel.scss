@@ -35,6 +35,10 @@
   .right-button {
     right: 1px;
   }
+
+  .card {
+    margin: 0 var(--listing-margin);
+  }
 }
 
 @media screen and (max-width: $window-sm) {
