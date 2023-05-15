@@ -1,5 +1,5 @@
 import "./Card.scss";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
@@ -7,6 +7,7 @@ import { getClasses } from "@/utils.tsx";
 
 interface CardProps extends ComponentBaseProps {
   shadow?: "none" | "normal" | "hover";
+  onClick?: MouseEventHandler;
 }
 
 const Card: ComponentBase<CardProps> = ({
@@ -14,17 +15,22 @@ const Card: ComponentBase<CardProps> = ({
   className = "",
   children = null,
   shadow = "normal",
+  onClick = null,
 }) => {
   return (
     <div
       id={id}
-      className={`card ${className} ${getClasses(className, {
-        prop: shadow,
-        mappings: [
-          { value: "normal", cssClass: "box-shadow" },
-          { value: "hover", cssClass: "box-shadow-hover" },
-        ],
-      })}`}
+      onClick={onClick}
+      className={`card ${className} ${onClick ? "pointer" : ""} ${getClasses(
+        className,
+        {
+          prop: shadow,
+          mappings: [
+            { value: "normal", cssClass: "box-shadow" },
+            { value: "hover", cssClass: "box-shadow-hover" },
+          ],
+        }
+      )}`}
     >
       {children}
     </div>
