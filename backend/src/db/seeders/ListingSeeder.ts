@@ -1,6 +1,7 @@
 import type { EntityManager } from "@mikro-orm/core";
 import { Seeder } from "@mikro-orm/seeder";
 import { Listing } from "../entities/Listing.js";
+import { HauntingType } from "../../types.js";
 
 export class ListingSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
@@ -12,12 +13,14 @@ export class ListingSeeder extends Seeder {
       description:
         "This picturesque castle is over 600 years old and rests " +
         "in the hills near Bran, Romania. Though it is marketed as the " +
-        "fictional Dracula’s home, the castle itself contains plenty of " +
-        "other spooks and scares for the discerning homeowner. Buy now!",
+        "fictional Dracula’s home, the castle itself and the surrounding " +
+        "countryside contains plenty of other spooks and scares for the " +
+        "discerning homeowner. Buy now!",
       bedrooms: 20,
       bathrooms: 15.5,
       area: 15000,
       price: 250000000,
+      haunting_type: HauntingType.UNKNOWN,
     });
 
     em.create(Listing, {
@@ -37,6 +40,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 4,
       area: 3600,
       price: 984600,
+      haunting_type: HauntingType.INHUMAN,
     });
 
     em.create(Listing, {
@@ -57,6 +61,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 13,
       area: 24000,
       price: 50000000,
+      haunting_type: HauntingType.INTELLIGENT,
     });
 
     em.create(Listing, {
@@ -85,6 +90,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 3.5,
       area: 4463,
       price: 1875000,
+      haunting_type: HauntingType.UNKNOWN,
     });
 
     em.create(Listing, {
@@ -108,6 +114,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 6,
       area: 16000,
       price: 2500000,
+      haunting_type: HauntingType.INTELLIGENT,
     });
   }
 }

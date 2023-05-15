@@ -18,6 +18,3 @@ const $TYPE = () => {
 
 export default $TYPE;
 EOF
-#printf "import \"./%s.scss\";\n\n" $TYPE >> $TSX
-#printf "const %s = () => {};\n\n" $TYPE >> $TSX
-#printf "export default %s" $TYPE >> $TSX
