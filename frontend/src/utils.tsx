@@ -2,7 +2,7 @@ const siteTitle = "Possessed Properties";
 
 export function getClasses(
   className?: string,
-  ...extras: { prop: string; mappings: { value: string; cssClass: string }[] }[]
+  ...extras: { prop: any; mappings: { value: any; cssClass: string }[] }[]
 ) {
   const classes = [];
 
