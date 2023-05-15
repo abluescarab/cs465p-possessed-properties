@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
+import Crumbs from "@/components/Crumbs/Crumbs.tsx";
 
 const Listing = () => {
   const listing: any = useLoaderData();
@@ -14,7 +15,11 @@ const Listing = () => {
 
   return (
     <>
-      <div className={"listing-crumbs"}></div>
+      <Crumbs
+        listing={listing.name}
+        region={listing.region}
+        country={listing.country}
+      />
       <article className={"listing"}>
         <div className={"listing-image"}>
           <img src={propertyImage} alt={`Image of ${listing.name}`} />
