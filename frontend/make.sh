@@ -1,4 +1,9 @@
 #!/bin/bash
+if [ $# -eq 0 ]; then
+    >&2 echo "Usage: $0 DIR NAME"
+    exit 1
+fi
+
 DIR=$1
 TYPE=$2
 SRC=./src/$DIR/$TYPE
