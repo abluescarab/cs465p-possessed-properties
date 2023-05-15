@@ -23,12 +23,54 @@ const Home = () => {
       <section id={"trending"} className={"home"}>
         <h2>Trending Properties</h2>
         <Carousel>
-          <ListingCard />
-          <ListingCard />
-          <ListingCard />
-          <ListingCard />
-          <ListingCard />
-          <ListingCard />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
+          <ListingCard
+            listingId={1}
+            name={"Dracula's Castle"}
+            bedrooms={20}
+            bathrooms={15.5}
+            area={15000}
+            price={250000000}
+          />
         </Carousel>
       </section>
     </>

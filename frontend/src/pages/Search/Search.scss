@@ -1,0 +1,11 @@
+.listing-search {
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--padding-lg);
+  width: 100%;
+
+  h2 {
+    margin: 0 var(--padding-lg);
+    align-self: start;
+  }
+}

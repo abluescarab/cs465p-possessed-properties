@@ -9,7 +9,12 @@ import React from "react";
 import SignIn from "@/pages/SignIn/SignIn.tsx";
 import SignUp from "@/pages/SignUp/SignUp.tsx";
 import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword.tsx";
-import { listingLoader } from "@/Loaders.tsx";
+import {
+  countryLoader,
+  listingLoader,
+  listingsLoader,
+  regionLoader,
+} from "@/Loaders.tsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -22,9 +27,24 @@ const AppRouter = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/listings",
+        element: <Search />,
+        loader: listingsLoader,
+      },
+      {
         path: "/listings/:listingId",
         element: <Listing />,
         loader: listingLoader,
+      },
+      {
+        path: "/listings/region/:listingRegion",
+        element: <Search />,
+        loader: regionLoader,
+      },
+      {
+        path: "/listings/country/:listingCountry",
+        element: <Search />,
+        loader: countryLoader,
       },
       {
         path: "/search",

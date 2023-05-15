@@ -3,25 +3,51 @@ import propertyImage from "@images/property.png";
 import Card from "@/components/Card/Card.tsx";
 import CardContent from "@/components/Card/CardContent.tsx";
 import CardImage from "@/components/Card/CardImage.tsx";
+import ComponentBase, {
+  ComponentBaseProps,
+} from "@/components/ComponentBase.tsx";
+import { useNavigate } from "react-router-dom";
 
-const ListingCard = () => {
+interface ListingProps extends ComponentBaseProps {
+  listingId: number;
+  name: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+}
+
+const ListingCard: ComponentBase<ListingProps> = ({
+  listingId,
+  name,
+  price,
+  bedrooms,
+  bathrooms,
+  area,
+}) => {
+  const navigate = useNavigate();
+
   return (
-    <Card className={"listing-card"} shadow={"hover"}>
-      <CardImage src={propertyImage} alt={"Dracula's Castle"} />
+    <Card
+      className={"listing-card"}
+      shadow={"hover"}
+      onClick={() => navigate(`/listings/${listingId}`)}
+    >
+      <CardImage src={propertyImage} alt={`Image of ${name}`} />
       <CardContent>
-        <p className={"bold font-lg"}>$000,000,000</p>
+        <p className={"bold font-lg"}>${price.toLocaleString()}</p>
         <div className={"listing-card-info"}>
           <div className={"listing-card-info-item"}>
-            <span className={"bold"}>00</span> bds
+            <span className={"bold"}>{bedrooms}</span> bds
           </div>
           <div className={"listing-card-info-item"}>
-            <span className={"bold"}>00</span> ba
+            <span className={"bold"}>{bathrooms}</span> ba
           </div>
           <div className={"listing-card-info-item"}>
-            <span className={"bold"}>0,000</span> sqft
+            <span className={"bold"}>{area.toLocaleString()}</span> sqft
           </div>
         </div>
-        <p>Listing Name</p>
+        <p>{name}</p>
       </CardContent>
     </Card>
   );

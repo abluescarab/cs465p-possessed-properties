@@ -7,7 +7,8 @@ import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
 
 const Listing = () => {
-  const listing: any = useLoaderData();
+  const loaderData: any = useLoaderData();
+  const listing = loaderData.result;
 
   useEffect(() => {
     setTitle(listing.name);

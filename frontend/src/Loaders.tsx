@@ -1,19 +1,39 @@
 import axios from "axios";
 
-export async function listingLoader({ params }) {
-  let data = null;
+async function searchListings(data: {}) {
+  let result = null;
 
   await axios({
     method: "SEARCH",
-    url: "http://localhost:8080/listings",
-    data: {
-      id: params.listingId,
-    },
+    url: `http://localhost:8080/listings`,
+    data: data,
   }).then((response) => {
     console.log(response.data);
-    data = response.data;
-    return data;
+    result = response.data;
+    return { data, result };
   });
 
-  return data;
+  return { data, result };
+}
+
+export async function listingsLoader({ params }) {
+  return searchListings({});
+}
+
+export async function listingLoader({ params }) {
+  return searchListings({
+    id: params.listingId,
+  });
+}
+
+export async function regionLoader({ params }) {
+  return searchListings({
+    region: params.listingRegion,
+  });
+}
+
+export async function countryLoader({ params }) {
+  return searchListings({
+    country: params.listingCountry,
+  });
 }
