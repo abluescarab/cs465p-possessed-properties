@@ -58,5 +58,56 @@ export class ListingSeeder extends Seeder {
       area: 24000,
       price: 50000000,
     });
+
+    em.create(Listing, {
+      owner: 4,
+      name: "Lizzie Borden House",
+      address: "230 Second St., Fall River",
+      region: "Massachusetts",
+      country: "United States",
+      description:
+        "Lizzie Borden took an axe...or did she? Welcome to the ORIGINAL house " +
+        "where Lizzie Borden was accused (and acquitted) of the brutal double " +
+        "axe murders of her father, Andrew, and stepmother, Abby, that occured " +
+        "on that warm summer day of August 4th,1892. This is an unbelivable " +
+        "opportunity to own and operate one of New Englands top tourist " +
+        "attractions. Entertain visitors from all over the world. This is a " +
+        "turnkey operation, running lucrative day tours and evening events, " +
+        "and as a popular bed and breakfast destination. Picture yourself " +
+        "serving fun hatchet cookies, tiny johnny cakes and a scrumptious " +
+        "breakfast to overnight guests who have just enjoyed an experience of " +
+        "a lifetime! Owners retirement is your gain! Sale includes business, " +
+        "trademarks, intellectual rights, and property. Can also be purchased " +
+        'with the Victorian mansion, "Maplecroft", where Lizzie lived the rest ' +
+        "of her life after she was acquitted. (Description taken from official " +
+        "sale listing.)",
+      bedrooms: 6,
+      bathrooms: 3.5,
+      area: 4463,
+      price: 1875000,
+    });
+
+    em.create(Listing, {
+      owner: 5,
+      name: "Pittock Mansion",
+      address: "3229 NW Pittock Dr., Portland",
+      region: "Oregon",
+      country: "United States",
+      description:
+        "This majestic French Renaissance-style château was built in 1914 for " +
+        "Oregonian publisher Henry Pittock and his wife Georgiana Burton " +
+        "Pittock. Unfortunately, Georgiana died four years later at the age of " +
+        "72 and Henry a year after at 84. However, the Pittocks were not so " +
+        "easily parted from their property; it is said to this day that the " +
+        "smell of roses fills rooms with no flowers and that a portrait of " +
+        "Henry moves around of its own accord. Ghostly shoveling sounds, " +
+        "unexplained footsteps, slamming windows, moving furniture, and " +
+        "even the specter of a woman in a long gown are also reported to haunt " +
+        "this property.",
+      bedrooms: 9,
+      bathrooms: 6,
+      area: 16000,
+      price: 2500000,
+    });
   }
 }
