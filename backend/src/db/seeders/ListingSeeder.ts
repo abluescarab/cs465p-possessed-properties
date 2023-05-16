@@ -20,7 +20,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 15.5,
       area: 15000,
       price: 250000000,
-      haunting_type: HauntingType.UNKNOWN,
+      haunting_type: "unknown",
     });
 
     em.create(Listing, {
@@ -40,7 +40,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 4,
       area: 3600,
       price: 984600,
-      haunting_type: HauntingType.INHUMAN,
+      haunting_type: "inhuman",
     });
 
     em.create(Listing, {
@@ -61,7 +61,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 13,
       area: 24000,
       price: 50000000,
-      haunting_type: HauntingType.INTELLIGENT,
+      haunting_type: "intelligent",
     });
 
     em.create(Listing, {
@@ -90,7 +90,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 3.5,
       area: 4463,
       price: 1875000,
-      haunting_type: HauntingType.UNKNOWN,
+      haunting_type: "unknown",
     });
 
     em.create(Listing, {
@@ -114,7 +114,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 6,
       area: 16000,
       price: 2500000,
-      haunting_type: HauntingType.INTELLIGENT,
+      haunting_type: "intelligent",
     });
   }
 }
