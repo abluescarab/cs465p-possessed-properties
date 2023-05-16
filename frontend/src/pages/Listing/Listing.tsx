@@ -27,6 +27,10 @@ const Listing = () => {
         </div>
         <div className={"listing-info"}>
           <h2 className={"listing-name"}>{listing.name}</h2>
+          <p className={"listing-address"}>
+            {listing.address ? `${listing.address}, ` : ""}
+            {listing.region}, {listing.country}
+          </p>
         </div>
         <div className={"listing-description"}>{listing.description}</div>
         <div className={"listing-actions"}>

@@ -1,4 +1,6 @@
+@use "../../theme/abstracts/mixins" as *;
+
 .crumbs {
   align-self: start;
-  margin: 0 var(--padding-lg) var(--padding-lg) var(--padding-lg);
+  @include margin(var(--padding-lg), left, right, bottom);
 }

@@ -34,3 +34,9 @@
     }
   }
 }
+
+@mixin margin($size, $sides...) {
+  @each $side in $sides {
+    margin-#{$side}: $size;
+  }
+}
