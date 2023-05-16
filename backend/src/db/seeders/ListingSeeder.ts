@@ -1,7 +1,6 @@
 import type { EntityManager } from "@mikro-orm/core";
 import { Seeder } from "@mikro-orm/seeder";
 import { Listing } from "../entities/Listing.js";
-import { HauntingType } from "../../types.js";
 
 export class ListingSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
