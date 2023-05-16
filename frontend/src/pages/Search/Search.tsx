@@ -14,22 +14,24 @@ const Search = () => {
   }, []);
 
   return (
-    <section className={"listing-search"}>
-      <h2>Search for {terms}</h2>
-      {listings.map((listing: any) => {
-        return (
-          <ListingCard
-            key={listing.id}
-            listingId={listing.id}
-            name={listing.name}
-            price={listing.price}
-            bedrooms={listing.bedrooms}
-            bathrooms={listing.bathrooms}
-            area={listing.area}
-          />
-        );
-      })}
-    </section>
+    <>
+      <section className={"listing-search"}>
+        <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
+        {listings.map((listing: any) => {
+          return (
+            <ListingCard
+              key={listing.id}
+              listingId={listing.id}
+              name={listing.name}
+              price={listing.price}
+              bedrooms={listing.bedrooms}
+              bathrooms={listing.bathrooms}
+              area={listing.area}
+            />
+          );
+        })}
+      </section>
+    </>
   );
 };
 

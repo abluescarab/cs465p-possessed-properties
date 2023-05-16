@@ -16,10 +16,8 @@ const ErrorPage = () => {
     <div id={"error-page"}>
       <h1>Error</h1>
       <p>An unexpected error has occurred.</p>
-      <p>
-        <em>
-          {error.status}: {error.statusText || error.message}
-        </em>
+      <p className={"emphasis"}>
+        {error.status}: {error.statusText || error.message}
       </p>
       <p>
         <Button onClick={() => navigate(-1)} color={"primary"}>

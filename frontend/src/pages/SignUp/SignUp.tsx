@@ -47,7 +47,11 @@ const SignUp = () => {
                 />
               </div>
               <div className={"input-line"}>
-                <Button type={"submit"} color={"primary"}>
+                <Button
+                  type={"submit"}
+                  color={"primary"}
+                  className={"input-button"}
+                >
                   Sign up
                 </Button>
               </div>
@@ -56,7 +60,7 @@ const SignUp = () => {
         </Card>
       </section>
       <section className={"auth-links"}>
-        <p className={"center-text font-sm"}>
+        <p className={"center-text font-sm auth-links-paragraph"}>
           Already have an account?&nbsp;<Link to={"/signin"}>Sign in</Link>
         </p>
       </section>

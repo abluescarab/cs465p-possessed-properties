@@ -21,7 +21,7 @@ const Listing = () => {
         region={listing.region}
         country={listing.country}
       />
-      <article className={"listing"}>
+      <article className={"listing-page"}>
         <div className={"listing-image"}>
           <img src={propertyImage} alt={`Image of ${listing.name}`} />
         </div>
@@ -36,10 +36,14 @@ const Listing = () => {
               ${listing.price.toLocaleString()}
             </span>
           </p>
-          <Button type={"button"} color={"primary"}>
+          <Button type={"button"} color={"primary"} className={"action-button"}>
             Buy
           </Button>
-          <Button type={"button"} color={"secondary"}>
+          <Button
+            type={"button"}
+            color={"secondary"}
+            className={"action-button"}
+          >
             Make Offer
           </Button>
         </div>

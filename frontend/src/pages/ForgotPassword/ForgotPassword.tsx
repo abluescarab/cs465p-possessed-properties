@@ -17,7 +17,7 @@ const ForgotPassword = () => {
       <section>
         <Card className={"auth"}>
           <CardContent>
-            <p className={"font-sm"}>
+            <p className={"font-sm auth-paragraph"}>
               Enter the email address associated with your account and we'll
               send you instructions to reset your password.
             </p>
@@ -33,7 +33,11 @@ const ForgotPassword = () => {
                 />
               </div>
               <div className={"input-line"}>
-                <Button type={"submit"} color={"primary"}>
+                <Button
+                  type={"submit"}
+                  color={"primary"}
+                  className={"input-button"}
+                >
                   Submit
                 </Button>
               </div>
@@ -42,9 +46,9 @@ const ForgotPassword = () => {
         </Card>
       </section>
       <section className={"auth-links"}>
-        <Link to={"/signin"} className={"font-sm"}>
-          Back to sign in
-        </Link>
+        <p className={"auth-links-paragraph center-text font-sm"}>
+          <Link to={"/signin"}>Back to sign in</Link>
+        </p>
       </section>
     </>
   );

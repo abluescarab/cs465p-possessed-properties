@@ -12,16 +12,16 @@ const Home = () => {
 
   return (
     <>
-      <section id={"intro"} className={"home"}>
-        <h2>
+      <section id={"intro"} className={"home-section"}>
+        <h2 className={"section-header"}>
           <span className={"text-shadow-dark"}>
             Find your haunted dream home today.
           </span>
         </h2>
         <SearchBar />
       </section>
-      <section id={"trending"} className={"home"}>
-        <h2>Trending Properties</h2>
+      <section id={"trending"} className={"home-section"}>
+        <h2 className={"section-header"}>Trending Properties</h2>
         <Carousel>
           <ListingCard
             listingId={1}

@@ -30,17 +30,17 @@ const Carousel: ComponentBase = ({
     <div id={id} className={`carousel-container ${className}`}>
       <div className={"carousel-controls"}>
         <IconButton
-          className={"left-button"}
+          className={"carousel-left"}
           icon={"chevron_left"}
           onClick={() => moveLeft()}
         />
         <IconButton
-          className={"right-button"}
+          className={"carousel-right"}
           icon={"chevron_right"}
           onClick={() => moveRight()}
         />
       </div>
-      <div className={"carousel"} style={style}>
+      <div className={"carousel-items"} style={style}>
         {children}
       </div>
     </div>

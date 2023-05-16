@@ -44,28 +44,28 @@ const SearchBar = () => {
   }
 
   return (
-    <div className={"search"}>
+    <div className={"search-bar"}>
       <Card shadow={"hover"}>
         <CardContent>
-          <form>
+          <form className={"search-form"}>
             <TextInput
+              className={"search-input font-lg"}
               name={"search"}
               placeholder={"Search for listings..."}
-              className={"font-lg"}
               onChange={search}
               autoComplete={"off"}
             />
-            <Button type={"submit"}>
+            <Button type={"submit"} className={"search-submit"}>
               <span className={"material-symbols-rounded dark"}>search</span>
             </Button>
           </form>
         </CardContent>
       </Card>
       <div className={"search-results"} ref={resultsDiv}>
-        <ul id={"listings-view"}>
+        <ul className={"listings-view"}>
           {listings.map((listing) => {
             return (
-              <li key={listing}>
+              <li key={listing} className={"listings-view-item"}>
                 <Link to={`/listings/${listing.id}`}>{listing.name}</Link>
               </li>
             );

@@ -11,12 +11,12 @@
     margin-right: 0;
   }
 
-  .listing-card-info {
+  .listing-card-content {
     display: flex;
     flex-flow: row wrap;
     gap: var(--padding-sm);
 
-    .listing-card-info-item:not(:last-child) {
+    .listing-card-content-item:not(:last-child) {
       border-right: 1px solid var(--border-color);
       padding-right: var(--padding-sm);
     }

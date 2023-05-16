@@ -3,7 +3,7 @@
   width: calc(100% - var(--padding-xl) * 2);
   margin: 0 var(--padding-xl);
 
-  p {
+  .auth-paragraph {
     margin-bottom: var(--padding-md);
   }
 
@@ -12,7 +12,7 @@
     flex-flow: column nowrap;
     text-align: center;
 
-    button {
+    .input-button {
       flex: 1;
     }
 
@@ -25,7 +25,7 @@
 .auth-links {
   margin-top: var(--padding-md);
 
-  p {
+  .auth-links-paragraph {
     display: flex;
     justify-content: center;
     width: 100%;

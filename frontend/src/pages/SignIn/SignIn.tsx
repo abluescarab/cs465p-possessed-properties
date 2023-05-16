@@ -38,7 +38,11 @@ const SignIn = () => {
                 />
               </div>
               <div className={"input-line"}>
-                <Button color={"primary"} type={"submit"}>
+                <Button
+                  color={"primary"}
+                  type={"submit"}
+                  className={"auth-button"}
+                >
                   Sign in
                 </Button>
               </div>
@@ -47,13 +51,11 @@ const SignIn = () => {
         </Card>
       </section>
       <section className={"auth-links"}>
-        <p className={"center-text font-sm"}>
+        <p className={"auth-links-paragraph center-text font-sm"}>
           No account?&nbsp;<Link to={"/signup"}>Sign up</Link>
         </p>
-        <p>
-          <Link className={"center-text font-sm"} to={"/forgotpassword"}>
-            Forgot your password?
-          </Link>
+        <p className={"auth-links-paragraph center-text font-sm"}>
+          <Link to={"/forgotpassword"}>Forgot your password?</Link>
         </p>
       </section>
     </>

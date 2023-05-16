@@ -1,12 +1,8 @@
-.listing {
+.listing-page {
   margin: 0 var(--padding-xl);
   display: flex;
   gap: var(--padding-md);
   max-width: var(--page-width);
-
-  h2 {
-    margin-bottom: 0;
-  }
 
   .listing-image {
     align-self: center;
@@ -28,7 +24,7 @@
     justify-content: end;
     align-items: center;
 
-    button {
+    .action-button {
       width: 125px;
     }
   }

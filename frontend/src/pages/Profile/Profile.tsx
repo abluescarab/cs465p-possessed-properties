@@ -9,11 +9,13 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className={"profile-div"}>
-      Profile...
-      <br />
-      <Link to={"/search"}>to search</Link>
-    </div>
+    <>
+      <section className={"profile-page"}>
+        Profile...
+        <br />
+        <Link to={"/search"}>to search</Link>
+      </section>
+    </>
   );
 };
 

@@ -36,14 +36,14 @@ const ListingCard: ComponentBase<ListingProps> = ({
       <CardImage src={propertyImage} alt={`Image of ${name}`} />
       <CardContent>
         <p className={"bold font-lg"}>${price.toLocaleString()}</p>
-        <div className={"listing-card-info"}>
-          <div className={"listing-card-info-item"}>
+        <div className={"listing-card-content"}>
+          <div className={"listing-card-content-item"}>
             <span className={"bold"}>{bedrooms}</span> bds
           </div>
-          <div className={"listing-card-info-item"}>
+          <div className={"listing-card-content-item"}>
             <span className={"bold"}>{bathrooms}</span> ba
           </div>
-          <div className={"listing-card-info-item"}>
+          <div className={"listing-card-content-item"}>
             <span className={"bold"}>{area.toLocaleString()}</span> sqft
           </div>
         </div>

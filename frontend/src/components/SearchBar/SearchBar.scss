@@ -1,20 +1,20 @@
-.search {
+.search-bar {
   max-width: var(--page-width);
   width: 100%;
   position: relative;
 
-  form {
+  .search-form {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
 
-    input {
+    .search-input {
       flex: 1;
       padding: 0;
       width: 100%;
     }
 
-    button {
+    .search-submit {
       display: flex;
       background: none;
       padding: 0;
@@ -39,11 +39,11 @@
       display: flex;
     }
 
-    ul {
+    .listings-view {
       list-style: none;
       width: 100%;
 
-      li {
+      .listings-view-item {
         user-select: none;
 
         &:not(:last-child) {

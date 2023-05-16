@@ -1,11 +1,11 @@
-.home {
+.home-section {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   max-width: 100%;
   width: calc(100% - var(--padding-xl) * 2);
 
-  h2 {
+  .section-header {
     text-align: center;
   }
 
