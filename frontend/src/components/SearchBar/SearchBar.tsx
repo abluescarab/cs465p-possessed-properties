@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = ({ small = false }) => {
   const [listings, setListings] = useState([]);
   const resultsDiv = useRef(null);
 
@@ -44,12 +44,12 @@ const SearchBar = () => {
   }
 
   return (
-    <div className={"search-bar"}>
+    <div className={small ? "small-search-bar" : "search-bar"}>
       <Card shadow={"hover"}>
         <CardContent>
           <form className={"search-form"}>
             <TextInput
-              className={"search-input font-lg"}
+              className={`search-input ${small ? "" : "font-lg"}`}
               name={"search"}
               placeholder={"Search for listings..."}
               onChange={search}

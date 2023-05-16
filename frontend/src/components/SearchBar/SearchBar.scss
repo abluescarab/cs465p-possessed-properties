@@ -1,6 +1,7 @@
-.search-bar {
+@use "../../theme/abstracts/mixins" as *;
+
+.search-bar, .small-search-bar {
   max-width: var(--page-width);
-  width: 100%;
   position: relative;
 
   .search-form {
@@ -69,5 +70,18 @@
         }
       }
     }
+  }
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.small-search-bar {
+  width: calc(100% - var(--padding-lg) * 2);
+  @include margin(var(--padding-lg), left, right, bottom);
+
+  .card-content {
+    padding: var(--padding-md);
   }
 }

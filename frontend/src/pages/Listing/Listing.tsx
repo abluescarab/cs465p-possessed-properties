@@ -5,6 +5,7 @@ import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
+import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 
 const Listing = () => {
   const loaderData: any = useLoaderData();
@@ -16,6 +17,7 @@ const Listing = () => {
 
   return (
     <>
+      <SearchBar small />
       <Crumbs
         listing={listing.name}
         region={listing.region}
