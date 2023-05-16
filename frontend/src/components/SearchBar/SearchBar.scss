@@ -78,6 +78,7 @@
 }
 
 .small-search-bar {
+  // TODO: fix dropdown size/background color/border
   width: calc(100% - var(--padding-lg) * 2);
   @include margin(var(--padding-lg), left, right, bottom);
 

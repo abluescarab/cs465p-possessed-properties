@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import { useEffect } from "react";
 import { setTitle } from "@/utils.tsx";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
+import Sidebar from "@/components/Sidebar/Sidebar.tsx";
 
 const Search = () => {
   const loaderData: any = useLoaderData();
@@ -15,6 +16,7 @@ const Search = () => {
 
   return (
     <>
+      <Sidebar />
       <section className={"listing-search"}>
         <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
         {listings.map((listing: any) => {
