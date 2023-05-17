@@ -13,44 +13,42 @@ const ForgotPassword = () => {
   }, []);
 
   return (
-    <>
-      <section>
-        <Card className={"auth"}>
-          <CardContent>
-            <p className={"font-sm auth-paragraph"}>
-              Enter the email address associated with your account and we'll
-              send you instructions to reset your password.
-            </p>
-            <form>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"email"}
-                  label={"Email"}
-                  name={"email"}
-                  placeholder={"e.g. yourname@email.com"}
-                  type={"email"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <Button
-                  type={"submit"}
-                  color={"primary"}
-                  className={"input-button"}
-                >
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </section>
+    <div id={"forgot-password-page"}>
+      <Card className={"auth"}>
+        <CardContent>
+          <p className={"font-sm auth-paragraph"}>
+            Enter the email address associated with your account and we'll send
+            you instructions to reset your password.
+          </p>
+          <form>
+            <div className={"input-line"}>
+              <TextInput
+                id={"email"}
+                label={"Email"}
+                name={"email"}
+                placeholder={"e.g. yourname@email.com"}
+                type={"email"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <Button
+                type={"submit"}
+                color={"primary"}
+                className={"input-button"}
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
       <section className={"auth-links"}>
         <p className={"auth-links-paragraph center-text font-sm"}>
           <Link to={"/signin"}>Back to sign in</Link>
         </p>
       </section>
-    </>
+    </div>
   );
 };
 

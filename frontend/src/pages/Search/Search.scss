@@ -1,15 +1,21 @@
-.listing-search {
+#search-page {
   display: flex;
   flex-flow: row wrap;
-  gap: var(--padding-lg);
   width: 100%;
+  max-width: var(--page-width);
+  background-color: red;
 
-  .sidebar {
+  .listing-search {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padding-lg);
+    flex: 1;
+    background-color: blue;
+    justify-content: start;
 
-  }
-
-  h2 {
-    margin: 0 var(--padding-lg);
-    align-self: start;
+    h2 {
+      margin: 0 var(--padding-lg);
+      align-self: start;
+    }
   }
 }

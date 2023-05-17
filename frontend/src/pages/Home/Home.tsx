@@ -14,14 +14,14 @@ const Home = () => {
     <div id={"home-page"}>
       <div id={"intro-container"}>
         <section className={"home-section"}>
-          <h2 className={"text-shadow-dark"}>
+          <h2 className={"text-shadow-dark home-header"}>
             Find your haunted dream home today.
           </h2>
           <SearchBar />
         </section>
       </div>
       <section className={"home-section"}>
-        <h2>Trending Properties</h2>
+        <h2 className={"home-header"}>Trending Properties</h2>
         <Carousel>
           <ListingCard
             listingId={1}

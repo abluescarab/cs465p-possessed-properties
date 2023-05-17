@@ -8,7 +8,6 @@ async function searchListings(data: {}) {
     url: `http://localhost:8080/listings`,
     data: data,
   }).then((response) => {
-    console.log(response.data);
     result = response.data;
     return { data, result };
   });
@@ -16,7 +15,7 @@ async function searchListings(data: {}) {
   return { data, result };
 }
 
-export async function listingsLoader({ params }) {
+export async function listingsLoader() {
   return searchListings({});
 }
 

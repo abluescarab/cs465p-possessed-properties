@@ -16,14 +16,14 @@ const Listing = () => {
   }, [listing]);
 
   return (
-    <>
+    <div id={"listing-page"}>
       <SearchBar small />
       <Crumbs
         listing={listing.name}
         region={listing.region}
         country={listing.country}
       />
-      <article className={"listing-page"}>
+      <article className={"listing-article"}>
         <div className={"listing-image"}>
           <img src={propertyImage} alt={`Image of ${listing.name}`} />
         </div>
@@ -54,7 +54,7 @@ const Listing = () => {
           </Button>
         </div>
       </article>
-    </>
+    </div>
   );
 };
 

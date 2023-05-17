@@ -2,7 +2,10 @@
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  text-align: center;
+
+  .home-header {
+    text-align: center;
+  }
 
   #intro-container {
     width: 100%;

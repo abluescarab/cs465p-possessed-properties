@@ -13,58 +13,56 @@ const SignUp = () => {
   }, []);
 
   return (
-    <>
-      <section>
-        <Card className={"auth"}>
-          <CardContent>
-            <form>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"email"}
-                  label={"Email"}
-                  name={"email"}
-                  placeholder={"e.g. yourname@email.com"}
-                  type={"email"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"password"}
-                  label={"Password"}
-                  name={"password"}
-                  placeholder={"e.g. hunter2"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"confirm-password"}
-                  label={"Confirm password"}
-                  name={"confirm-password"}
-                  placeholder={"Passwords must match"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <Button
-                  type={"submit"}
-                  color={"primary"}
-                  className={"input-button"}
-                >
-                  Sign up
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </section>
+    <div id={"signup-page"}>
+      <Card className={"auth"}>
+        <CardContent>
+          <form>
+            <div className={"input-line"}>
+              <TextInput
+                id={"email"}
+                label={"Email"}
+                name={"email"}
+                placeholder={"e.g. yourname@email.com"}
+                type={"email"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <TextInput
+                id={"password"}
+                label={"Password"}
+                name={"password"}
+                placeholder={"e.g. hunter2"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <TextInput
+                id={"confirm-password"}
+                label={"Confirm password"}
+                name={"confirm-password"}
+                placeholder={"Passwords must match"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <Button
+                type={"submit"}
+                color={"primary"}
+                className={"input-button"}
+              >
+                Sign up
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
       <section className={"auth-links"}>
         <p className={"center-text font-sm auth-links-paragraph"}>
           Already have an account?&nbsp;<Link to={"/signin"}>Sign in</Link>
         </p>
       </section>
-    </>
+    </div>
   );
 };
 

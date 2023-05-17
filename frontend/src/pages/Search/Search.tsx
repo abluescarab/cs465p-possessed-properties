@@ -15,8 +15,7 @@ const Search = () => {
   }, []);
 
   return (
-    <>
-      <Sidebar />
+    <div id={"search-page"}>
       <section className={"listing-search"}>
         <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
         {listings.map((listing: any) => {
@@ -33,7 +32,8 @@ const Search = () => {
           );
         })}
       </section>
-    </>
+      <Sidebar />
+    </div>
   );
 };
 

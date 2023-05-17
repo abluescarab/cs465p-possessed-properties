@@ -10,7 +10,7 @@
   background-color: var(--dark-background-color);
   overflow: hidden;
   position: relative;
-  @include width(4);
+  @include width(3);
 
   .carousel-items {
     display: flex;
@@ -50,11 +50,5 @@
 @media screen and (min-width: $window-sm) and (max-width: $window-md) {
   .carousel-container {
     @include width(2);
-  }
-}
-
-@media screen and (min-width: $window-md) and (max-width: $window-lg) {
-  .carousel-container {
-    @include width(3);
   }
 }

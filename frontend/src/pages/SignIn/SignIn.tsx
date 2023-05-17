@@ -13,43 +13,41 @@ const SignIn = () => {
   }, []);
 
   return (
-    <>
-      <section>
-        <Card className={"auth"}>
-          <CardContent>
-            <form>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"email"}
-                  label={"Email"}
-                  name={"email"}
-                  placeholder={"e.g. yourname@email.com"}
-                  type={"email"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <TextInput
-                  id={"password"}
-                  label={"Password"}
-                  name={"password"}
-                  placeholder={"e.g. hunter2"}
-                  className={"underline"}
-                />
-              </div>
-              <div className={"input-line"}>
-                <Button
-                  color={"primary"}
-                  type={"submit"}
-                  className={"auth-button"}
-                >
-                  Sign in
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </section>
+    <div id={"signin-page"}>
+      <Card className={"auth"}>
+        <CardContent>
+          <form>
+            <div className={"input-line"}>
+              <TextInput
+                id={"email"}
+                label={"Email"}
+                name={"email"}
+                placeholder={"e.g. yourname@email.com"}
+                type={"email"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <TextInput
+                id={"password"}
+                label={"Password"}
+                name={"password"}
+                placeholder={"e.g. hunter2"}
+                className={"underline"}
+              />
+            </div>
+            <div className={"input-line"}>
+              <Button
+                color={"primary"}
+                type={"submit"}
+                className={"auth-button"}
+              >
+                Sign in
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
       <section className={"auth-links"}>
         <p className={"auth-links-paragraph center-text font-sm"}>
           No account?&nbsp;<Link to={"/signup"}>Sign up</Link>
@@ -58,7 +56,7 @@ const SignIn = () => {
           <Link to={"/forgotpassword"}>Forgot your password?</Link>
         </p>
       </section>
-    </>
+    </div>
   );
 };
 

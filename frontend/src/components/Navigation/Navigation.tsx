@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navigation = () => {
   return (
     <nav>
-      <div className={"nav-columnumn"}>
+      <div className={"nav-column"}>
         <Link to={"/buy"}>Buy</Link>
         <Link to={"/sell"}>Sell</Link>
       </div>
