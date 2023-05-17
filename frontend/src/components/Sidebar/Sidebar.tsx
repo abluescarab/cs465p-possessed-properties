@@ -7,14 +7,15 @@ const Sidebar = ({ id = "", className = "" }) => {
   const [regions, setRegions] = useState([]);
   const [countries, setCountries] = useState([]);
 
+  // TODO: get all listings and map once?
+  const getListings = async () => {
+    const allListings = await listingsLoader();
+
+    setRegions([...new Set(allListings.result.map((l) => l.region))]);
+    setCountries([...new Set(allListings.result.map((l) => l.country))]);
+  };
+
   useEffect(() => {
-    const getListings = async () => {
-      const allListings = await listingsLoader();
-
-      setRegions([...new Set(allListings.result.map((l) => l.region))]);
-      setCountries([...new Set(allListings.result.map((l) => l.country))]);
-    };
-
     getListings();
   }, []);
 
