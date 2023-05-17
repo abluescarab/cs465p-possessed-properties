@@ -3,14 +3,12 @@
   flex-flow: row wrap;
   width: 100%;
   max-width: var(--page-width);
-  background-color: red;
 
   .listing-search {
     display: flex;
     flex-flow: row wrap;
     gap: var(--padding-lg);
     flex: 1;
-    background-color: blue;
     justify-content: start;
 
     h2 {
