@@ -8,16 +8,25 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const SearchBar = ({ small = false }) => {
-  const [listings, setListings] = useState([]);
+  const [allListings, setAllListings] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const resultsDiv = useRef(null);
 
-  // TODO: use SEARCH instead of GET?
-  async function fetchListings(searchTerm: string) {
+  const fetch = async () => {
     const { data } = await axios.get("http://localhost:8080/listings");
+    const listings = data.map((listing) => ({
+      id: listing.id,
+      name: listing.name,
+    }));
+
+    setAllListings(listings);
+  };
+
+  const filter = (searchTerm: string) => {
     const listingItems = [];
 
     if (searchTerm.length > 0) {
-      data.forEach((listing) => {
+      allListings.forEach((listing) => {
         if (listing.name.toLowerCase().startsWith(searchTerm)) {
           listingItems.push({ id: listing.id, name: listing.name });
         }
@@ -26,22 +35,26 @@ const SearchBar = ({ small = false }) => {
       listingItems.sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    return listingItems;
-  }
+    setFiltered(listingItems);
+  };
+
+  const search = async (e) => {
+    filter(e.currentTarget.value);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   useEffect(() => {
     if (resultsDiv.current) {
-      if (listings.length > 0) {
+      if (filtered.length > 0) {
         resultsDiv.current.classList.add("open");
       } else {
         resultsDiv.current.classList.remove("open");
       }
     }
-  }, [listings]);
-
-  async function search(e) {
-    await fetchListings(e.currentTarget.value).then(setListings);
-  }
+  }, [filtered]);
 
   return (
     <div className={small ? "small-search-bar" : "search-bar"}>
@@ -63,9 +76,9 @@ const SearchBar = ({ small = false }) => {
       </Card>
       <div className={"search-results"} ref={resultsDiv}>
         <ul className={"listings-view"}>
-          {listings.map((listing) => {
+          {filtered.map((listing) => {
             return (
-              <li key={listing} className={"listings-view-item"}>
+              <li key={listing.id} className={"listings-view-item"}>
                 <Link to={`/listings/${listing.id}`}>{listing.name}</Link>
               </li>
             );
