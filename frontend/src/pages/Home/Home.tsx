@@ -11,17 +11,17 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <section id={"intro"} className={"home-section"}>
-        <h2 className={"section-header"}>
-          <span className={"text-shadow-dark"}>
+    <div id={"home-page"}>
+      <div id={"intro-container"}>
+        <section className={"home-section"}>
+          <h2 className={"text-shadow-dark"}>
             Find your haunted dream home today.
-          </span>
-        </h2>
-        <SearchBar />
-      </section>
-      <section id={"trending"} className={"home-section"}>
-        <h2 className={"section-header"}>Trending Properties</h2>
+          </h2>
+          <SearchBar />
+        </section>
+      </div>
+      <section className={"home-section"}>
+        <h2>Trending Properties</h2>
         <Carousel>
           <ListingCard
             listingId={1}
@@ -73,7 +73,7 @@ const Home = () => {
           />
         </Carousel>
       </section>
-    </>
+    </div>
   );
 };
 
