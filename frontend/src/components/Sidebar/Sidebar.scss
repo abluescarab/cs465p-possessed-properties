@@ -1,8 +1,13 @@
 .sidebar {
   height: 100%;
-  flex: 0 0 250px;
+  flex: 0 0 200px;
 
   .sidebar-section {
     align-content: start;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    margin-bottom: var(--padding-md);
   }
 }

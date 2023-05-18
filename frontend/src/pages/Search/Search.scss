@@ -1,6 +1,7 @@
 #search-page {
   display: flex;
   flex-flow: row wrap;
+  width: calc(100% - var(--padding-lg) * 2);
   max-width: var(--page-width);
   margin: 0 var(--padding-lg);
   gap: var(--padding-lg);
