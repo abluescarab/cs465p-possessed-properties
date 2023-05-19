@@ -11,8 +11,8 @@ const Search = () => {
   const terms = Object.values(loaderData.data).join(", ");
 
   useEffect(() => {
-    setTitle("Search");
-  }, []);
+    setTitle(`Search for ${terms}`);
+  }, [terms]);
 
   return (
     <div id={"search-page"}>
