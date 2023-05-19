@@ -56,10 +56,17 @@ h1 {
   line-height: 1.1;
 }
 
-h2 {
-  font-size: var(--font-xl);
+h2, h3, h4 {
   width: 100%;
   margin-bottom: var(--padding-md);
+}
+
+h2 {
+  font-size: var(--font-xl);
+}
+
+h3 {
+  font-size: var(--font-lg);
 }
 
 input, select, textarea {
