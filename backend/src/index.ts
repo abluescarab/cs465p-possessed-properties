@@ -8,8 +8,10 @@ app.listen(
   (err, address) => {
     if (err) {
       app.log.error(err);
+      console.log(err);
       process.exit(1);
     }
     app.log.info(`Started server at ${address}`);
+    console.log(`Started server at ${address}`);
   }
 );
