@@ -10,6 +10,7 @@ import type { Rel } from "@mikro-orm/core";
 import { Offer } from "./Offer.js";
 import { ProjectBaseEntity } from "./ProjectBaseEntity.js";
 import { User } from "./User.js";
+import { HauntingType } from "../../types.js";
 
 @Entity({ tableName: "listings" })
 export class Listing extends ProjectBaseEntity {
