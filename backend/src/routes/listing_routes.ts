@@ -3,6 +3,7 @@ import { Listing } from "../db/entities/Listing.js";
 import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
+import type { HauntingType } from "../types.js";
 
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
@@ -25,6 +26,7 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms?: number;
       area?: number;
       price?: number;
+      haunting_type?: HauntingType;
     };
   }>("/listings", async (request, reply) => {
     const data = createBody(request.body, ["owner_email"]);
@@ -79,6 +81,7 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms: number;
       area: number;
       price: number;
+      haunting_type: HauntingType;
     };
   }>("/listings", async (request, reply) => {
     const data = createBody(request.body, ["owner_email"]);
@@ -121,6 +124,7 @@ export function createListingRoutes(app: FastifyInstance) {
       area?: number;
       price?: number;
       buyer_email?: string;
+      haunting_type?: HauntingType;
     };
   }>("/listings", async (request, reply) => {
     const {
@@ -132,6 +136,7 @@ export function createListingRoutes(app: FastifyInstance) {
       area,
       price,
       buyer_email,
+      haunting_type,
     } = request.body;
 
     try {
@@ -199,6 +204,10 @@ export function createListingRoutes(app: FastifyInstance) {
         // TODO: close/reject all offers
       }
 
+      if (haunting_type !== undefined) {
+        listing.haunting_type = haunting_type;
+      }
+
       await request.em.flush();
       console.log(listing);
       return reply.send(listing);
@@ -235,7 +244,6 @@ export function createListingRoutes(app: FastifyInstance) {
         );
       }
 
-      // listing.deleted_at = new Date();
       await request.em.remove(listing);
       await request.em.flush();
 
