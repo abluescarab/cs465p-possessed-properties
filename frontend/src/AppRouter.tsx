@@ -47,10 +47,6 @@ const AppRouter = createBrowserRouter([
         loader: countryLoader,
       },
       {
-        path: "/search",
-        element: <Search />,
-      },
-      {
         path: "/profile",
         element: <Profile />,
       },
