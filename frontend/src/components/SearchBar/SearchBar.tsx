@@ -10,6 +10,7 @@ const SearchBar = ({ small = false }) => {
   const [allListings, setAllListings] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const resultsDiv = useRef(null);
+  const searchBar = useRef(null);
 
   const fetch = async () => {
     const { data } = await axios.get("http://localhost:8080/listings");
@@ -37,8 +38,13 @@ const SearchBar = ({ small = false }) => {
     setFiltered(listingItems);
   };
 
-  const search = async (e) => {
+  const search = (e) => {
     filter(e.currentTarget.value);
+  };
+
+  const reset = () => {
+    searchBar.current.value = "";
+    setFiltered([]);
   };
 
   useEffect(() => {
@@ -67,6 +73,7 @@ const SearchBar = ({ small = false }) => {
               onChange={search}
               autoComplete={"off"}
               style={"none"}
+              ref={searchBar}
             />
             <Button type={"submit"} className={"search-submit"}>
               <span className={"material-symbols-rounded light"}>search</span>
@@ -79,7 +86,9 @@ const SearchBar = ({ small = false }) => {
           {filtered.map((listing) => {
             return (
               <li key={listing.id} className={"listings-view-item"}>
-                <Link to={`/listings/${listing.id}`}>{listing.name}</Link>
+                <Link to={`/listings/${listing.id}`} onClick={reset}>
+                  {listing.name}
+                </Link>
               </li>
             );
           })}

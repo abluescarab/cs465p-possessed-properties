@@ -1,5 +1,5 @@
 import "./TextInput.scss";
-import React, { ChangeEventHandler } from "react";
+import React, { ChangeEventHandler, ForwardedRef, forwardRef } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
@@ -16,53 +16,60 @@ interface TextInputProps extends ComponentBaseProps {
   rightText?: string;
   style?: "underline" | "none";
   required?: boolean;
+  ref?: ForwardedRef<HTMLInputElement>;
 }
 
-const TextInput: ComponentBase<TextInputProps> = ({
-  id = "",
-  className = "",
-  type = "text",
-  name,
-  label = "",
-  placeholder = "",
-  onChange = null,
-  autoComplete = "on",
-  leftText = "",
-  rightText = "",
-  style = "underline",
-  required = false,
-}) => {
-  return (
-    <div className={"input-wrapper"}>
-      {id && label ? (
-        <p className={`label-wrapper ${required ? "required" : ""}`}>
-          <label htmlFor={id}>{label}</label>
-        </p>
-      ) : null}
-      <div className={"input-box-wrapper"}>
-        {leftText && <span className={"input-left"}>{leftText}</span>}
-        <input
-          type={type}
-          id={id}
-          className={getClasses(className, {
-            prop: style,
-            mappings: [
-              {
-                value: "underline",
-                cssClass: "underline",
-              },
-            ],
-          })}
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          autoComplete={autoComplete}
-          required={required}
-        />
-        {rightText && <span className={"input-right"}>{rightText}</span>}
+const TextInput: ComponentBase<TextInputProps> = forwardRef(
+  (
+    {
+      id = "",
+      className = "",
+      type = "text",
+      name,
+      label = "",
+      placeholder = "",
+      onChange = null,
+      autoComplete = "on",
+      leftText = "",
+      rightText = "",
+      style = "underline",
+      required = false,
+    },
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    return (
+      <div className={"input-wrapper"}>
+        {id && label ? (
+          <p className={`label-wrapper ${required ? "required" : ""}`}>
+            <label htmlFor={id}>{label}</label>
+          </p>
+        ) : null}
+        <div className={"input-box-wrapper"}>
+          {leftText && <span className={"input-left"}>{leftText}</span>}
+          <input
+            type={type}
+            id={id}
+            className={getClasses(className, {
+              prop: style,
+              mappings: [
+                {
+                  value: "underline",
+                  cssClass: "underline",
+                },
+              ],
+            })}
+            name={name}
+            placeholder={placeholder}
+            onChange={onChange}
+            autoComplete={autoComplete}
+            required={required}
+            ref={ref}
+          />
+          {rightText && <span className={"input-right"}>{rightText}</span>}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default TextInput;
