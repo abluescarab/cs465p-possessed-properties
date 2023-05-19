@@ -54,6 +54,18 @@ export const CardTitle: ComponentBase = ({
   );
 };
 
+export const CardSubtitle: ComponentBase = ({
+  id = "",
+  className = "",
+  children = null,
+}) => {
+  return (
+    <div id={id} className={`card-subtitle ${className}`}>
+      {children}
+    </div>
+  );
+};
+
 export const CardImage: ComponentBase<CardImageProps> = ({
   id = "",
   className = "",
