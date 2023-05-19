@@ -22,7 +22,7 @@ const Sell = () => {
               <p className={"label-wrapper required"}>
                 <label htmlFor={"listing-haunting"}>
                   Haunting type{" "}
-                  <Link to={"/guide"} target={"_blank"}>
+                  <Link to={"/guide#types-of-hauntings"} target={"_blank"}>
                     (?)
                   </Link>
                 </label>
