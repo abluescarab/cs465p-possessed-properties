@@ -40,7 +40,7 @@ export function createListingRoutes(app: FastifyInstance) {
           return error(reply, HttpStatus.NOT_FOUND, "No listings found");
         }
 
-        console.log(listing);
+        app.log.info(listing);
         return reply.send(listing);
       }
 
@@ -60,7 +60,7 @@ export function createListingRoutes(app: FastifyInstance) {
         return error(reply, HttpStatus.NOT_FOUND, "No listings found");
       }
 
-      console.log(listings);
+      app.log.info(listings);
       return reply.send(listings);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -105,7 +105,7 @@ export function createListingRoutes(app: FastifyInstance) {
       const listing = await request.em.create(Listing, data);
       await request.em.flush();
 
-      console.log("Created new listing: ", listing);
+      app.log.info("Created new listing: ", listing);
       return reply.send(listing);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -209,7 +209,7 @@ export function createListingRoutes(app: FastifyInstance) {
       }
 
       await request.em.flush();
-      console.log(listing);
+      app.log.info(listing);
       return reply.send(listing);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -247,7 +247,7 @@ export function createListingRoutes(app: FastifyInstance) {
       await request.em.remove(listing);
       await request.em.flush();
 
-      console.log(listing);
+      app.log.info(listing);
       return reply.send(listing);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);

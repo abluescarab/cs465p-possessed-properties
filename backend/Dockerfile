@@ -13,7 +13,7 @@ RUN pnpm install
 
 COPY . .
 EXPOSE 8080
-ENV ADDRESS=0.0.0.0 PORT=8080 DB_HOST=postgres DB_PORT=5432 DB_NAME=possessedprops DB_USER=admin DB_PASS=password
+ENV ADDRESS=0.0.0.0 PORT=8080 DB_HOST=postgres DB_PORT=5432 DB_NAME=possessedprops DB_USER=admin DB_PASS=password NODE_ENV=development
 
 RUN pnpm build
 

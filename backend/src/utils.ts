@@ -3,6 +3,7 @@ import { Listing } from "./db/entities/Listing.js";
 import { HttpStatus } from "./status_codes.js";
 import { ProjectBaseEntity } from "./db/entities/ProjectBaseEntity.js";
 import { OfferStatus } from "./types.js";
+import app from "./app.js";
 
 /**
  * Replies with a specified error and prints it to the console.
@@ -11,7 +12,7 @@ import { OfferStatus } from "./types.js";
  * @param message message to send
  */
 export async function error(reply, code, message) {
-  console.log(message);
+  app.log.info(message);
   return reply.status(code).send({ message: message });
 }
 

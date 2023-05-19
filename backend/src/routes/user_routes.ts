@@ -28,7 +28,7 @@ export function createUserRoutes(app: FastifyInstance) {
         return reply;
       }
 
-      console.log(user);
+      app.log.info(user);
       return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -58,7 +58,7 @@ export function createUserRoutes(app: FastifyInstance) {
 
       await request.em.flush();
 
-      console.log("Created new user: ", user);
+      app.log.info("Created new user: ", user);
       return reply.send(user);
     } catch (err) {
       return error(
@@ -91,7 +91,7 @@ export function createUserRoutes(app: FastifyInstance) {
 
       // persist object changes to database
       await request.em.flush();
-      console.log(user);
+      app.log.info(user);
       return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -123,7 +123,7 @@ export function createUserRoutes(app: FastifyInstance) {
       await request.em.remove(user);
       await request.em.flush();
 
-      console.log(user);
+      app.log.info(user);
       return reply.send(user);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);

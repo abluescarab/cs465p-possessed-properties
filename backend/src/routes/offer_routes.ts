@@ -61,7 +61,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         return error(reply, HttpStatus.NOT_FOUND, `No offers found`);
       }
 
-      console.log(offers);
+      app.log.info(offers);
       return reply.send(offers);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -108,7 +108,7 @@ export function createOfferRoutes(app: FastifyInstance) {
 
       await request.em.flush();
 
-      console.log(offer);
+      app.log.info(offer);
       return reply.send(offer);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -166,7 +166,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         }
 
         await request.em.flush();
-        console.log(offer);
+        app.log.info(offer);
         return reply.send(offer);
       } catch (err) {
         return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
@@ -204,7 +204,7 @@ export function createOfferRoutes(app: FastifyInstance) {
       await request.em.remove(offer);
       await request.em.flush();
 
-      console.log(offer);
+      app.log.info(offer);
       return reply.send(offer);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);

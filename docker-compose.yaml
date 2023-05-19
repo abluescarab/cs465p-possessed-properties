@@ -32,6 +32,7 @@ services:
       - DB_NAME=possessedprops
       - DB_USER=admin
       - DB_PASS=password
+      - NODE_ENV=development
     depends_on:
       postgres:
         condition: service_healthy
