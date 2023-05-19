@@ -1,0 +1,9 @@
+#back-to-top {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  text-align: end;
+  padding: var(--padding-md);
+  background-color: var(--background-color-light);
+}

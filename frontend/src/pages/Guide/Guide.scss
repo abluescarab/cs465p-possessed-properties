@@ -1,0 +1,21 @@
+#guide-page {
+  width: calc(100% - var(--padding-lg) * 2);
+  max-width: var(--page-width);
+  margin: 0 var(--padding-lg);
+
+  p {
+    margin-bottom: var(--padding-md);
+  }
+
+  .guide-contents {
+    margin-bottom: var(--padding-lg);
+
+    .card {
+      max-width: 100%;
+    }
+
+    ol {
+      margin-left: var(--padding-lg);
+    }
+  }
+}

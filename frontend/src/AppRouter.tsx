@@ -17,6 +17,7 @@ import {
   regionLoader,
 } from "@/Loaders.tsx";
 import Sell from "@/pages/Sell/Sell.tsx";
+import Guide from "@/pages/Guide/Guide.tsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const AppRouter = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/guide",
+        element: <Guide />,
       },
       {
         path: "/listings",

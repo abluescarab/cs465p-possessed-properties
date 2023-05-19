@@ -15,6 +15,7 @@ const Navigation = () => {
         </Link>
       </div>
       <div className={"nav-column"}>
+        <Link to={"/guide"}>Guide</Link>
         <Link to={"/signin"}>Sign in</Link>
       </div>
     </nav>
