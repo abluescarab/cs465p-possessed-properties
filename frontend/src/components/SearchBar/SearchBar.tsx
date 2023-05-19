@@ -69,7 +69,7 @@ const SearchBar = ({ small = false }) => {
               autoComplete={"off"}
             />
             <Button type={"submit"} className={"search-submit"}>
-              <span className={"material-symbols-rounded dark"}>search</span>
+              <span className={"material-symbols-rounded light"}>search</span>
             </Button>
           </form>
         </CardContent>

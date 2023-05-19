@@ -51,15 +51,15 @@
   -moz-osx-font-smoothing: grayscale;
 
   &.dark {
-    color: var(--color);
+    color: var(--text-color-dark);
   }
 
   &.light {
-    color: var(--color-light);
+    color: var(--text-color-light);
   }
 }
 
 .text-shadow-dark {
-    color: var(--color-light);
-    text-shadow:  0 0 6px var(--color);
+    color: var(--text-color-dark);
+    text-shadow:  0 0 6px var(--text-color-light);
 }

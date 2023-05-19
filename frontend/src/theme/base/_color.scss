@@ -4,12 +4,17 @@
   --secondary-color: #cb6600;
   --secondary-color-contrast: #000;
 
-  --background-color: #fff;
-  --color: #000;
-  --color-light: #fff;
+  // light theme
+  --background-color-light: #fff;
+  --text-color-light: #000;
+  --text-color-md: #999;
+
+  // dark theme
+  --background-color-dark: #000;
+  --text-color-dark: #fff;
+
+  // specific colors
+  --card-color: var(--background-color-light);
   --border-color: rgba(0, 0, 0, 0.2);
   --shadow-color: rgba(0, 0, 0, 0.3);
-
-  // element specific
-  --card-color: var(--background-color);
 }

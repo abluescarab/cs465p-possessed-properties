@@ -9,8 +9,8 @@
   line-height: 1.5;
 
   color-scheme: light dark;
-  color: var(--color);
-  background-color: var(--background-color);
+  color: var(--text-color-light);
+  background-color: var(--background-color-light);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -62,11 +62,11 @@ h2 {
   margin-bottom: var(--padding-md);
 }
 
-input {
+input, select {
   font-family: "Noto Sans", sans-serif;
   font-size: var(--font-md);
-  background-color: var(--background-color);
-  color: var(--color);
+  background-color: var(--background-color-light);
+  color: var(--text-color-light);
   border: 0;
   outline: 0;
   padding: var(--padding-md);
@@ -74,6 +74,18 @@ input {
   &::placeholder {
     font-style: italic;
   }
+}
+
+// Hide number input spinner (Chromium)
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+// Hide number input spinner (Firefox)
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 button {
