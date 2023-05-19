@@ -24,7 +24,6 @@ const SignUp = () => {
                 name={"email"}
                 placeholder={"e.g. yourname@email.com"}
                 type={"email"}
-                className={"underline"}
               />
             </div>
             <div className={"form-line"}>
@@ -33,7 +32,6 @@ const SignUp = () => {
                 label={"Password"}
                 name={"password"}
                 placeholder={"e.g. hunter2"}
-                className={"underline"}
               />
             </div>
             <div className={"form-line"}>
@@ -42,7 +40,6 @@ const SignUp = () => {
                 label={"Confirm password"}
                 name={"confirm-password"}
                 placeholder={"Passwords must match"}
-                className={"underline"}
               />
             </div>
             <div className={"form-line"}>

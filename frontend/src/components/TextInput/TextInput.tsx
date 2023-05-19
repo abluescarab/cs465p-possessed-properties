@@ -3,6 +3,7 @@ import React, { ChangeEventHandler } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
+import { getClasses } from "@/utils.tsx";
 
 interface TextInputProps extends ComponentBaseProps {
   type?: string;
@@ -11,6 +12,9 @@ interface TextInputProps extends ComponentBaseProps {
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   autoComplete?: "on" | "off";
+  leftText?: string;
+  rightText?: string;
+  style?: "underline" | "none";
 }
 
 const TextInput: ComponentBase<TextInputProps> = ({
@@ -22,24 +26,39 @@ const TextInput: ComponentBase<TextInputProps> = ({
   placeholder = "",
   onChange = null,
   autoComplete = "on",
+  leftText = "",
+  rightText = "",
+  style = "underline",
 }) => {
   return (
-    <>
+    <div className={"input-wrapper"}>
       {id && label ? (
-        <p>
+        <p className={"label-wrapper"}>
           <label htmlFor={id}>{label}</label>
         </p>
       ) : null}
-      <input
-        type={type}
-        id={id}
-        className={className}
-        name={name}
-        placeholder={placeholder}
-        onChange={onChange}
-        autoComplete={autoComplete}
-      />
-    </>
+      <div className={"input-box-wrapper"}>
+        {leftText && <span className={"input-left"}>{leftText}</span>}
+        <input
+          type={type}
+          id={id}
+          className={getClasses(className, {
+            prop: style,
+            mappings: [
+              {
+                value: "underline",
+                cssClass: "underline",
+              },
+            ],
+          })}
+          name={name}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete={autoComplete}
+        />
+        {rightText && <span className={"input-right"}>{rightText}</span>}
+      </div>
+    </div>
   );
 };
 
