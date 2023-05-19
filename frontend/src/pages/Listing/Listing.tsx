@@ -6,6 +6,11 @@ import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";
+import Card, {
+  CardContent,
+  CardSubtitle,
+  CardTitle,
+} from "@/components/Card/Card.tsx";
 
 const Listing = () => {
   const loaderData: any = useLoaderData();
@@ -27,32 +32,38 @@ const Listing = () => {
         <div className={"listing-image"}>
           <img src={propertyImage} alt={`Image of ${listing.name}`} />
         </div>
-        <div className={"listing-info"}>
-          <h2 className={"listing-name"}>{listing.name}</h2>
-          <p className={"listing-address"}>
+        <Card>
+          <CardTitle>{listing.name}</CardTitle>
+          <CardSubtitle>
             {listing.address ? `${listing.address}, ` : ""}
             {listing.region}, {listing.country}
-          </p>
-        </div>
-        <div className={"listing-description"}>{listing.description}</div>
-        <div className={"listing-actions"}>
-          <p className={"font-lg"}>
-            <span className={"bold"}>List Price:&nbsp;</span>
-            <span className={"listing-price"}>
-              ${listing.price.toLocaleString()}
-            </span>
-          </p>
-          <Button type={"button"} color={"primary"} className={"action-button"}>
-            Buy
-          </Button>
-          <Button
-            type={"button"}
-            color={"secondary"}
-            className={"action-button"}
-          >
-            Make Offer
-          </Button>
-        </div>
+          </CardSubtitle>
+          <CardContent>
+            <p className={"listing-description"}>{listing.description}</p>
+            <div className={"listing-actions"}>
+              <p className={"font-lg"}>
+                <span className={"bold"}>List Price:&nbsp;</span>
+                <span className={"listing-price"}>
+                  ${listing.price.toLocaleString()}
+                </span>
+              </p>
+              <Button
+                type={"button"}
+                color={"primary"}
+                className={"action-button"}
+              >
+                Buy
+              </Button>
+              <Button
+                type={"button"}
+                color={"secondary"}
+                className={"action-button"}
+              >
+                Make Offer
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </article>
     </div>
   );
