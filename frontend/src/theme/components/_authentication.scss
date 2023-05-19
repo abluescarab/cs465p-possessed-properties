@@ -1,27 +1,3 @@
-.auth {
-  max-width: 400px;
-  width: calc(100% - var(--padding-xl) * 2);
-  margin: 0 var(--padding-xl);
-
-  .auth-paragraph {
-    margin-bottom: var(--padding-md);
-  }
-
-  .input-line {
-    display: flex;
-    flex-flow: column nowrap;
-    text-align: center;
-
-    .input-button {
-      flex: 1;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: var(--padding-lg);
-    }
-  }
-}
-
 .auth-links {
   margin-top: var(--padding-md);
 

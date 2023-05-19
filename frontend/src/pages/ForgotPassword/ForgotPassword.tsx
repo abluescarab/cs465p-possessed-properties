@@ -14,14 +14,14 @@ const ForgotPassword = () => {
 
   return (
     <div id={"forgot-password-page"}>
-      <Card className={"auth"}>
+      <Card className={"card-form"}>
         <CardContent>
-          <p className={"font-sm auth-paragraph"}>
+          <p className={"font-sm form-paragraph"}>
             Enter the email address associated with your account and we'll send
             you instructions to reset your password.
           </p>
           <form>
-            <div className={"input-line"}>
+            <div className={"form-line"}>
               <TextInput
                 id={"email"}
                 label={"Email"}
@@ -31,11 +31,11 @@ const ForgotPassword = () => {
                 className={"underline"}
               />
             </div>
-            <div className={"input-line"}>
+            <div className={"form-line"}>
               <Button
                 type={"submit"}
                 color={"primary"}
-                className={"input-button"}
+                className={"form-button"}
               >
                 Submit
               </Button>

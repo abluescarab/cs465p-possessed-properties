@@ -14,10 +14,10 @@ const SignIn = () => {
 
   return (
     <div id={"signin-page"}>
-      <Card className={"auth"}>
+      <Card className={"card-form"}>
         <CardContent>
           <form>
-            <div className={"input-line"}>
+            <div className={"form-line"}>
               <TextInput
                 id={"email"}
                 label={"Email"}
@@ -27,7 +27,7 @@ const SignIn = () => {
                 className={"underline"}
               />
             </div>
-            <div className={"input-line"}>
+            <div className={"form-line"}>
               <TextInput
                 id={"password"}
                 label={"Password"}
@@ -36,11 +36,11 @@ const SignIn = () => {
                 className={"underline"}
               />
             </div>
-            <div className={"input-line"}>
+            <div className={"form-line"}>
               <Button
                 color={"primary"}
                 type={"submit"}
-                className={"auth-button"}
+                className={"form-button"}
               >
                 Sign in
               </Button>

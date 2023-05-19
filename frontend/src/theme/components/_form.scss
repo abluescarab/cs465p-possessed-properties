@@ -1,0 +1,23 @@
+.card-form {
+  max-width: 400px;
+  width: calc(100% - var(--padding-xl) * 2);
+  margin: 0 var(--padding-xl);
+
+  .form-paragraph {
+    margin-bottom: var(--padding-md);
+  }
+
+  .form-line {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+
+    .form-button {
+      flex: 1;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--padding-lg);
+    }
+  }
+}
