@@ -28,6 +28,7 @@ const ForgotPassword = () => {
                 name={"email"}
                 placeholder={"e.g. yourname@email.com"}
                 type={"email"}
+                required
               />
             </div>
             <div className={"form-line"}>

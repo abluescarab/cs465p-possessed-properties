@@ -24,6 +24,7 @@ const SignIn = () => {
                 name={"email"}
                 placeholder={"e.g. yourname@email.com"}
                 type={"email"}
+                required
               />
             </div>
             <div className={"form-line"}>
@@ -32,6 +33,7 @@ const SignIn = () => {
                 label={"Password"}
                 name={"password"}
                 placeholder={"e.g. hunter2"}
+                required
               />
             </div>
             <div className={"form-line"}>

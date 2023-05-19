@@ -15,6 +15,7 @@ interface TextInputProps extends ComponentBaseProps {
   leftText?: string;
   rightText?: string;
   style?: "underline" | "none";
+  required?: boolean;
 }
 
 const TextInput: ComponentBase<TextInputProps> = ({
@@ -29,6 +30,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
   leftText = "",
   rightText = "",
   style = "underline",
+  required = false,
 }) => {
   return (
     <div className={"input-wrapper"}>
@@ -55,6 +57,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
           placeholder={placeholder}
           onChange={onChange}
           autoComplete={autoComplete}
+          required={required}
         />
         {rightText && <span className={"input-right"}>{rightText}</span>}
       </div>
