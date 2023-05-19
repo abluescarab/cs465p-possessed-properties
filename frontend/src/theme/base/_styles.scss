@@ -25,3 +25,9 @@
 .pointer {
   cursor: pointer;
 }
+
+.required:after {
+  margin-left: var(--padding-sm);
+  content: "*";
+  color: var(--secondary-color);
+}

@@ -35,7 +35,7 @@ const TextInput: ComponentBase<TextInputProps> = ({
   return (
     <div className={"input-wrapper"}>
       {id && label ? (
-        <p className={"label-wrapper"}>
+        <p className={`label-wrapper ${required ? "required" : ""}`}>
           <label htmlFor={id}>{label}</label>
         </p>
       ) : null}
