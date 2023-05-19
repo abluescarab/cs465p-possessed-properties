@@ -5,7 +5,7 @@ import BackToTop from "@/components/BackToTop/BackToTop.tsx";
 const Guide = () => {
   return (
     <>
-      <article id={"guide-page"}>
+      <article id={"guide-page"} className={"page"}>
         <section className={"guide-contents"}>
           <Card>
             <CardTitle>Contents</CardTitle>

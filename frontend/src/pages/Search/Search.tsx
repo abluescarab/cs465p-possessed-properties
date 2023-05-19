@@ -15,7 +15,7 @@ const Search = () => {
   }, [terms]);
 
   return (
-    <div id={"search-page"}>
+    <div id={"search-page"} className={"page"}>
       <section className={"listing-search"}>
         <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
         {listings.map((listing: any) => {

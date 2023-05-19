@@ -16,7 +16,7 @@ const Listing = () => {
   }, [listing]);
 
   return (
-    <div id={"listing-page"}>
+    <div id={"listing-page"} className={"page"}>
       <SearchBar small />
       <Crumbs
         listing={listing.name}
