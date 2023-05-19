@@ -11,6 +11,7 @@ import SignUp from "@/pages/SignUp/SignUp.tsx";
 import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword.tsx";
 import {
   countryLoader,
+  hauntingTypeLoader,
   listingLoader,
   listingsLoader,
   regionLoader,
@@ -46,6 +47,11 @@ const AppRouter = createBrowserRouter([
         path: "/listings/country/:listingCountry",
         element: <Search />,
         loader: countryLoader,
+      },
+      {
+        path: "/listings/type/:listingType",
+        element: <Search />,
+        loader: hauntingTypeLoader,
       },
       {
         path: "/profile",

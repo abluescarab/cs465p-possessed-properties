@@ -11,6 +11,7 @@ const Sell = () => {
     setTitle("Create a listing");
   });
 
+  // TODO: add photo upload
   return (
     <div id={"sell-page"}>
       <Card className={"new-listing-info card-form"}>

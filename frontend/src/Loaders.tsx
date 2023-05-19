@@ -36,3 +36,9 @@ export async function countryLoader({ params }) {
     country: params.listingCountry,
   });
 }
+
+export async function hauntingTypeLoader({ params }) {
+  return searchListings({
+    haunting_type: params.listingType.toLowerCase(),
+  });
+}

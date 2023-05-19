@@ -1,5 +1,9 @@
 const siteTitle = "Possessed Properties";
 
+export function capitalize(str: string) {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
 export function getClasses(
   className?: string,
   ...extras: { prop: any; mappings: { value: any; cssClass: string }[] }[]
