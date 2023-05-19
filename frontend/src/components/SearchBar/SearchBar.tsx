@@ -14,12 +14,10 @@ const SearchBar = ({ small = false }) => {
 
   const fetch = async () => {
     const { data } = await axios.get("http://localhost:8080/listings");
-    const listings = data.map((listing) => ({
+    return data.map((listing) => ({
       id: listing.id,
       name: listing.name,
     }));
-
-    setAllListings(listings);
   };
 
   const filter = (searchTerm: string) => {
@@ -48,7 +46,7 @@ const SearchBar = ({ small = false }) => {
   };
 
   useEffect(() => {
-    fetch();
+    fetch().then(setAllListings);
   }, []);
 
   useEffect(() => {

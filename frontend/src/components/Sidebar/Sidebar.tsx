@@ -11,27 +11,33 @@ const Sidebar = ({ id = "", className = "" }) => {
 
   const getListings = async () => {
     const allListings = await listingsLoader();
-    const getRegions = {};
-    const getCountries = {};
-    const getHauntings = {};
+    const regionList = {};
+    const countryList = {};
+    const hauntingList = {};
 
     allListings.result.forEach((listing) => {
       const region = listing.region;
       const country = listing.country;
       const haunting = capitalize(listing.haunting_type);
 
-      getRegions[region] = (getRegions[region] || 0) + 1;
-      getCountries[country] = (getCountries[country] || 0) + 1;
-      getHauntings[haunting] = (getHauntings[haunting] || 0) + 1;
+      regionList[region] = (regionList[region] || 0) + 1;
+      countryList[country] = (countryList[country] || 0) + 1;
+      hauntingList[haunting] = (hauntingList[haunting] || 0) + 1;
     });
 
-    setRegions(getRegions);
-    setCountries(getCountries);
-    setHauntings(getHauntings);
+    return {
+      regionList,
+      countryList,
+      hauntingList,
+    };
   };
 
   useEffect(() => {
-    getListings();
+    getListings().then(({ regionList, countryList, hauntingList }) => {
+      setRegions(regionList);
+      setCountries(countryList);
+      setHauntings(hauntingList);
+    });
   }, []);
 
   return (
