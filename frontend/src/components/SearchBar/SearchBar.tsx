@@ -1,6 +1,5 @@
 import "./SearchBar.scss";
-import Card from "@/components/Card/Card.tsx";
-import CardContent from "@/components/Card/CardContent.tsx";
+import Card, { CardContent } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { useEffect, useRef, useState } from "react";

@@ -40,3 +40,9 @@
     margin-#{$side}: $size;
   }
 }
+
+@mixin padding($size, $sides...) {
+  @each $side in $sides {
+    padding-#{$side}: $size;
+  }
+}

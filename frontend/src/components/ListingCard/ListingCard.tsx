@@ -1,8 +1,6 @@
 import "./ListingCard.scss";
 import propertyImage from "@images/property.png";
-import Card from "@/components/Card/Card.tsx";
-import CardContent from "@/components/Card/CardContent.tsx";
-import CardImage from "@/components/Card/CardImage.tsx";
+import Card, { CardContent, CardImage } from "@/components/Card/Card.tsx";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";

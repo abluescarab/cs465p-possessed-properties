@@ -10,6 +10,11 @@ interface CardProps extends ComponentBaseProps {
   onClick?: MouseEventHandler;
 }
 
+interface CardImageProps extends ComponentBaseProps {
+  src: string;
+  alt: string;
+}
+
 const Card: ComponentBase<CardProps> = ({
   id = "",
   className = "",
@@ -32,6 +37,43 @@ const Card: ComponentBase<CardProps> = ({
         }
       )}`}
     >
+      {children}
+    </div>
+  );
+};
+
+export const CardTitle: ComponentBase = ({
+  id = "",
+  className = "",
+  children = null,
+}) => {
+  return (
+    <div id={id} className={`card-title ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+export const CardImage: ComponentBase<CardImageProps> = ({
+  id = "",
+  className = "",
+  src,
+  alt,
+}) => {
+  return (
+    <div id={id} className={`card-image ${className}`}>
+      <img src={src} className={className} alt={alt} />
+    </div>
+  );
+};
+
+export const CardContent: ComponentBase = ({
+  id = "",
+  className = "",
+  children = null,
+}) => {
+  return (
+    <div id={id} className={`card-content ${className}`}>
       {children}
     </div>
   );

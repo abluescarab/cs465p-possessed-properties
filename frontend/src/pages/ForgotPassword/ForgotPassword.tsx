@@ -1,6 +1,5 @@
 import "./ForgotPassword.scss";
-import Card from "@/components/Card/Card.tsx";
-import CardContent from "@/components/Card/CardContent.tsx";
+import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
@@ -15,6 +14,7 @@ const ForgotPassword = () => {
   return (
     <div id={"forgot-password-page"}>
       <Card className={"card-form"}>
+        <CardTitle>Forgot password</CardTitle>
         <CardContent>
           <p className={"font-sm form-paragraph"}>
             Enter the email address associated with your account and we'll send

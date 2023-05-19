@@ -1,6 +1,5 @@
 import "./SignIn.scss";
-import Card from "@/components/Card/Card.tsx";
-import CardContent from "@/components/Card/CardContent.tsx";
+import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
@@ -15,6 +14,7 @@ const SignIn = () => {
   return (
     <div id={"signin-page"}>
       <Card className={"card-form"}>
+        <CardTitle>Sign in</CardTitle>
         <CardContent>
           <form>
             <div className={"form-line"}>

@@ -8,6 +8,12 @@
   display: flex;
   flex-flow: column nowrap;
 
+  .card-title {
+    font-size: var(--font-lg);
+    font-weight: bold;
+    @include padding(var(--padding-lg), left, right, top);
+  }
+
   .card-image {
     flex: 0;
     max-height: var(--card-image-height);
@@ -25,4 +31,29 @@
     flex-flow: column nowrap;
     flex: 1;
   }
+
+  &.card-form {
+    max-width: 400px;
+    width: calc(100% - var(--padding-xl) * 2);
+    margin: 0 var(--padding-xl);
+
+    .form-paragraph {
+      margin-bottom: var(--padding-md);
+    }
+
+    .form-line {
+      display: flex;
+      flex-flow: column nowrap;
+      text-align: center;
+
+      .form-button {
+        flex: 1;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: var(--padding-lg);
+      }
+    }
+  }
+
 }
