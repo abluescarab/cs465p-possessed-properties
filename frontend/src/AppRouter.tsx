@@ -15,6 +15,7 @@ import {
   listingsLoader,
   regionLoader,
 } from "@/Loaders.tsx";
+import Sell from "@/pages/Sell/Sell.tsx";
 
 const AppRouter = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const AppRouter = createBrowserRouter([
       {
         path: "/forgotpassword",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/sell",
+        element: <Sell />,
       },
     ],
   },
