@@ -6,7 +6,7 @@ const Navigation = () => {
   return (
     <nav>
       <div className={"nav-column"}>
-        <Link to={"/buy"}>Buy</Link>
+        <Link to={"/listings"}>Buy</Link>
         <Link to={"/sell"}>Sell</Link>
       </div>
       <div className={"nav-column"}>
