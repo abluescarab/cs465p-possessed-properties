@@ -1,15 +1,47 @@
 import "./SignUp.scss";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "@/firebase.ts";
+import axios from "axios";
 
 const SignUp = () => {
+  const userName = useRef<HTMLInputElement>(null);
+  const userEmail = useRef<HTMLInputElement>(null);
+  const userPassword = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setTitle("Sign Up");
   }, []);
+
+  const signUp = async (e) => {
+    e.preventDefault();
+
+    // axios({
+    //   method: "POST",
+    //   url: "http://localhost:8080/users",
+    //   data:
+    // });
+
+    // e.preventDefault();
+    // const auth = getAuth(firebaseApp);
+    //
+    // await createUserWithEmailAndPassword(
+    //   auth,
+    //   userEmail.current.value,
+    //   userPassword.current.value
+    // )
+    //   .then((cred) => {
+    //     const user = cred.user;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 
   return (
     <div id={"signup-page"}>
@@ -17,6 +49,15 @@ const SignUp = () => {
         <CardTitle>Sign up</CardTitle>
         <CardContent>
           <form>
+            <div className={"form-line"}>
+              <TextInput
+                id={"name"}
+                label={"name"}
+                name={"name"}
+                placeholder={"e.g. Your Name"}
+                required
+              />
+            </div>
             <div className={"form-line"}>
               <TextInput
                 id={"email"}
@@ -32,15 +73,18 @@ const SignUp = () => {
                 id={"password"}
                 label={"Password"}
                 name={"password"}
+                type={"password"}
                 placeholder={"e.g. hunter2"}
                 required
               />
             </div>
+            {/* TODO: verify passwords are the same */}
             <div className={"form-line"}>
               <TextInput
                 id={"confirm-password"}
                 label={"Confirm password"}
                 name={"confirm-password"}
+                type={"password"}
                 placeholder={"Passwords must match"}
                 required
               />
