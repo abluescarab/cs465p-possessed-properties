@@ -38,7 +38,7 @@ export function createUserRoutes(app: FastifyInstance) {
 
   // region POST - create a user
   app.post<{ Body: IUserRouteData }>("/users", async (request, reply) => {
-    const { email, name } = request.body;
+    const { email, name, password } = request.body;
 
     try {
       const existing = await request.em.findOne(User, { email });

@@ -5,8 +5,6 @@ import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseApp from "@/firebase.ts";
 import axios from "axios";
 
 const SignUp = () => {
