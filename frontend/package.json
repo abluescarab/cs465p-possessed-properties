@@ -13,7 +13,6 @@
     "sass:watch": "sass -w src/theme:src/assets/css"
   },
   "dependencies": {
-    "@now-ims/fastify-firebase": "^1.1.3",
     "axios": "^1.4.0",
     "firebase": "^9.22.0",
     "firebase-admin": "^11.8.0",

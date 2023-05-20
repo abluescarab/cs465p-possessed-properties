@@ -37,9 +37,12 @@ const app = Fastify({
 
 await app.register(FastifyMikroOrmPlugin, config);
 await app.register(FastifySearchHttpMethodPlugin);
-await app.register(AppRoutes);
+await app.register(FastifyFirebasePlugin, firebaseConfig);
+
 await app.register(cors, {
   origin: false,
 });
+
+await app.register(AppRoutes);
 
 export default app;
