@@ -42,8 +42,7 @@
     "dotenv": "^16.0.3",
     "fastify": "^4.15.0",
     "fastify-plugin": "^4.5.0",
-    "firebase": "^9.22.0",
-    "firebase-admin": "^11.8.0"
+    "firebase": "^9.22.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

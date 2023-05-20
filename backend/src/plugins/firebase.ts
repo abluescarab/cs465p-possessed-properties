@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import "fastify-plugin";
-import fb from "firebase-admin";
+import { initializeApp } from "firebase/app";
 import fp from "fastify-plugin";
 
 declare module "fastify" {
@@ -10,7 +10,7 @@ declare module "fastify" {
 }
 
 export const fastifyFirebase = async function (app: FastifyInstance, options) {
-  const firebase = fb.initializeApp(options);
+  const firebase = initializeApp(options);
   app.decorate("firebase", firebase);
 };
 
