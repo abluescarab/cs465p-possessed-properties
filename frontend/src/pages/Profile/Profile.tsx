@@ -66,11 +66,11 @@ const Profile = () => {
       {dbUser ? (
         <>
           <h2 className={"profile-name"}>{dbUser && dbUser.name}</h2>
-          <div id={"profile-col-1"} className={"profile-col"}>
+          <div className={"profile-col"}>
             <h3>Offers</h3>
             {/* TODO: load created offers */}
           </div>
-          <div id={"profile-col-2"} className={"profile-col"}>
+          <div className={"profile-col"}>
             <h3>Listings</h3>
             {/* TODO: load created listings */}
           </div>

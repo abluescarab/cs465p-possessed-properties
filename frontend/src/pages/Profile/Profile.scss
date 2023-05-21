@@ -1,3 +1,5 @@
+@use "../../theme/abstracts/variables" as *;
+
 #profile-page {
   display: flex;
   flex-flow: row wrap;
@@ -9,5 +11,14 @@
   .profile-col {
     flex: 1 1 50%;
     min-width: 0;
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padding-md);
+  }
+}
+
+@media screen and (max-width: $window-sm) {
+  #profile-page .profile-col {
+    flex: 1 1 100%;
   }
 }
