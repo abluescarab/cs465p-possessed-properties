@@ -4,10 +4,15 @@ import { setTitle } from "@/utils.tsx";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "@/firebase.ts";
 
 const SignUp = () => {
+  const auth = getAuth(firebaseApp);
+  const navigate = useNavigate();
+
   const userName = useRef<HTMLInputElement>(null);
   const userEmail = useRef<HTMLInputElement>(null);
   const userPassword = useRef<HTMLInputElement>(null);
@@ -19,30 +24,30 @@ const SignUp = () => {
   const signUp = async (e) => {
     e.preventDefault();
 
-    // axios({
-    //   method: "POST",
-    //   url: "http://localhost:8080/users",
-    //   data:
-    // });
+    const email = userEmail.current.value;
+    const name = userName.current.value;
+    const password = userPassword.current.value;
 
-    // e.preventDefault();
-    // const auth = getAuth(firebaseApp);
-    //
-    // await createUserWithEmailAndPassword(
-    //   auth,
-    //   userEmail.current.value,
-    //   userPassword.current.value
-    // )
-    //   .then((cred) => {
-    //     const user = cred.user;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    await axios({
+      method: "POST",
+      url: "http://localhost:8080/users",
+      data: {
+        email,
+        name,
+        password,
+      },
+    }).then((response) => {
+      console.log(response);
+      if (response.status == 200) {
+        signInWithEmailAndPassword(auth, email, password).then(() => {
+          navigate(-1);
+        });
+      }
+    });
   };
 
   return (
-    <div id={"signup-page"}>
+    <div id={"sign-up-page"}>
       <Card className={"card-form"}>
         <CardTitle>Sign up</CardTitle>
         <CardContent>
@@ -54,6 +59,7 @@ const SignUp = () => {
                 name={"name"}
                 placeholder={"e.g. Your Name"}
                 required
+                ref={userName}
               />
             </div>
             <div className={"form-line"}>
@@ -64,6 +70,7 @@ const SignUp = () => {
                 placeholder={"e.g. yourname@email.com"}
                 type={"email"}
                 required
+                ref={userEmail}
               />
             </div>
             <div className={"form-line"}>
@@ -74,6 +81,7 @@ const SignUp = () => {
                 type={"password"}
                 placeholder={"e.g. hunter2"}
                 required
+                ref={userPassword}
               />
             </div>
             {/* TODO: verify passwords are the same */}
@@ -92,6 +100,7 @@ const SignUp = () => {
                 type={"submit"}
                 color={"primary"}
                 className={"form-button"}
+                onClick={signUp}
               >
                 Sign up
               </Button>

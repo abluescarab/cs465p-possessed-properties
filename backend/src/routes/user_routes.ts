@@ -3,8 +3,11 @@ import { User } from "../db/entities/User.js";
 import { error, find } from "../utils.js";
 import { HttpStatus } from "../status_codes.js";
 import { IUserRouteData } from "../types.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export function createUserRoutes(app: FastifyInstance) {
+  const auth = getAuth(app.firebase);
+
   // region GET - get all users
   app.get("/users", async (request) => {
     return request.em.find(User, {}, { filters: false });
@@ -51,6 +54,8 @@ export function createUserRoutes(app: FastifyInstance) {
         );
       }
 
+      await createUserWithEmailAndPassword(auth, email, password);
+
       const user = await request.em.create(User, {
         email,
         name,
@@ -59,6 +64,7 @@ export function createUserRoutes(app: FastifyInstance) {
       await request.em.flush();
 
       app.log.info("Created new user: ", user);
+
       return reply.send(user);
     } catch (err) {
       return error(
