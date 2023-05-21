@@ -1,0 +1,11 @@
+#sign-out-page {
+  display: flex;
+  flex-flow: column;
+  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    margin-bottom: var(--padding-md);
+  }
+}

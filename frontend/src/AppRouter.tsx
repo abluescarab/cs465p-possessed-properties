@@ -18,6 +18,7 @@ import {
 } from "@/Loaders.tsx";
 import Sell from "@/pages/Sell/Sell.tsx";
 import Guide from "@/pages/Guide/Guide.tsx";
+import SignOut from "@/pages/SignOut/SignOut.tsx";
 
 export const Routes = {
   home: { path: "/", element: <Home /> },
@@ -46,6 +47,7 @@ export const Routes = {
   profile: { path: "/profile", element: <Profile /> },
   signIn: { path: "/signin", element: <SignIn /> },
   signUp: { path: "/signup", element: <SignUp /> },
+  signOut: { path: "/signout", element: <SignOut /> },
   forgotPassword: { path: "/forgotpassword", element: <ForgotPassword /> },
   sell: { path: "/sell", element: <Sell /> },
 };
@@ -66,6 +68,7 @@ const AppRouter = createBrowserRouter([
       Routes.sell,
       Routes.signUp,
       Routes.signIn,
+      Routes.signOut,
       Routes.forgotPassword,
       Routes.profile,
     ],
