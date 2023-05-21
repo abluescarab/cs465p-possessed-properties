@@ -1,0 +1,13 @@
+#profile-page {
+  display: flex;
+  flex-flow: row wrap;
+
+  .profile-name {
+    grid-column: span 2;
+  }
+
+  .profile-col {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+}

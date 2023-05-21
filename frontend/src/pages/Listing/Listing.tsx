@@ -41,6 +41,7 @@ const Listing = () => {
           <CardContent>
             <p className={"listing-description"}>{listing.description}</p>
             <div className={"listing-actions"}>
+              {/* TODO: add link to see offers on listing if owner */}
               <p className={"font-lg"}>
                 <span className={"bold"}>List Price:&nbsp;</span>
                 <span className={"listing-price"}>
