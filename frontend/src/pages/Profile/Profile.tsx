@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { setTitle } from "@/utils.tsx";
 import { UserContext } from "@/App.tsx";
 import axios from "axios";
+import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -72,7 +73,18 @@ const Profile = () => {
           </div>
           <div className={"profile-col"}>
             <h3>Listings</h3>
-            {/* TODO: load created listings */}
+            {dbUser &&
+              listings.map((listing) => (
+                <ListingCard
+                  key={listing.id}
+                  listingId={listing.id}
+                  name={listing.name}
+                  price={listing.price}
+                  bedrooms={listing.bedrooms}
+                  bathrooms={listing.bathrooms}
+                  area={listing.area}
+                />
+              ))}
           </div>
         </>
       ) : (
