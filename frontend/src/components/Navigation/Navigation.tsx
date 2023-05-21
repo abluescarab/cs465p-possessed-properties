@@ -1,14 +1,11 @@
 import "./Navigation.scss";
 import banner from "/banner.png";
 import { Link } from "react-router-dom";
-import { getAuth } from "firebase/auth";
-import firebaseApp from "@/firebase.ts";
 import { useContext } from "react";
 import { UserContext } from "@/App.tsx";
 import { Routes } from "@/AppRouter.tsx";
 
 const Navigation = () => {
-  const auth = getAuth(firebaseApp);
   const context = useContext(UserContext);
 
   return (

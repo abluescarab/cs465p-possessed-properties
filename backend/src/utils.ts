@@ -49,42 +49,6 @@ export async function find<T extends typeof ProjectBaseEntity>(
 }
 
 /**
- * Find a user and their owned listing.
- * @param request query request
- * @param reply reply to send to
- * @param user_email listing owner email address
- * @param listing_name name of the listing
- */
-export async function findUserAndListing(
-  request,
-  reply,
-  user_email: string,
-  listing_name: string
-): Promise<{ success: boolean; user: User; listing: Listing }> {
-  const user = await find(
-    request,
-    reply,
-    User,
-    { email: user_email },
-    `User with email ${user_email} not found`
-  );
-
-  const listing = await find(
-    request,
-    reply,
-    Listing,
-    { owner: user.entity, name: listing_name },
-    `Listing with name ${listing_name} not found`
-  );
-
-  return {
-    success: user.success && listing.success,
-    user: user.entity,
-    listing: listing.entity,
-  };
-}
-
-/**
  * Creates a new request body, removing provided entries.
  * @param body body to copy
  * @param remove entries to remove
