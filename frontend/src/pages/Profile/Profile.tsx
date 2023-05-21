@@ -1,5 +1,4 @@
 import "./Profile.scss";
-import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { setTitle } from "@/utils.tsx";
 import { UserContext } from "@/App.tsx";
@@ -9,6 +8,7 @@ const Profile = () => {
   const { user } = useContext(UserContext);
 
   const [dbUser, setDbUser] = useState(null);
+  const [doFetch, setDoFetch] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -18,12 +18,15 @@ const Profile = () => {
         data: { email: user.email },
       }).then((request) => {
         setDbUser(request.data);
-        setTitle(`${dbUser.name}'s Profile`);
+        setTitle(`${request.data.name}'s Profile`);
+        setDoFetch(false);
       });
     };
 
-    fetchUser();
-  }, [user, dbUser]);
+    if (user && doFetch) {
+      fetchUser();
+    }
+  }, [doFetch, user]);
 
   return (
     <article id={"profile-page"} className={"page"}>
