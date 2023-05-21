@@ -15,7 +15,7 @@ async function searchListings(data: {}) {
   return { data, result };
 }
 
-export async function listingsLoader() {
+export async function searchLoader() {
   return searchListings({});
 }
 
@@ -25,19 +25,19 @@ export async function listingLoader({ params }) {
   });
 }
 
-export async function regionLoader({ params }) {
+export async function searchRegionLoader({ params }) {
   return searchListings({
     region: params.listingRegion,
   });
 }
 
-export async function countryLoader({ params }) {
+export async function searchCountryLoader({ params }) {
   return searchListings({
     country: params.listingCountry,
   });
 }
 
-export async function hauntingTypeLoader({ params }) {
+export async function searchTypeLoader({ params }) {
   return searchListings({
     haunting_type: params.listingType.toLowerCase(),
   });

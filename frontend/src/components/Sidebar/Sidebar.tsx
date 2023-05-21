@@ -1,6 +1,6 @@
 import "./Sidebar.scss";
 import { useEffect, useState } from "react";
-import { listingsLoader } from "@/Loaders.tsx";
+import { searchLoader } from "@/Loaders.tsx";
 import { Link } from "react-router-dom";
 import { capitalize } from "@/utils.tsx";
 
@@ -10,7 +10,7 @@ const Sidebar = ({ id = "", className = "" }) => {
   const [hauntings, setHauntings] = useState({});
 
   const getListings = async () => {
-    const allListings = await listingsLoader();
+    const allListings = await searchLoader();
     const regionList = {};
     const countryList = {};
     const hauntingList = {};
