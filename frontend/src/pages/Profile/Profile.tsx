@@ -8,7 +8,10 @@ const Profile = () => {
   const { user } = useContext(UserContext);
 
   const [dbUser, setDbUser] = useState(null);
-  const [doFetch, setDoFetch] = useState(true);
+  const [listings, setListings] = useState([]);
+  const [offers, setOffers] = useState([]);
+  const [doContextFetch, setDoContextFetch] = useState(true);
+  const [doDbFetch, setDoDbFetch] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,14 +22,44 @@ const Profile = () => {
       }).then((request) => {
         setDbUser(request.data);
         setTitle(`${request.data.name}'s Profile`);
-        setDoFetch(false);
       });
     };
 
-    if (user && doFetch) {
+    const fetchListings = async () => {
+      await axios({
+        method: "SEARCH",
+        url: "http://localhost:8080/listings",
+        data: {
+          owner_email: dbUser.email,
+        },
+      }).then((response) => {
+        setListings(response.data);
+      });
+    };
+
+    const fetchOffers = async () => {
+      await axios({
+        method: "SEARCH",
+        url: "http://localhost:8080/offers",
+        data: {
+          buyer_email: dbUser.email,
+        },
+      }).then((response) => {
+        setOffers(response.data);
+      });
+    };
+
+    if (user && doContextFetch) {
       fetchUser();
+      setDoContextFetch(false);
     }
-  }, [doFetch, user]);
+
+    if (dbUser && doDbFetch) {
+      fetchListings();
+      fetchOffers();
+      setDoDbFetch(false);
+    }
+  }, [doDbFetch, doContextFetch, user, dbUser]);
 
   return (
     <article id={"profile-page"} className={"page"}>
