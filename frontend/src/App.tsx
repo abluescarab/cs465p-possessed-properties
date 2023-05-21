@@ -30,7 +30,10 @@ function App() {
         setCurrentUser(user);
       }
     } else {
-      if (location.pathname == Routes.sell.path) {
+      if (
+        location.pathname == Routes.sell.path ||
+        location.pathname == Routes.profile.path
+      ) {
         navigate(Routes.signIn.path);
       }
 
