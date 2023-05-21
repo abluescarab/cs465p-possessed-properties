@@ -6,7 +6,7 @@ import { UserContext } from "@/App.tsx";
 import { Routes } from "@/AppRouter.tsx";
 
 const Navigation = () => {
-  const context = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <nav>
@@ -21,8 +21,11 @@ const Navigation = () => {
       </div>
       <div className={"nav-column"}>
         <Link to={"/guide"}>Guide</Link>
-        {context.user ? (
-          <Link to={Routes.signOut.path}>Sign out</Link>
+        {user ? (
+          <>
+            <Link to={Routes.profile.path}>Profile</Link>
+            <Link to={Routes.signOut.path}>Sign out</Link>
+          </>
         ) : (
           <Link to={"/signin"}>Sign in</Link>
         )}
