@@ -17,6 +17,7 @@ interface TextInputProps extends ComponentBaseProps {
   style?: "underline" | "none";
   required?: boolean;
   ref?: ForwardedRef<HTMLInputElement>;
+  minLength?: number;
 }
 
 const TextInput: ComponentBase<TextInputProps> = forwardRef(
@@ -34,6 +35,7 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
       rightText = "",
       style = "underline",
       required = false,
+      minLength = 0,
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -64,6 +66,7 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             autoComplete={autoComplete}
             required={required}
             ref={ref}
+            minLength={minLength}
           />
           {rightText && <span className={"input-right"}>{rightText}</span>}
         </div>
