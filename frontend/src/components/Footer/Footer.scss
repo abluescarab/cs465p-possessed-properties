@@ -1,8 +1,10 @@
 footer {
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-content: center;
+  justify-content: center;
   height: var(--nav-height);
   padding: var(--padding-md) var(--padding-lg);
   max-width: var(--page-width);
+  gap: var(--padding-md);
 }
