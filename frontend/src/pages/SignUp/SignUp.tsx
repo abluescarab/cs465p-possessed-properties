@@ -18,7 +18,7 @@ const SignUp = () => {
   const userEmail = useRef<HTMLInputElement>(null);
   const userPassword = useRef<HTMLInputElement>(null);
   const userConfirmPassword = useRef<HTMLInputElement>(null);
-  const invalidNotice = useRef(null);
+  const notice = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setTitle("Sign Up");
@@ -64,23 +64,20 @@ const SignUp = () => {
         password: password.value,
       },
     })
-      .then((response) => {
-        if (response.status == HttpStatus.OK) {
-          invalidNotice.current.innerText = "";
-
-          signInWithEmailAndPassword(auth, email.value, password.value).then(
-            () => {
-              navigate(-1);
-            }
-          );
-        }
+      .then(() => {
+        signInWithEmailAndPassword(auth, email.value, password.value).then(
+          () => {
+            notice.current.innerText = "";
+            navigate(-1);
+          }
+        );
       })
       .catch((err) => {
         if (err.response.status == HttpStatus.CONFLICT) {
-          invalidNotice.current.innerText =
+          notice.current.innerText =
             "An account with that email already exists.";
         } else {
-          invalidNotice.current.innerText =
+          notice.current.innerText =
             "Account creation failed. Please try again.";
         }
       });
@@ -88,7 +85,7 @@ const SignUp = () => {
 
   return (
     <div id={"sign-up-page"}>
-      <div className={"invalid-notice"} ref={invalidNotice}></div>
+      <div className={"notice invalid"} ref={notice}></div>
       <Card className={"card-form"}>
         <CardTitle>Sign up</CardTitle>
         <CardContent>

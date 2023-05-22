@@ -1,0 +1,10 @@
+.notice {
+  text-align: center;
+  height: calc(var(--padding-xl) * 1.5);
+  line-height: calc(var(--padding-xl) * 1.5);
+  width: 400px;
+}
+
+.invalid {
+  color: red;
+}
