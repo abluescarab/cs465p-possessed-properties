@@ -6,7 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
 import firebaseApp from "@/firebase.ts";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  AuthErrorCodes,
+} from "firebase/auth";
 
 const SignIn = () => {
   const auth = getAuth(firebaseApp);
@@ -14,6 +18,7 @@ const SignIn = () => {
 
   const userEmail = useRef<HTMLInputElement>(null);
   const userPassword = useRef<HTMLInputElement>(null);
+  const invalidNotice = useRef(null);
 
   useEffect(() => {
     setTitle("Sign In");
@@ -30,13 +35,21 @@ const SignIn = () => {
         navigate(-1);
       })
       .catch((err) => {
-        // TODO: display error if sign in invalid
-        console.log(err);
+        if (err.code == AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
+          invalidNotice.current.innerText =
+            "Too many login attempts. Try again later.";
+        } else if (err.code == AuthErrorCodes.INVALID_PASSWORD) {
+          invalidNotice.current.innerText =
+            "Account not found with that email and password.";
+        } else {
+          invalidNotice.current.innerText = "Sign in failed. Please try again.";
+        }
       });
   };
 
   return (
     <div id={"sign-in-page"}>
+      <div className={"invalid-notice"} ref={invalidNotice}></div>
       <Card className={"card-form"}>
         <CardTitle>Sign in</CardTitle>
         <CardContent>
