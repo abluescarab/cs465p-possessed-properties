@@ -13,6 +13,7 @@ const Navigation = () => {
       <div className={"nav-column"}>
         <Link to={"/listings"}>Buy</Link>
         <Link to={"/sell"}>Sell</Link>
+        <Link to={"/guide"}>Guide</Link>
       </div>
       <div className={"nav-column"}>
         <Link to={"/"} className={"flex"}>
@@ -20,7 +21,6 @@ const Navigation = () => {
         </Link>
       </div>
       <div className={"nav-column"}>
-        <Link to={"/guide"}>Guide</Link>
         {user ? (
           <>
             <Link to={Routes.profile.path}>Profile</Link>
