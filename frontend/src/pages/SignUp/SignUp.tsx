@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "@/firebase.ts";
+import { HttpStatus } from "@/status_codes.ts";
 
 const SignUp = () => {
   const auth = getAuth(firebaseApp);
@@ -16,6 +17,8 @@ const SignUp = () => {
   const userName = useRef<HTMLInputElement>(null);
   const userEmail = useRef<HTMLInputElement>(null);
   const userPassword = useRef<HTMLInputElement>(null);
+  const userConfirmPassword = useRef<HTMLInputElement>(null);
+  const invalidNotice = useRef(null);
 
   useEffect(() => {
     setTitle("Sign Up");
@@ -24,30 +27,68 @@ const SignUp = () => {
   const signUp = async (e) => {
     e.preventDefault();
 
-    const email = userEmail.current.value;
-    const name = userName.current.value;
-    const password = userPassword.current.value;
+    const email = userEmail.current;
+    const password = userPassword.current;
+    const confirm = userConfirmPassword.current;
+
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("Must be a valid email");
+      email.reportValidity();
+      return;
+    } else {
+      email.setCustomValidity("");
+    }
+
+    if (password.validity.tooShort) {
+      password.setCustomValidity("Password must be at least 6 characters");
+      password.reportValidity();
+      return;
+    } else {
+      password.setCustomValidity("");
+    }
+
+    if (confirm.value !== password.value) {
+      confirm.setCustomValidity("Passwords must match");
+      confirm.reportValidity();
+      return;
+    } else {
+      confirm.setCustomValidity("");
+    }
 
     await axios({
       method: "POST",
       url: "http://localhost:8080/users",
       data: {
-        email,
-        name,
-        password,
+        email: email.value,
+        name: userName.current.value,
+        password: password.value,
       },
-    }).then((response) => {
-      console.log(response);
-      if (response.status == 200) {
-        signInWithEmailAndPassword(auth, email, password).then(() => {
-          navigate(-1);
-        });
-      }
-    });
+    })
+      .then((response) => {
+        if (response.status == HttpStatus.OK) {
+          invalidNotice.current.innerText = "";
+
+          signInWithEmailAndPassword(auth, email.value, password.value).then(
+            () => {
+              navigate(-1);
+            }
+          );
+        }
+      })
+      .catch((err) => {
+        if (err.response.status == HttpStatus.CONFLICT) {
+          invalidNotice.current.innerText =
+            "An account with that email already exists.";
+        } else {
+          invalidNotice.current.innerText =
+            "Account creation failed. Please try again.";
+        }
+      });
   };
 
   return (
     <div id={"sign-up-page"}>
+      <div className={"invalid-notice"} ref={invalidNotice}></div>
       <Card className={"card-form"}>
         <CardTitle>Sign up</CardTitle>
         <CardContent>
@@ -55,11 +96,12 @@ const SignUp = () => {
             <div className={"form-line"}>
               <TextInput
                 id={"name"}
-                label={"name"}
+                label={"Name"}
                 name={"name"}
                 placeholder={"e.g. Your Name"}
                 required
                 ref={userName}
+                autoComplete={"off"}
               />
             </div>
             <div className={"form-line"}>
@@ -71,6 +113,7 @@ const SignUp = () => {
                 type={"email"}
                 required
                 ref={userEmail}
+                autoComplete={"off"}
               />
             </div>
             <div className={"form-line"}>
@@ -82,9 +125,9 @@ const SignUp = () => {
                 placeholder={"e.g. hunter2"}
                 required
                 ref={userPassword}
+                minLength={6}
               />
             </div>
-            {/* TODO: verify passwords are the same */}
             <div className={"form-line"}>
               <TextInput
                 id={"confirm-password"}
@@ -93,6 +136,8 @@ const SignUp = () => {
                 type={"password"}
                 placeholder={"Passwords must match"}
                 required
+                ref={userConfirmPassword}
+                minLength={6}
               />
             </div>
             <div className={"form-line"}>
