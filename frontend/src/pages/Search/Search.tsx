@@ -16,8 +16,8 @@ const Search = () => {
 
   return (
     <div id={"search-page"} className={"page"}>
+      <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
       <section className={"listing-search"}>
-        <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
         {listings.map((listing: any) => {
           return (
             <ListingCard

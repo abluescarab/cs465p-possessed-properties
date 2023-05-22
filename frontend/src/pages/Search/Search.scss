@@ -3,16 +3,17 @@
   flex-flow: row wrap;
   gap: var(--padding-lg);
 
+  h2 {
+    margin: 0;
+    align-self: start;
+  }
+
   .listing-search {
     display: flex;
     flex-flow: row wrap;
+    align-content: start;
     gap: var(--padding-lg);
     flex: 1;
     justify-content: start;
-
-    h2 {
-      margin: 0 var(--padding-lg);
-      align-self: start;
-    }
   }
 }
