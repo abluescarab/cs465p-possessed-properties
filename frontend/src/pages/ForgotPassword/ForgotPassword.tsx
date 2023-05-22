@@ -3,16 +3,49 @@ import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import firebaseApp from "@/firebase.ts";
 
 const ForgotPassword = () => {
+  const auth = getAuth(firebaseApp);
+
+  const userEmail = useRef<HTMLInputElement>(null);
+  const notice = useRef<HTMLDivElement>(null);
+
+  const sendEmail = async (e) => {
+    e.preventDefault();
+
+    const email = userEmail.current;
+
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("Must be a valid email");
+      email.reportValidity();
+      return;
+    } else {
+      email.setCustomValidity("");
+    }
+
+    await sendPasswordResetEmail(auth, email.value)
+      .then(() => {
+        notice.current.classList.remove("invalid");
+        notice.current.innerText =
+          "Check your inbox for your password reset email.";
+      })
+      .catch(() => {
+        notice.current.classList.add("invalid");
+        notice.current.innerText = "No account with that email exists.";
+      });
+  };
+
   useEffect(() => {
     setTitle("Forgot Password");
   }, []);
 
   return (
     <div id={"forgot-password-page"}>
+      <div className={"notice"} ref={notice}></div>
       <Card className={"card-form"}>
         <CardTitle>Forgot password</CardTitle>
         <CardContent>
@@ -29,6 +62,7 @@ const ForgotPassword = () => {
                 placeholder={"e.g. yourname@email.com"}
                 type={"email"}
                 required
+                ref={userEmail}
               />
             </div>
             <div className={"form-line"}>
@@ -36,6 +70,7 @@ const ForgotPassword = () => {
                 type={"submit"}
                 color={"primary"}
                 className={"form-button"}
+                onClick={sendEmail}
               >
                 Submit
               </Button>
