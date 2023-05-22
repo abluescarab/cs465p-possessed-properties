@@ -4,7 +4,10 @@ footer {
   align-content: center;
   justify-content: center;
   height: var(--nav-height);
-  padding: var(--padding-md) var(--padding-lg);
   max-width: var(--page-width);
   gap: var(--padding-md);
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
