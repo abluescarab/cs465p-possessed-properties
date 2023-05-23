@@ -8,18 +8,18 @@
   display: flex;
   flex-flow: column nowrap;
 
-  .card-title {
+  .card-title:not(:empty) {
     font-size: var(--font-lg);
     font-weight: bold;
     @include padding(var(--padding-lg), left, right, top);
   }
 
-  .card-subtitle {
+  .card-subtitle:not(:empty) {
     font-size: var(--font-md);
     @include padding(var(--padding-lg), left, right);
   }
 
-  .card-image {
+  .card-image:not(:empty) {
     flex: 0;
     max-height: var(--card-image-height);
 
@@ -30,7 +30,7 @@
     }
   }
 
-  .card-content {
+  .card-content:not(:empty) {
     padding: var(--padding-lg);
     display: flex;
     flex-flow: column nowrap;
