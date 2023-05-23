@@ -1,0 +1,28 @@
+.popup-container {
+  z-index: 100;
+  background-color: var(--shadow-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .popup {
+    --popup-width: 400px;
+    --popup-height: 300px;
+
+    position: relative;
+    width: var(--popup-width);
+  }
+
+  .popup-buttons:not(:empty) {
+    margin-top: var(--padding-lg);
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--padding-lg);
+    align-self: center;
+  }
+}
