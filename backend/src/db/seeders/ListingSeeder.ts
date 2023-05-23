@@ -115,5 +115,144 @@ export class ListingSeeder extends Seeder {
       price: 2500000,
       haunting_type: "intelligent",
     });
+
+    em.create(Listing, {
+      owner: 6,
+      name: "Lalaurie Mansion",
+      address: "1140 Royal St, New Orleans",
+      region: "Louisiana",
+      country: "United States",
+      description:
+        "Built in 1831, this charming cornerstone of Louisiana history boasts " +
+        "10,284 square feet of haunted home living! 6 bedrooms and 7 bathrooms " +
+        "provide ample space to raise a family, move in your in-laws, and hide " +
+        "from the ghostly apparitions of Delphine MacCarthy Lalaurie. Lalaurie " +
+        "enslaved and tortured many people in this house, before fleeing in " +
+        "'34 after a fire broke out on the property. Luckily, after some " +
+        "restoration, this manor is ready to go and become the creepy " +
+        "exploitative bed and breakfast of your dreams!",
+      bedrooms: 6,
+      bathrooms: 7,
+      area: 10284,
+      price: 3550000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 7,
+      name: "The Castle",
+      address: "411 Craven Street, Beaufort",
+      region: "South Carolina",
+      country: "United States",
+      description:
+        "A surviving structure of South Carolina's battles, this property was " +
+        "used as a hospital for injured and dying soldiers. These militant " +
+        "apparitions serve as a permanent audience for the famous Gauche- A " +
+        "phantom jester, who has haunted the area since well before the " +
+        "house's construction in the late 1850s. Snap up your new ghostly " +
+        "roommates (and this 7932 sq ft, 5 bed/6 bath home) today!",
+      bedrooms: 5,
+      bathrooms: 6,
+      area: 7932,
+      price: 4050000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 8,
+      name: "The House of Death",
+      address: "14 W 10th St, New York",
+      region: "New York",
+      country: "United States",
+      description:
+        "This large estate has been converted into a series of apartments! " +
+        "Make a ghoulish amount of money renting out apartments in The Big " +
+        "Apple. Supernatural seekers and thrill finders will love the odd " +
+        "occurances and rumored curses that befall the residents. You deal " +
+        "with the deed. They deal with the dead. Win-win!",
+      bedrooms: 6,
+      bathrooms: 5,
+      area: 4750,
+      price: 4373000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 9,
+      name: "Molly Brown House",
+      address: "1340 N Pennsylvania St, Denver",
+      region: "Colorado",
+      country: "United States",
+      description:
+        "This quaint house has been restored and turned into a museum " +
+        "dedicated to the Unsinkable Molly Brown. Periodic reports of a " +
+        "disappearing friendly woman indicate this is a more passive " +
+        "haunting- With less risk of bodily harm, insanity, ancient curses, " +
+        "bleeding walls, or possession! Make a buck, or turn it back into a " +
+        "residential home. 2 beds, 2 baths, and 1300 sq ft make this one of " +
+        "the smaller (and cheaper) spooky entries on this website.",
+      bedrooms: 2,
+      bathrooms: 2,
+      area: 1328,
+      price: 450000,
+      haunting_type: "intelligent",
+    });
+
+    em.create(Listing, {
+      owner: 10,
+      name: "Sallie House",
+      address: "508 N 2nd St, Atchison",
+      region: "Kansas",
+      country: "United States",
+      description:
+        "This 3 bed, one-and-a-half bath house serves as a portal between the " +
+        "mortal and spirit realms. All sorts of paranormal activites have been " +
+        "reported, ranging from harmless to hair-raising. Made famous by the " +
+        "ghost Sallie, who died from a failed appendectomy at 6 years old, it " +
+        "has gained world-wide reknown. This would be a lovely haven for a " +
+        "lesbian couple, as Sallie does not like men.",
+      bedrooms: 3,
+      bathrooms: 1.5,
+      area: 1464,
+      price: 400000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 1,
+      name: "Snedeker House",
+      address: "208 Meriden Ave, Southington",
+      region: "Connecticut",
+      country: "United States",
+      description:
+        "After the former residents moved, paranormal activities have " +
+        "DEFINITELY ceased. This 3000 sq ft house SHOULD be free of evil " +
+        "spirits and malicious nightmares... Free to whoever is willing to " +
+        "risk it.",
+      bedrooms: 5,
+      bathrooms: 2,
+      area: 3084,
+      price: 0,
+      haunting_type: "poltergeist",
+    });
+
+    em.create(Listing, {
+      owner: 2,
+      name: "Monte Cristo Homestead",
+      address: "1 Homestead Lane, Junee",
+      region: "New South Wales",
+      country: "Australia",
+      description:
+        "This homestead is a package deal with two buildings. A cabin and a " +
+        "manor share an expanse of land, providing an excellent opportunity " +
+        "for families looking for an additional dwelling unit. Excusing the " +
+        "occasional ghostly harassment, this colorful property could serve " +
+        "all your storage and baby-raising needs!",
+      bedrooms: 5,
+      bathrooms: 4,
+      area: 3200,
+      price: 750000,
+      haunting_type: "unknown",
+    });
   }
 }
