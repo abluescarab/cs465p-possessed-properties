@@ -221,6 +221,15 @@
           "nullable": false,
           "mappedType": "integer"
         },
+        "haunting_type": {
+          "name": "haunting_type",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "purchased_at": {
           "name": "purchased_at",
           "type": "timestamptz(0)",
@@ -351,8 +360,18 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "accepted_at": {
-          "name": "accepted_at",
+        "status": {
+          "name": "status",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "'open'",
+          "mappedType": "string"
+        },
+        "closed_at": {
+          "name": "closed_at",
           "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,

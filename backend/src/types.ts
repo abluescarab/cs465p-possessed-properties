@@ -11,25 +11,16 @@ export interface IUserRouteData {
 
 /**
  * The current status of an {@link Offer}.
+ *
+ * <em>open</em>: The offer is still open.
+ *
+ * <em>closed</em>: The offer was closed by the buyer.
+ *
+ * <em>accepted</em>: The offer was accepted by the listing owner.
+ *
+ * <em>rejected</em>: The offer was rejected by the listing owner.
  */
-export enum OfferStatus {
-  /**
-   * The offer is still open.
-   */
-  OPEN,
-  /**
-   * The offer was closed by the offer creator.
-   */
-  CLOSED,
-  /**
-   * The offer was accepted by the listing owner.
-   */
-  ACCEPTED,
-  /**
-   * The offer was rejected by the listing owner.
-   */
-  REJECTED,
-}
+export type OfferStatus = "open" | "closed" | "accepted" | "rejected";
 
 /**
  * <em>unknown</em>: Usually reserved for locations with multiple hauntings or
