@@ -2,20 +2,19 @@
 
 #profile-page {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   gap: var(--padding-md);
 
   .profile-name {
     grid-column: span 2;
   }
 
-  .profile-col {
-    flex: 1 1 calc(50% - var(--padding-md));
+  .profile-section {
     min-width: 0;
     display: flex;
     flex-flow: row wrap;
     gap: var(--padding-md);
-    align-content: start;
+    justify-content: start;
   }
 
   .offer-table {

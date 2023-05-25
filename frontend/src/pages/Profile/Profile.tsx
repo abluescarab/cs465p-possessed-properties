@@ -44,7 +44,25 @@ const Profile = () => {
       {dbUser ? (
         <>
           <h2 className={"profile-name"}>{dbUser.name}</h2>
-          <div className={"profile-col"}>
+          <section className={"profile-section"}>
+            <h3>Listings</h3>
+            {dbUser.created_listings.length > 0 ? (
+              dbUser.created_listings.map((listing) => (
+                <ListingCard
+                  key={listing.id}
+                  listingId={listing.id}
+                  name={listing.name}
+                  price={listing.price}
+                  bedrooms={listing.bedrooms}
+                  bathrooms={listing.bathrooms}
+                  area={listing.area}
+                />
+              ))
+            ) : (
+              <p>No created listings.</p>
+            )}
+          </section>
+          <section className={"profile-section"}>
             <h3>Offers</h3>
             {dbUser.created_offers.length > 0 ? (
               <table className={"offer-table"}>
@@ -54,6 +72,7 @@ const Profile = () => {
                     <th>Listing</th>
                     <th>Price</th>
                     <th>Offer</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,6 +96,7 @@ const Profile = () => {
                         </td>
                         <td>${offer.listing.price.toLocaleString()}</td>
                         <td>${offer.price.toLocaleString()}</td>
+                        <td>{offer.status}</td>
                       </tr>
                     );
                   })}
@@ -85,25 +105,7 @@ const Profile = () => {
             ) : (
               <p>No offers made.</p>
             )}
-          </div>
-          <div className={"profile-col"}>
-            <h3>Listings</h3>
-            {dbUser.created_listings.length > 0 ? (
-              dbUser.created_listings.map((listing) => (
-                <ListingCard
-                  key={listing.id}
-                  listingId={listing.id}
-                  name={listing.name}
-                  price={listing.price}
-                  bedrooms={listing.bedrooms}
-                  bathrooms={listing.bathrooms}
-                  area={listing.area}
-                />
-              ))
-            ) : (
-              <p>No created listings.</p>
-            )}
-          </div>
+          </section>
         </>
       ) : (
         <p>Loading...</p>
