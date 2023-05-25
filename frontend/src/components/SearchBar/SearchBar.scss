@@ -26,10 +26,11 @@
   }
 
   .search-results {
+    @include box-shadow(false);
+
     background-color: var(--background-color-light);
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
-    border-top: 1px solid var(--border-color);
     display: none;
     margin-top: calc(var(--border-radius) * -1);
     position: absolute;
@@ -78,7 +79,6 @@
 }
 
 .small-search-bar {
-  // TODO: fix dropdown size/background color/border
   width: calc(100% - var(--padding-lg) * 2);
   @include margin(var(--padding-lg), left, right, bottom);
 
