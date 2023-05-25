@@ -227,7 +227,7 @@ export class ListingSeeder extends Seeder {
       description:
         "After the former residents moved, paranormal activities have " +
         "DEFINITELY ceased. This 3000 sq ft house SHOULD be free of evil " +
-        "spirits and malicious nightmares... Free to whoever is willing to " +
+        "spirits and malicious nightmares... free to whoever is willing to " +
         "risk it.",
       bedrooms: 5,
       bathrooms: 2,
@@ -253,6 +253,79 @@ export class ListingSeeder extends Seeder {
       area: 3200,
       price: 750000,
       haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 3,
+      name: "Hull House",
+      address: "800 S Halsted, Chicago",
+      region: "Illinois",
+      country: "United States",
+      description:
+        "Stories of the weird and macabre stem from this complex's origins as " +
+        "a home for wayward women and children. Nestled on the outskirts of " +
+        "University of Illinois Chicago's campus, this is a glorious " +
+        "opportunity for student housing! Students will love sharing the scary " +
+        "scenarios they encounter while living in communal housing with their " +
+        "friends.",
+      bedrooms: 22,
+      bathrooms: 8,
+      area: 14000,
+      price: 550000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      owner: 4,
+      name: "Dudley House",
+      address: "197 North Ashwood Avenue, Ventura",
+      region: "California",
+      country: "United States",
+      description:
+        'The "faulty wiring" in this old farmhouse may cause some odd ' +
+        "occurances in the kitchen. No murder or mayhem here. 4 bedrooms, " +
+        "2 bathrooms, and 1566 square feet of familial bliss, blessed by the " +
+        "ancestors of the original Dudley family.",
+      bedrooms: 4,
+      bathrooms: 2,
+      area: 1566,
+      price: 457000,
+      haunting_type: "unknown",
+    });
+
+    em.create(Listing, {
+      name: "Hallahan Funeral Home",
+      address: "208 Meriden Ave, Southington",
+      region: "Connecticut",
+      country: "United States",
+      description:
+        "After the deceased were removed, a family moved in. This DEFINITELY " +
+        "did not result in a pocket dimension, complete with addition " +
+        "timeloop. This 3000 sq ft house is COMPLETELY FILLED with evil spirits " +
+        "and malicious nightmares... free to whoever is willing to risk it.",
+      bedrooms: 5,
+      bathrooms: 2,
+      area: 3084,
+      price: 0,
+      haunting_type: "poltergeist",
+    });
+
+    em.create(Listing, {
+      name: "Villisca Ax Murder House",
+      address: "508 East 2nd Street, Villisca",
+      region: "Iowa",
+      country: "United States",
+      description:
+        "Don't let the cold case murder spree attached to this house's " +
+        "history deter you from this adorable cottage-inspired abode! The 8 " +
+        "victims, 6 of which were children, were given proper funerals. May " +
+        "they rest in peace, and you rest your head in this 3 bed, 2 bath " +
+        "slice of Iowa heaven.",
+      bedrooms: 3,
+      bathrooms: 2,
+      area: 1475,
+      price: 375000,
+      haunting_type: "residual",
     });
   }
 }
