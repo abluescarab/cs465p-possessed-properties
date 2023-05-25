@@ -1,5 +1,3 @@
-import { User } from "./db/entities/User.js";
-import { Listing } from "./db/entities/Listing.js";
 import { HttpStatus } from "./status_codes.js";
 import { ProjectBaseEntity } from "./db/entities/ProjectBaseEntity.js";
 import { OfferStatus } from "./types.js";
@@ -24,15 +22,19 @@ export async function error(reply, code, message) {
  * @param mapping entity properties
  * @param errorMessage error message to display if entity is missing or
  *  deleted
+ * @param populate which fields to populate and return with the object
  */
 export async function find<T extends typeof ProjectBaseEntity>(
   request,
   reply,
   type: T,
   mapping,
-  errorMessage?: string
+  errorMessage?: string,
+  populate?: string[]
 ): Promise<{ success: boolean; entity: any }> {
-  const entity = await request.em.findOne(type, mapping);
+  const entity = await request.em.findOne(type, mapping, {
+    populate: populate,
+  });
 
   if (entity === null || entity.deleted_at !== null) {
     if (errorMessage !== undefined) {

@@ -3,21 +3,33 @@
 #profile-page {
   display: flex;
   flex-flow: row wrap;
+  gap: var(--padding-md);
 
   .profile-name {
     grid-column: span 2;
   }
 
   .profile-col {
-    flex: 1 1 50%;
+    flex: 1 1 calc(50% - var(--padding-md));
     min-width: 0;
     display: flex;
     flex-flow: row wrap;
     gap: var(--padding-md);
+    align-content: start;
+  }
+
+  .offer-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td, th {
+      border: 1px solid var(--border-color);
+      padding: var(--padding-sm);
+    }
   }
 }
 
-@media screen and (max-width: $window-sm) {
+@media screen and (max-width: $window-md) {
   #profile-page .profile-col {
     flex: 1 1 100%;
   }

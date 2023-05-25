@@ -1,6 +1,6 @@
 import "./Listing.scss";
 import { useLoaderData } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
@@ -13,8 +13,10 @@ import Card, {
 } from "@/components/Card/Card.tsx";
 import Popup from "@/components/Popup/Popup.tsx";
 import axios from "axios";
+import { UserContext } from "@/App.tsx";
 
 const Listing = () => {
+  const { user } = useContext(UserContext);
   const loaderData: any = useLoaderData();
   const listing = loaderData.result;
 
@@ -25,9 +27,15 @@ const Listing = () => {
   };
 
   const confirmPurchase = async () => {
-    // TODO: send offer
     await axios({
       method: "POST",
+      url: "http://localhost:8080/offers",
+      data: {
+        token: user.accessToken,
+        uid: user.uid,
+        listing_id: listing.id,
+        price: listing.price,
+      },
     });
   };
 

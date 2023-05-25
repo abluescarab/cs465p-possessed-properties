@@ -15,16 +15,29 @@ export function createUserRoutes(app: FastifyInstance) {
   // endregion
 
   // region SEARCH - find a user
-  app.search("/users", async (request, reply) => {
-    const { email } = request.body;
+  app.search<{
+    Body: { populate_listings?: boolean; populate_offers?: boolean };
+  }>("/users", async (request, reply) => {
+    const { populate_listings, populate_offers, email } = request.body;
 
     try {
+      const populate = [];
+
+      if (populate_listings) {
+        populate.push("created_listings");
+      }
+
+      if (populate_offers) {
+        populate.push("created_offers", "created_offers.listing");
+      }
+
       const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        `User with email ${email} not found`
+        `User with email ${email} not found`,
+        populate
       );
 
       if (!success) {

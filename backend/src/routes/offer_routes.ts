@@ -5,6 +5,7 @@ import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
 import { OfferStatus } from "../types.js";
+import verifyToken from "../firebase/verify_token.js";
 
 export function createOfferRoutes(app: FastifyInstance) {
   // region GET - get all offers
@@ -21,6 +22,7 @@ export function createOfferRoutes(app: FastifyInstance) {
     const { buyer_email, listing_name, price } = request.body;
     let listings = null;
 
+    // TODO: populate offer listing
     try {
       if (buyer_email !== undefined) {
         const { success, entity: buyer } = await find(request, reply, User, {
@@ -71,17 +73,32 @@ export function createOfferRoutes(app: FastifyInstance) {
 
   // region POST - create an offer
   app.post<{
-    Body: { buyer_email: string; listing_id: number; price: number };
+    Body: {
+      token: string;
+      uid: string;
+      listing_id: number;
+      price: number;
+    };
   }>("/offers", async (request, reply) => {
-    const { buyer_email, listing_id, price } = request.body;
+    const { token, uid, listing_id, price } = request.body;
 
     try {
+      const user = verifyToken(token, uid);
+
+      if (!user) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          "Invalid user authentication token"
+        );
+      }
+
       const buyer = await find(
         request,
         reply,
         User,
-        { email: buyer_email },
-        `User with email ${buyer_email} not found`
+        { email: user.email },
+        `User with email ${user.email} not found`
       );
 
       if (!buyer.success) {
@@ -117,69 +134,29 @@ export function createOfferRoutes(app: FastifyInstance) {
   // endregion
 
   // region PUT - update an offer
-  app.put<{ Body: { id: number; price?: number; status?: string } }>(
-    "/offers",
-    async (request, reply) => {
-      const { id, price, status } = request.body;
-
-      try {
-        const { success, entity: offer } = await find(
-          request,
-          reply,
-          Offer,
-          { id },
-          `Offer with ID ${id} not found`
-        );
-
-        if (!success) {
-          return reply;
-        }
-
-        if (offer.closed_at !== null) {
-          return error(
-            reply,
-            HttpStatus.FORBIDDEN,
-            `Offer with ID ${id} has been accepted and is not modifiable`
-          );
-        }
-
-        if (price !== undefined) {
-          offer.price = price;
-        }
-
-        switch (status) {
-          case httpStatus(OfferStatus.CLOSED):
-            offer.status = OfferStatus.CLOSED;
-            break;
-          case httpStatus(OfferStatus.ACCEPTED):
-            offer.status = OfferStatus.ACCEPTED;
-            break;
-          case httpStatus(OfferStatus.REJECTED):
-            offer.status = OfferStatus.REJECTED;
-            break;
-          default:
-            return error(reply, HttpStatus.BAD_REQUEST, `Unknown status type`);
-        }
-
-        if (offer.status !== OfferStatus.OPEN) {
-          offer.closed_at = new Date();
-        }
-
-        await request.em.flush();
-        app.log.info(offer);
-        return reply.send(offer);
-      } catch (err) {
-        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
-      }
-    }
-  );
-  // endregion
-
-  // region DELETE - mark an offer as deleted
-  app.delete<{ Body: { id: number } }>("/offers", async (request, reply) => {
-    const { id } = request.body;
+  app.put<{
+    Body: {
+      token: string;
+      uid: string;
+      id: number;
+      price?: number;
+      status?: string;
+    };
+  }>("/offers", async (request, reply) => {
+    const { token, uid, id, price, status } = request.body;
 
     try {
+      const user = verifyToken(token, uid);
+
+      if (!user) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          "Invalid user authentication token"
+        );
+      }
+
+      // TODO: ensure specified user owns offer
       const { success, entity: offer } = await find(
         request,
         reply,
@@ -200,15 +177,84 @@ export function createOfferRoutes(app: FastifyInstance) {
         );
       }
 
-      // offer.deleted_at = new Date();
-      await request.em.remove(offer);
-      await request.em.flush();
+      if (price !== undefined) {
+        offer.price = price;
+      }
 
+      switch (status) {
+        case httpStatus(OfferStatus.CLOSED):
+          offer.status = OfferStatus.CLOSED;
+          break;
+        case httpStatus(OfferStatus.ACCEPTED):
+          offer.status = OfferStatus.ACCEPTED;
+          break;
+        case httpStatus(OfferStatus.REJECTED):
+          offer.status = OfferStatus.REJECTED;
+          break;
+        default:
+          return error(reply, HttpStatus.BAD_REQUEST, `Unknown status type`);
+      }
+
+      if (offer.status !== OfferStatus.OPEN) {
+        offer.closed_at = new Date();
+      }
+
+      await request.em.flush();
       app.log.info(offer);
       return reply.send(offer);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
   });
+  // endregion
+
+  // region DELETE - mark an offer as deleted
+  app.delete<{ Body: { token: string; uid: string; id: number } }>(
+    "/offers",
+    async (request, reply) => {
+      const { token, uid, id } = request.body;
+
+      // TODO: ensure user owns offer
+      try {
+        const user = verifyToken(token, uid);
+
+        if (!user) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            "Invalid user authentication token"
+          );
+        }
+
+        const { success, entity: offer } = await find(
+          request,
+          reply,
+          Offer,
+          { id },
+          `Offer with ID ${id} not found`
+        );
+
+        if (!success) {
+          return reply;
+        }
+
+        if (offer.closed_at !== null) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            `Offer with ID ${id} has been accepted and is not modifiable`
+          );
+        }
+
+        await request.em.remove(offer);
+        await request.em.flush();
+
+        app.log.info(offer);
+        return reply.send(offer);
+      } catch (err) {
+        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
+      }
+    }
+  );
   // endregion
 }

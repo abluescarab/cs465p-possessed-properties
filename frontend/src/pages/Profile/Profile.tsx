@@ -9,72 +9,77 @@ const Profile = () => {
   const { user } = useContext(UserContext);
 
   const [dbUser, setDbUser] = useState(null);
-  const [listings, setListings] = useState([]);
-  const [offers, setOffers] = useState([]);
-  const [doContextFetch, setDoContextFetch] = useState(true);
-  const [doDbFetch, setDoDbFetch] = useState(true);
+  const [doFetch, setDoFetch] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       await axios({
         method: "SEARCH",
         url: "http://localhost:8080/users",
-        data: { email: user.email },
-      }).then((request) => {
-        setDbUser(request.data);
-        setTitle(`${request.data.name}'s Profile`);
-      });
-    };
-
-    const fetchListings = async () => {
-      await axios({
-        method: "SEARCH",
-        url: "http://localhost:8080/listings",
         data: {
-          owner_email: dbUser.email,
+          email: user.email,
+          populate_listings: true,
+          populate_offers: true,
         },
-      }).then((response) => {
-        setListings(response.data);
-      });
+      })
+        .then((request) => {
+          setDbUser(request.data);
+          setTitle(`${request.data.name}'s Profile`);
+        })
+        .catch(() => {
+          // ignore
+        });
     };
 
-    const fetchOffers = async () => {
-      await axios({
-        method: "SEARCH",
-        url: "http://localhost:8080/offers",
-        data: {
-          buyer_email: dbUser.email,
-        },
-      }).then((response) => {
-        setOffers(response.data);
-      });
-    };
-
-    if (user && doContextFetch) {
+    if (user && doFetch) {
       fetchUser();
-      setDoContextFetch(false);
+      setDoFetch(false);
     }
-
-    if (dbUser && doDbFetch) {
-      fetchListings();
-      fetchOffers();
-      setDoDbFetch(false);
-    }
-  }, [doDbFetch, doContextFetch, user, dbUser]);
+  }, [doFetch, user, dbUser]);
 
   return (
     <article id={"profile-page"} className={"page"}>
       {dbUser ? (
         <>
-          <h2 className={"profile-name"}>{dbUser && dbUser.name}</h2>
+          <h2 className={"profile-name"}>{dbUser.name}</h2>
           <div className={"profile-col"}>
             <h3>Offers</h3>
-            {/* TODO: load created offers */}
+            {dbUser.created_offers.length > 0 ? (
+              <table className={"offer-table"}>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Listing</th>
+                    <th>Price</th>
+                    <th>Offer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dbUser.created_offers.map((offer) => {
+                    return (
+                      <tr key={offer.id}>
+                        <td>
+                          {new Date(offer.created_at).toLocaleString("en-US", {
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })}
+                        </td>
+                        <td>{offer.listing.name}</td>
+                        <td>${offer.listing.price.toLocaleString()}</td>
+                        <td>${offer.price.toLocaleString()}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p>No offers made.</p>
+            )}
           </div>
           <div className={"profile-col"}>
             <h3>Listings</h3>
-            {dbUser &&
-              listings.map((listing) => (
+            {dbUser.created_listings.length > 0 ? (
+              dbUser.created_listings.map((listing) => (
                 <ListingCard
                   key={listing.id}
                   listingId={listing.id}
@@ -84,7 +89,10 @@ const Profile = () => {
                   bathrooms={listing.bathrooms}
                   area={listing.area}
                 />
-              ))}
+              ))
+            ) : (
+              <p>No created listings.</p>
+            )}
           </div>
         </>
       ) : (
