@@ -31,13 +31,13 @@ export class User extends ProjectBaseEntity {
   @OneToMany(() => Listing, (listing) => listing.owner, {
     cascade: [Cascade.ALL],
   })
-  created_listings!: Collection<Listing>;
+  listings!: Collection<Listing>;
 
   /**
    * Offers made by the user on other properties.
    */
   @OneToMany(() => Offer, (offer) => offer.buyer, { cascade: [Cascade.ALL] })
-  created_offers!: Collection<Offer>;
+  offers!: Collection<Offer>;
 
   /**
    * Properties purchased on the platform.
@@ -45,5 +45,5 @@ export class User extends ProjectBaseEntity {
   @OneToMany(() => Listing, (listing) => listing.purchased_by, {
     cascade: [Cascade.ALL],
   })
-  purchased_properties!: Collection<Listing>;
+  purchases!: Collection<Listing>;
 }
