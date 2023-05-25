@@ -4,6 +4,7 @@ import { setTitle } from "@/utils.tsx";
 import { UserContext } from "@/App.tsx";
 import axios from "axios";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -20,6 +21,7 @@ const Profile = () => {
           email: user.email,
           populate_listings: true,
           populate_offers: true,
+          filter_deleted: false,
         },
       })
         .then((request) => {
@@ -64,7 +66,15 @@ const Profile = () => {
                             timeStyle: "short",
                           })}
                         </td>
-                        <td>{offer.listing.name}</td>
+                        <td>
+                          {offer.listing.deleted_at == null ? (
+                            <Link to={`/listings/${offer.listing.id}`}>
+                              {offer.listing.name}
+                            </Link>
+                          ) : (
+                            offer.listing.name
+                          )}
+                        </td>
                         <td>${offer.listing.price.toLocaleString()}</td>
                         <td>${offer.price.toLocaleString()}</td>
                       </tr>
