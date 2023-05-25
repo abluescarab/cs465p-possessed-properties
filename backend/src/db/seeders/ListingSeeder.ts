@@ -313,7 +313,7 @@ export class ListingSeeder extends Seeder {
 
     em.create(Listing, {
       owner: 6,
-      name: "Villisca Ax Murder House",
+      name: "Villisca Axe Murder House",
       address: "508 East 2nd Street, Villisca",
       region: "Iowa",
       country: "United States",
