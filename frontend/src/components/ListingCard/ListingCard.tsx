@@ -13,6 +13,7 @@ interface ListingProps extends ComponentBaseProps {
   bedrooms: number;
   bathrooms: number;
   area: number;
+  cancelled?: boolean;
 }
 
 const ListingCard: ComponentBase<ListingProps> = ({
@@ -22,6 +23,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
   bedrooms,
   bathrooms,
   area,
+  cancelled = false,
 }) => {
   const navigate = useNavigate();
 
@@ -33,7 +35,9 @@ const ListingCard: ComponentBase<ListingProps> = ({
     >
       <CardImage src={propertyImage} alt={`Image of ${name}`} />
       <CardContent>
-        <p className={"bold font-lg"}>${price.toLocaleString()}</p>
+        <p className={"bold font-lg"}>
+          {cancelled ? "Not for sale" : `$${price.toLocaleString()}`}
+        </p>
         <div className={"listing-card-content"}>
           <div className={"listing-card-content-item"}>
             <span className={"bold"}>{bedrooms}</span> bds

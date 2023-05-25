@@ -56,6 +56,7 @@ const Profile = () => {
                   bedrooms={listing.bedrooms}
                   bathrooms={listing.bathrooms}
                   area={listing.area}
+                  cancelled={listing.deleted_at}
                 />
               ))
             ) : (
