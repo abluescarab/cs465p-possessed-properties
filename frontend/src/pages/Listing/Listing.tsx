@@ -1,6 +1,6 @@
 import "./Listing.scss";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
@@ -14,36 +14,67 @@ import Card, {
 import axios from "axios";
 import { UserContext } from "@/App.tsx";
 import Popup from "@/components/Popup/Popup.tsx";
+import TextInput from "@/components/TextInput/TextInput.tsx";
 
 const Listing = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const loaderData: any = useLoaderData();
   const listing = loaderData.result;
+  const offerInput = useRef<HTMLInputElement>(null);
 
   const [showPopup, setShowPopup] = useState(false);
   const [userIsOwner, setUserIsOwner] = useState(false);
   const [popup, setPopup] = useState(null);
 
-  const confirmBuyPopup = (
+  const sendOffer = async (price) => {
+    await axios({
+      method: "POST",
+      url: "http://localhost:8080/offers",
+      data: {
+        token: user.accessToken,
+        uid: user.uid,
+        listing_id: listing.id,
+        price,
+      },
+    }).then(() => {
+      setPopup(successPopup(price));
+    });
+  };
+
+  const validateAndSend = async () => {
+    const amount = offerInput.current;
+
+    if (amount.validity.rangeUnderflow || amount.validity.valueMissing) {
+      amount.setCustomValidity("Number must be 0 or more");
+      amount.reportValidity();
+      return;
+    }
+
+    amount.setCustomValidity("");
+    await sendOffer(amount.value);
+  };
+
+  const cancelListing = async () => {
+    await axios({
+      method: "DELETE",
+      url: "http://localhost:8080/listings",
+      data: {
+        token: user.accessToken,
+        uid: user.uid,
+        id: listing.id,
+      },
+    }).then(() => {
+      navigate(-1);
+    });
+  };
+
+  const buyPopup = (
     <Popup
-      title={"Confirm Offer"}
+      title={"Confirm Buy"}
       primaryButton={"Yes"}
       secondaryButton={"No"}
-      onPrimaryClick={async () => {
-        await axios({
-          method: "POST",
-          url: "http://localhost:8080/offers",
-          data: {
-            token: user.accessToken,
-            uid: user.uid,
-            listing_id: listing.id,
-            price: listing.price,
-          },
-        }).then(() => {
-          setPopup(offerConfirmedPopup);
-        });
-      }}
+      onPrimaryClick={() => sendOffer(listing.price)}
       onSecondaryClick={() => setShowPopup(false)}
     >
       This action will send an offer for the full price of the listing. Are you
@@ -51,24 +82,35 @@ const Listing = () => {
     </Popup>
   );
 
-  const confirmClosePopup = (
+  const offerPopup = (
     <Popup
-      title={"Confirm Listing Close"}
+      title={"Confirm Offer"}
       primaryButton={"Yes"}
       secondaryButton={"No"}
-      onPrimaryClick={async () => {
-        await axios({
-          method: "DELETE",
-          url: "http://localhost:8080/listings",
-          data: {
-            token: user.accessToken,
-            uid: user.uid,
-            id: listing.id,
-          },
-        }).then(() => {
-          navigate(-1);
-        });
-      }}
+      onPrimaryClick={() => validateAndSend()}
+      onSecondaryClick={() => setShowPopup(false)}
+    >
+      <TextInput
+        id={"offer-amount"}
+        name={"offer-amount"}
+        leftText={"$"}
+        autoComplete={"off"}
+        placeholder={"0"}
+        required
+        label={"Offer amount"}
+        type={"number"}
+        ref={offerInput}
+        min={0}
+      />
+    </Popup>
+  );
+
+  const cancelPopup = (
+    <Popup
+      title={"Confirm Cancel"}
+      primaryButton={"Yes"}
+      secondaryButton={"No"}
+      onPrimaryClick={() => cancelListing()}
       onSecondaryClick={() => setShowPopup(false)}
     >
       This action will close the listing and cancel all current offers. Are you
@@ -76,18 +118,19 @@ const Listing = () => {
     </Popup>
   );
 
-  const offerConfirmedPopup = (
+  const successPopup = (price: number) => (
     <Popup
       title={"Offer Sent"}
       primaryButton={"OK"}
       onPrimaryClick={() => setShowPopup(false)}
     >
-      You have successfully sent an offer for this listing.
+      You have successfully sent an offer in the amount of $
+      {price.toLocaleString()}.
     </Popup>
   );
 
   const seeOffers = () => {
-    // TODO
+    // TODO: make new route in approuter?
   };
 
   useEffect(() => {
@@ -145,11 +188,11 @@ const Listing = () => {
                       color={"secondary"}
                       className={"action-button"}
                       onClick={() => {
-                        setPopup(confirmClosePopup);
+                        setPopup(cancelPopup);
                         setShowPopup(true);
                       }}
                     >
-                      Close Listing
+                      Cancel Listing
                     </Button>
                   </>
                 ) : (
@@ -159,7 +202,7 @@ const Listing = () => {
                       color={"primary"}
                       className={"action-button"}
                       onClick={() => {
-                        setPopup(confirmBuyPopup);
+                        setPopup(buyPopup);
                         setShowPopup(true);
                       }}
                     >
@@ -169,6 +212,10 @@ const Listing = () => {
                       type={"button"}
                       color={"secondary"}
                       className={"action-button"}
+                      onClick={() => {
+                        setPopup(offerPopup);
+                        setShowPopup(true);
+                      }}
                     >
                       Make Offer
                     </Button>

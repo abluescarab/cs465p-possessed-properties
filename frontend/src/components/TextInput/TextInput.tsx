@@ -18,6 +18,8 @@ interface TextInputProps extends ComponentBaseProps {
   required?: boolean;
   ref?: ForwardedRef<HTMLInputElement>;
   minLength?: number;
+  min?: string | number;
+  max?: string | number;
 }
 
 const TextInput: ComponentBase<TextInputProps> = forwardRef(
@@ -36,6 +38,8 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
       style = "underline",
       required = false,
       minLength = 0,
+      min = null,
+      max = null,
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -67,6 +71,8 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             required={required}
             ref={ref}
             minLength={minLength}
+            min={min}
+            max={max}
           />
           {rightText && <span className={"input-right"}>{rightText}</span>}
         </div>

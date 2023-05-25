@@ -76,30 +76,38 @@ const Profile = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dbUser.offers.map((offer) => {
-                    return (
-                      <tr key={offer.id}>
-                        <td>
-                          {new Date(offer.created_at).toLocaleString("en-US", {
-                            dateStyle: "short",
-                            timeStyle: "short",
-                          })}
-                        </td>
-                        <td>
-                          {offer.listing.deleted_at == null ? (
-                            <Link to={`/listings/${offer.listing.id}`}>
-                              {offer.listing.name}
-                            </Link>
-                          ) : (
-                            offer.listing.name
-                          )}
-                        </td>
-                        <td>${offer.listing.price.toLocaleString()}</td>
-                        <td>${offer.price.toLocaleString()}</td>
-                        <td>{capitalize(offer.status)}</td>
-                      </tr>
-                    );
-                  })}
+                  {dbUser.offers
+                    .sort(
+                      (o1, o2) =>
+                        new Date(o1.created_at) < new Date(o2.created_at)
+                    )
+                    .map((offer) => {
+                      return (
+                        <tr key={offer.id}>
+                          <td>
+                            {new Date(offer.created_at).toLocaleString(
+                              "en-US",
+                              {
+                                dateStyle: "short",
+                                timeStyle: "short",
+                              }
+                            )}
+                          </td>
+                          <td>
+                            {offer.listing.deleted_at == null ? (
+                              <Link to={`/listings/${offer.listing.id}`}>
+                                {offer.listing.name}
+                              </Link>
+                            ) : (
+                              offer.listing.name
+                            )}
+                          </td>
+                          <td>${offer.listing.price.toLocaleString()}</td>
+                          <td>${offer.price.toLocaleString()}</td>
+                          <td>{capitalize(offer.status)}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             ) : (
