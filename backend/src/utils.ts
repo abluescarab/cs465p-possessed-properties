@@ -1,6 +1,5 @@
 import { HttpStatus } from "./status_codes.js";
 import { ProjectBaseEntity } from "./db/entities/ProjectBaseEntity.js";
-import { OfferStatus } from "./types.js";
 import app from "./app.js";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 
@@ -75,23 +74,4 @@ export function createBody(body, remove: Array<string>) {
   }
 
   return data;
-}
-
-/**
- * Gets the HTTP request text for an {@link OfferStatus}.
- * @param type type of {@link OfferStatus}
- */
-export function httpStatus(type: OfferStatus) {
-  switch (type) {
-    case OfferStatus.OPEN:
-      return "open";
-    case OfferStatus.CLOSED:
-      return "close";
-    case OfferStatus.ACCEPTED:
-      return "accept";
-    case OfferStatus.REJECTED:
-      return "reject";
-    default:
-      return null;
-  }
 }

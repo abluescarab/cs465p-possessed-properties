@@ -1,10 +1,9 @@
 import { FastifyInstance } from "fastify";
 import { Offer } from "../db/entities/Offer.js";
-import { error, find, httpStatus } from "../utils.js";
+import { error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
-import { OfferStatus } from "../types.js";
 import verifyToken from "../firebase/verify_token.js";
 
 export function createOfferRoutes(app: FastifyInstance) {
@@ -192,21 +191,11 @@ export function createOfferRoutes(app: FastifyInstance) {
         offer.price = price;
       }
 
-      switch (status) {
-        case httpStatus(OfferStatus.CLOSED):
-          offer.status = OfferStatus.CLOSED;
-          break;
-        case httpStatus(OfferStatus.ACCEPTED):
-          offer.status = OfferStatus.ACCEPTED;
-          break;
-        case httpStatus(OfferStatus.REJECTED):
-          offer.status = OfferStatus.REJECTED;
-          break;
-        default:
-          return error(reply, HttpStatus.BAD_REQUEST, `Unknown status type`);
+      if (offer.status !== status) {
+        offer.status = status;
       }
 
-      if (offer.status !== OfferStatus.OPEN) {
+      if (offer.status !== "open") {
         offer.closed_at = new Date();
       }
 
