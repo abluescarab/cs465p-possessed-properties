@@ -2,6 +2,7 @@ import { HttpStatus } from "./status_codes.js";
 import { ProjectBaseEntity } from "./db/entities/ProjectBaseEntity.js";
 import { OfferStatus } from "./types.js";
 import app from "./app.js";
+import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 
 /**
  * Replies with a specified error and prints it to the console.
@@ -20,25 +21,34 @@ export async function error(reply, code, message) {
  * @param reply reply to send to
  * @param type type of entity
  * @param mapping entity properties
- * @param errorMessage error message to display if entity is missing or
+ * @param options extra options
+ * @param options.errorMessage error message to display if entity is missing or
  *  deleted
- * @param populate which fields to populate and return with the object
+ * @param options.populate which fields to populate and return with the object
+ * @param options.filterDeleted whether to exclude deleted entries
  */
 export async function find<T extends typeof ProjectBaseEntity>(
   request,
   reply,
   type: T,
   mapping,
-  errorMessage?: string,
-  populate?: string[]
+  options?: {
+    errorMessage?: string;
+    populate?: string[];
+    filterDeleted?: boolean;
+  }
 ): Promise<{ success: boolean; entity: any }> {
   const entity = await request.em.findOne(type, mapping, {
-    populate: populate,
+    populate: options.populate,
+    filters: {
+      [SOFT_DELETABLE_FILTER]:
+        options.filterDeleted != null ? options.filterDeleted : true,
+    },
   });
 
   if (entity === null || entity.deleted_at !== null) {
-    if (errorMessage !== undefined) {
-      await error(reply, HttpStatus.NOT_FOUND, errorMessage);
+    if (options.errorMessage !== undefined) {
+      await error(reply, HttpStatus.NOT_FOUND, options.errorMessage);
     }
 
     return {

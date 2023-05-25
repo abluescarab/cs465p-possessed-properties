@@ -27,10 +27,11 @@ export function createListingRoutes(app: FastifyInstance) {
       area?: number;
       price?: number;
       haunting_type?: HauntingType;
+      filter_deleted?: boolean;
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["owner_email"]);
-    const { id, owner_email } = request.body;
+    const data = createBody(request.body, ["owner_email", "filter_deleted"]);
+    const { id, owner_email, filter_deleted } = request.body;
 
     try {
       if (id !== undefined) {
@@ -45,9 +46,15 @@ export function createListingRoutes(app: FastifyInstance) {
       }
 
       if (owner_email !== undefined) {
-        const { success, entity: owner } = await find(request, reply, User, {
-          email: owner_email,
-        });
+        const { success, entity: owner } = await find(
+          request,
+          reply,
+          User,
+          {
+            email: owner_email,
+          },
+          { filterDeleted: filter_deleted }
+        );
 
         if (success) {
           data["owner"] = owner;
@@ -93,7 +100,7 @@ export function createListingRoutes(app: FastifyInstance) {
         reply,
         User,
         { email: owner_email },
-        `User with email ${owner_email} not found`
+        { errorMessage: `User with email ${owner_email} not found` }
       );
 
       if (success) {
@@ -145,7 +152,7 @@ export function createListingRoutes(app: FastifyInstance) {
         reply,
         Listing,
         { id },
-        `Listing with ID ${id} not found`
+        { errorMessage: `Listing with ID ${id} not found` }
       );
 
       if (!success) {
@@ -190,7 +197,7 @@ export function createListingRoutes(app: FastifyInstance) {
           reply,
           User,
           { email: buyer_email },
-          `User with email ${buyer_email} not found`
+          { errorMessage: `User with email ${buyer_email} not found` }
         );
 
         if (!success) {
@@ -228,7 +235,7 @@ export function createListingRoutes(app: FastifyInstance) {
         reply,
         Listing,
         { id },
-        `Listing with ID ${id} not found`
+        { errorMessage: `Listing with ID ${id} not found` }
       );
 
       if (!success) {

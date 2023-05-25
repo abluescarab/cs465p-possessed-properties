@@ -16,9 +16,15 @@ export function createUserRoutes(app: FastifyInstance) {
 
   // region SEARCH - find a user
   app.search<{
-    Body: { populate_listings?: boolean; populate_offers?: boolean };
+    Body: {
+      email: string;
+      populate_listings?: boolean;
+      populate_offers?: boolean;
+      filter_deleted?: boolean;
+    };
   }>("/users", async (request, reply) => {
-    const { populate_listings, populate_offers, email } = request.body;
+    const { email, populate_listings, populate_offers, filter_deleted } =
+      request.body;
 
     try {
       const populate = [];
@@ -36,8 +42,11 @@ export function createUserRoutes(app: FastifyInstance) {
         reply,
         User,
         { email },
-        `User with email ${email} not found`,
-        populate
+        {
+          errorMessage: `User with email ${email} not found`,
+          populate: populate,
+          filterDeleted: filter_deleted,
+        }
       );
 
       if (!success) {
@@ -93,13 +102,14 @@ export function createUserRoutes(app: FastifyInstance) {
   app.put<{ Body: IUserRouteData }>("/users", async (request, reply) => {
     const { email, name } = request.body;
 
+    // TODO: require user auth
     try {
       const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        `User with email ${email} not found`
+        { errorMessage: `User with email ${email} not found` }
       );
 
       if (!success) {
@@ -124,21 +134,20 @@ export function createUserRoutes(app: FastifyInstance) {
   }>("/users", async (request, reply) => {
     const { email } = request.body;
 
-    // TODO: require admin access
+    // TODO: require user auth
     try {
       const { success, entity: user } = await find(
         request,
         reply,
         User,
         { email },
-        `User with email ${email} not found`
+        { errorMessage: `User with email ${email} not found` }
       );
 
       if (!success) {
         return reply;
       }
 
-      // user.deleted_at = new Date();
       await request.em.remove(user);
       await request.em.flush();
 

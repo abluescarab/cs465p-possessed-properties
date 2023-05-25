@@ -16,18 +16,29 @@ export function createOfferRoutes(app: FastifyInstance) {
 
   // region SEARCH - find an offer
   app.search<{
-    Body: { buyer_email?: string; listing_name?: string; price?: number };
+    Body: {
+      buyer_email?: string;
+      listing_name?: string;
+      price?: number;
+      filter_deleted?: boolean;
+    };
   }>("/offers", async (request, reply) => {
     const data = {};
-    const { buyer_email, listing_name, price } = request.body;
+    const { buyer_email, listing_name, price, filter_deleted } = request.body;
     let listings = null;
 
     // TODO: populate offer listing
     try {
       if (buyer_email !== undefined) {
-        const { success, entity: buyer } = await find(request, reply, User, {
-          email: buyer_email,
-        });
+        const { success, entity: buyer } = await find(
+          request,
+          reply,
+          User,
+          {
+            email: buyer_email,
+          },
+          { filterDeleted: filter_deleted }
+        );
 
         if (success) {
           data["buyer"] = buyer;
@@ -98,7 +109,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         reply,
         User,
         { email: user.email },
-        `User with email ${user.email} not found`
+        { errorMessage: `User with email ${user.email} not found` }
       );
 
       if (!buyer.success) {
@@ -110,7 +121,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         reply,
         Listing,
         { id: listing_id },
-        `Listing with ID ${listing_id} not found`
+        { errorMessage: `Listing with ID ${listing_id} not found` }
       );
 
       if (!listing.success) {
@@ -162,7 +173,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         reply,
         Offer,
         { id },
-        `Offer with ID ${id} not found`
+        { errorMessage: `Offer with ID ${id} not found` }
       );
 
       if (!success) {
@@ -231,7 +242,7 @@ export function createOfferRoutes(app: FastifyInstance) {
           reply,
           Offer,
           { id },
-          `Offer with ID ${id} not found`
+          { errorMessage: `Offer with ID ${id} not found` }
         );
 
         if (!success) {
