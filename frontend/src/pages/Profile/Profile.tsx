@@ -1,6 +1,6 @@
 import "./Profile.scss";
 import { useContext, useEffect, useState } from "react";
-import { setTitle } from "@/utils.tsx";
+import { capitalize, setTitle } from "@/utils.tsx";
 import { UserContext } from "@/App.tsx";
 import axios from "axios";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
@@ -20,7 +20,7 @@ const Profile = () => {
         data: {
           email: user.email,
           filter_deleted: false,
-          populate: ["listings", "offers"],
+          populate: ["listings", "offers.listing"],
         },
       })
         .then((request) => {
@@ -96,7 +96,7 @@ const Profile = () => {
                         </td>
                         <td>${offer.listing.price.toLocaleString()}</td>
                         <td>${offer.price.toLocaleString()}</td>
-                        <td>{offer.status}</td>
+                        <td>{capitalize(offer.status)}</td>
                       </tr>
                     );
                   })}

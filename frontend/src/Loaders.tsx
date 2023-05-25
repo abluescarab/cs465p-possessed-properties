@@ -22,7 +22,7 @@ export async function searchLoader() {
 export async function listingLoader({ params }) {
   return searchListings({
     id: params.listingId,
-    populate_owner: true,
+    populate: ["owner"],
   });
 }
 
