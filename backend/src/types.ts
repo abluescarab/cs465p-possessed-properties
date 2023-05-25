@@ -1,15 +1,4 @@
 /**
- * Used to create and modify a {@link User}.
- */
-export interface IUserRouteData {
-  token: string;
-  uid: string;
-  email: string;
-  name: string;
-  password: string;
-}
-
-/**
  * The current status of an {@link Offer}.
  *
  * <em>open</em>: The offer is still open.
