@@ -5,7 +5,12 @@ import { faker } from "@faker-js/faker";
 
 export class UserSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
-    for (let i = 0; i < 10; i++) {
+    em.create(User, {
+      email: "email@email.com",
+      name: "Test User",
+    });
+
+    for (let i = 0; i < 9; i++) {
       const first = faker.name.firstName();
       const last = faker.name.lastName();
 
