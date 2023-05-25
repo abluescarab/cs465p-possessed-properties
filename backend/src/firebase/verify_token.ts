@@ -17,10 +17,20 @@ const getTokens = async () => {
 const secureTokens = await getTokens();
 
 const verifyToken = (token, uid) => {
-  const header64 = token.split(".")[0];
-  const header = JSON.parse(Buffer.from(header64, "base64").toString("ascii"));
+  if (!token) {
+    throw new Error("No user token provided");
+  }
+
+  if (!uid) {
+    throw new Error("No user uid provided");
+  }
 
   try {
+    const header64 = token.split(".")[0];
+    const header = JSON.parse(
+      Buffer.from(header64, "base64").toString("ascii")
+    );
+
     return jwt.verify(token, secureTokens[header.kid], {
       algorithms: ["RS256"],
       audience: "possessed-props",
@@ -28,7 +38,7 @@ const verifyToken = (token, uid) => {
       subject: uid,
     });
   } catch (error) {
-    return null;
+    throw new Error("Invalid user authentication token");
   }
 };
 
