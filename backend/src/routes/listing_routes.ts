@@ -28,14 +28,23 @@ export function createListingRoutes(app: FastifyInstance) {
       price?: number;
       haunting_type?: HauntingType;
       filter_deleted?: boolean;
+      populate_owner?: boolean;
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["owner_email", "filter_deleted"]);
-    const { id, owner_email, filter_deleted } = request.body;
+    const data = createBody(request.body, [
+      "owner_email",
+      "filter_deleted",
+      "populate_owner",
+    ]);
+    const { id, owner_email, filter_deleted, populate_owner } = request.body;
 
     try {
       if (id !== undefined) {
-        const listing = await request.em.findOne(Listing, { id });
+        const listing = await request.em.findOne(
+          Listing,
+          { id },
+          { populate: populate_owner ? ["owner"] : [] }
+        );
 
         if (!listing) {
           return error(reply, HttpStatus.NOT_FOUND, "No listings found");
@@ -50,9 +59,7 @@ export function createListingRoutes(app: FastifyInstance) {
           request,
           reply,
           User,
-          {
-            email: owner_email,
-          },
+          { email: owner_email },
           { filterDeleted: filter_deleted }
         );
 
@@ -61,7 +68,9 @@ export function createListingRoutes(app: FastifyInstance) {
         }
       }
 
-      const listings = await request.em.find(Listing, data);
+      const listings = await request.em.find(Listing, data, {
+        populate: populate_owner ? ["owner"] : [],
+      });
 
       if (listings.length === 0) {
         return error(reply, HttpStatus.NOT_FOUND, "No listings found");
