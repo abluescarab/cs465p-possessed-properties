@@ -1,5 +1,5 @@
 import "./Listing.scss";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
@@ -17,35 +17,90 @@ import Popup from "@/components/Popup/Popup.tsx";
 
 const Listing = () => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const loaderData: any = useLoaderData();
   const listing = loaderData.result;
 
   const [showPopup, setShowPopup] = useState(false);
+  const [userIsOwner, setUserIsOwner] = useState(false);
+  const [popup, setPopup] = useState(null);
 
-  const showConfirmation = () => {
-    setShowPopup(true);
-  };
+  const confirmBuyPopup = (
+    <Popup
+      title={"Confirm Offer"}
+      primaryButton={"Yes"}
+      secondaryButton={"No"}
+      onPrimaryClick={async () => {
+        await axios({
+          method: "POST",
+          url: "http://localhost:8080/offers",
+          data: {
+            token: user.accessToken,
+            uid: user.uid,
+            listing_id: listing.id,
+            price: listing.price,
+          },
+        }).then(() => {
+          setPopup(offerConfirmedPopup);
+        });
+      }}
+      onSecondaryClick={() => setShowPopup(false)}
+    >
+      This action will send an offer for the full price of the listing. Are you
+      sure you want to continue?
+    </Popup>
+  );
 
-  const confirmPurchase = async () => {
-    await axios({
-      method: "POST",
-      url: "http://localhost:8080/offers",
-      data: {
-        token: user.accessToken,
-        uid: user.uid,
-        listing_id: listing.id,
-        price: listing.price,
-      },
-    });
-  };
+  const confirmClosePopup = (
+    <Popup
+      title={"Confirm Listing Close"}
+      primaryButton={"Yes"}
+      secondaryButton={"No"}
+      onPrimaryClick={async () => {
+        await axios({
+          method: "DELETE",
+          url: "http://localhost:8080/listings",
+          data: {
+            token: user.accessToken,
+            uid: user.uid,
+            id: listing.id,
+          },
+        }).then(() => {
+          navigate(-1);
+        });
+      }}
+      onSecondaryClick={() => setShowPopup(false)}
+    >
+      This action will close the listing and cancel all current offers. Are you
+      sure you want to continue?
+    </Popup>
+  );
 
-  const cancelPurchase = () => {
-    setShowPopup(false);
+  const offerConfirmedPopup = (
+    <Popup
+      title={"Offer Sent"}
+      primaryButton={"OK"}
+      onPrimaryClick={() => setShowPopup(false)}
+    >
+      You have successfully sent an offer for this listing.
+    </Popup>
+  );
+
+  const seeOffers = () => {
+    // TODO
   };
 
   useEffect(() => {
     setTitle(listing.name);
   }, [listing]);
+
+  useEffect(() => {
+    if (user && listing && listing.owner.email === user.email) {
+      setUserIsOwner(true);
+    } else {
+      setUserIsOwner(false);
+    }
+  }, [listing, user]);
 
   return (
     <>
@@ -69,45 +124,62 @@ const Listing = () => {
             <CardContent>
               <p className={"listing-description"}>{listing.description}</p>
               <div className={"listing-actions"}>
-                {/* TODO: add link to see offers on listing if owner */}
                 <p className={"font-lg"}>
                   <span className={"bold"}>List Price:&nbsp;</span>
                   <span className={"listing-price"}>
                     ${listing.price.toLocaleString()}
                   </span>
                 </p>
-                <Button
-                  type={"button"}
-                  color={"primary"}
-                  className={"action-button"}
-                  onClick={showConfirmation}
-                >
-                  Buy
-                </Button>
-                <Button
-                  type={"button"}
-                  color={"secondary"}
-                  className={"action-button"}
-                >
-                  Make Offer
-                </Button>
+                {userIsOwner ? (
+                  <>
+                    <Button
+                      type={"button"}
+                      color={"primary"}
+                      className={"action-button"}
+                      onClick={seeOffers}
+                    >
+                      See Offers
+                    </Button>
+                    <Button
+                      type={"button"}
+                      color={"secondary"}
+                      className={"action-button"}
+                      onClick={() => {
+                        setPopup(confirmClosePopup);
+                        setShowPopup(true);
+                      }}
+                    >
+                      Close Listing
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      type={"button"}
+                      color={"primary"}
+                      className={"action-button"}
+                      onClick={() => {
+                        setPopup(confirmBuyPopup);
+                        setShowPopup(true);
+                      }}
+                    >
+                      Buy
+                    </Button>
+                    <Button
+                      type={"button"}
+                      color={"secondary"}
+                      className={"action-button"}
+                    >
+                      Make Offer
+                    </Button>
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>
         </article>
       </div>
-      {showPopup && (
-        <Popup
-          title={"Confirm Purchase"}
-          primaryButton={"Yes"}
-          secondaryButton={"No"}
-          primaryButtonOnClick={confirmPurchase}
-          secondaryButtonOnClick={cancelPurchase}
-        >
-          This action will send a purchase offer for the full price of the
-          listing. Are you sure you want to continue?
-        </Popup>
-      )}
+      {showPopup && popup}
     </>
   );
 };

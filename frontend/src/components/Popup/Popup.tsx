@@ -32,20 +32,24 @@ const Popup: ComponentBase<PopupProps> = ({
           {children}
           {(primaryButton || secondaryButton) && (
             <div className={"popup-buttons"}>
-              <Button
-                className={"action-button"}
-                color={"primary"}
-                onClick={primaryButtonOnClick}
-              >
-                {primaryButton}
-              </Button>
-              <Button
-                className={"action-button"}
-                color={"secondary"}
-                onClick={secondaryButtonOnClick}
-              >
-                {secondaryButton}
-              </Button>
+              {primaryButton && (
+                <Button
+                  className={"action-button"}
+                  color={"primary"}
+                  onClick={onPrimaryClick}
+                >
+                  {primaryButton}
+                </Button>
+              )}
+              {secondaryButton && (
+                <Button
+                  className={"action-button"}
+                  color={"secondary"}
+                  onClick={onSecondaryClick}
+                >
+                  {secondaryButton}
+                </Button>
+              )}
             </div>
           )}
         </CardContent>
