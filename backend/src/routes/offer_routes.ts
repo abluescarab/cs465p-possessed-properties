@@ -157,9 +157,9 @@ export function createOfferRoutes(app: FastifyInstance) {
     const { token, uid, id, price, status } = request.body;
 
     try {
-      const user = verifyToken(token, uid);
+      const authenticated = verifyToken(token, uid);
 
-      if (!user) {
+      if (!authenticated) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,

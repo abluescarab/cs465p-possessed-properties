@@ -4,6 +4,7 @@ import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import type { HauntingType } from "../types.js";
+import { OfferStatus } from "../types.js";
 
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
@@ -152,7 +153,10 @@ export function createListingRoutes(app: FastifyInstance) {
         reply,
         Listing,
         { id },
-        { errorMessage: `Listing with ID ${id} not found` }
+        {
+          errorMessage: `Listing with ID ${id} not found`,
+          populate: ["offers"],
+        }
       );
 
       if (!success) {
@@ -209,6 +213,11 @@ export function createListingRoutes(app: FastifyInstance) {
         listing.purchased_at = new Date();
 
         // TODO: close/reject all offers
+        listing.offers.forEach((offer) => {
+          if (offer.status == OfferStatus.OPEN) {
+            offer.status = OfferStatus.CLOSED;
+          }
+        });
       }
 
       if (haunting_type !== undefined) {
@@ -235,7 +244,10 @@ export function createListingRoutes(app: FastifyInstance) {
         reply,
         Listing,
         { id },
-        { errorMessage: `Listing with ID ${id} not found` }
+        {
+          errorMessage: `Listing with ID ${id} not found`,
+          populate: ["offers"],
+        }
       );
 
       if (!success) {
@@ -251,6 +263,7 @@ export function createListingRoutes(app: FastifyInstance) {
         );
       }
 
+      // TODO: close/reject all offers
       await request.em.remove(listing);
       await request.em.flush();
 

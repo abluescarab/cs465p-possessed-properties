@@ -2,6 +2,8 @@
  * Used to create and modify a {@link User}.
  */
 export interface IUserRouteData {
+  token: string;
+  uid: string;
   email: string;
   name: string;
   password: string;

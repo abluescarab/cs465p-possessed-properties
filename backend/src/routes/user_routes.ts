@@ -4,6 +4,7 @@ import { error, find } from "../utils.js";
 import { HttpStatus } from "../status_codes.js";
 import { IUserRouteData } from "../types.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import verifyToken from "../firebase/verify_token.js";
 
 export function createUserRoutes(app: FastifyInstance) {
   const auth = getAuth(app.firebase);
@@ -100,10 +101,19 @@ export function createUserRoutes(app: FastifyInstance) {
 
   // region PUT - update a user
   app.put<{ Body: IUserRouteData }>("/users", async (request, reply) => {
-    const { email, name } = request.body;
+    const { token, uid, email, name } = request.body;
 
-    // TODO: require user auth
     try {
+      const authenticated = verifyToken(token, uid);
+
+      if (!authenticated) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          "Invalid user authentication token"
+        );
+      }
+
       const { success, entity: user } = await find(
         request,
         reply,
@@ -134,7 +144,7 @@ export function createUserRoutes(app: FastifyInstance) {
   }>("/users", async (request, reply) => {
     const { email } = request.body;
 
-    // TODO: require user auth
+    // TODO: require user/admin auth
     try {
       const { success, entity: user } = await find(
         request,
