@@ -294,6 +294,7 @@ export class ListingSeeder extends Seeder {
     });
 
     em.create(Listing, {
+      owner: 5,
       name: "Hallahan Funeral Home",
       address: "208 Meriden Ave, Southington",
       region: "Connecticut",
@@ -311,6 +312,7 @@ export class ListingSeeder extends Seeder {
     });
 
     em.create(Listing, {
+      owner: 6,
       name: "Villisca Ax Murder House",
       address: "508 East 2nd Street, Villisca",
       region: "Iowa",
