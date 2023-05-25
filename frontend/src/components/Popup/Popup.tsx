@@ -9,9 +9,9 @@ import Button from "@/components/Button/Button.tsx";
 interface PopupProps extends ComponentBaseProps {
   title?: string;
   primaryButton?: string;
-  primaryButtonOnClick?: MouseEventHandler;
+  onPrimaryClick?: MouseEventHandler;
   secondaryButton?: string;
-  secondaryButtonOnClick?: MouseEventHandler;
+  onSecondaryClick?: MouseEventHandler;
 }
 
 const Popup: ComponentBase<PopupProps> = ({
@@ -20,9 +20,9 @@ const Popup: ComponentBase<PopupProps> = ({
   title = "",
   children = null,
   primaryButton = "",
-  primaryButtonOnClick = null,
+  onPrimaryClick = null,
   secondaryButton = "",
-  secondaryButtonOnClick = null,
+  onSecondaryClick = null,
 }) => {
   return (
     <div id={id} className={`popup-container ${className}`}>

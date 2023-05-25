@@ -11,9 +11,9 @@ import Card, {
   CardSubtitle,
   CardTitle,
 } from "@/components/Card/Card.tsx";
-import Popup from "@/components/Popup/Popup.tsx";
 import axios from "axios";
 import { UserContext } from "@/App.tsx";
+import Popup from "@/components/Popup/Popup.tsx";
 
 const Listing = () => {
   const { user } = useContext(UserContext);
