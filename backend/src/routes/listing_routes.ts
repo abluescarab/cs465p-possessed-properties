@@ -4,6 +4,7 @@ import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import type { HauntingType } from "../types.js";
+import verifyToken from "../firebase/verify_token.js";
 
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
@@ -16,7 +17,7 @@ export function createListingRoutes(app: FastifyInstance) {
   app.search<{
     Body: {
       id?: number;
-      owner_email?: string;
+      owner_id?: number;
       name?: string;
       address?: string;
       region?: string;
@@ -28,48 +29,36 @@ export function createListingRoutes(app: FastifyInstance) {
       price?: number;
       haunting_type?: HauntingType;
       filter_deleted?: boolean;
-      populate_owner?: boolean;
+      populate?: string[];
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, [
-      "owner_email",
-      "filter_deleted",
-      "populate_owner",
-    ]);
-    const { id, owner_email, filter_deleted, populate_owner } = request.body;
+    const data = createBody(request.body, ["filter_deleted", "populate"]);
+    const { id, filter_deleted, populate } = request.body;
 
     try {
       if (id !== undefined) {
-        const listing = await request.em.findOne(
+        const { success, entity: listing } = await find(
+          request,
+          reply,
           Listing,
           { id },
-          { populate: populate_owner ? ["owner"] : [] }
+          {
+            errorMessage: `Listing with ID ${id} not found`,
+            populate,
+            filterDeleted: filter_deleted,
+          }
         );
 
-        if (!listing) {
-          return error(reply, HttpStatus.NOT_FOUND, "No listings found");
+        if (!success) {
+          return reply;
         }
 
         app.log.info(listing);
         return reply.send(listing);
       }
 
-      if (owner_email !== undefined) {
-        const { success, entity: owner } = await find(
-          request,
-          reply,
-          User,
-          { email: owner_email },
-          { filterDeleted: filter_deleted }
-        );
-
-        if (success) {
-          data["owner"] = owner;
-        }
-      }
-
       const listings = await request.em.find(Listing, data, {
-        populate: populate_owner ? ["owner"] : [],
+        populate,
       });
 
       if (listings.length === 0) {
@@ -87,7 +76,8 @@ export function createListingRoutes(app: FastifyInstance) {
   // region POST - create a listing
   app.post<{
     Body: {
-      owner_email: string;
+      token: string;
+      uid: string;
       name: string;
       address?: string;
       region: string;
@@ -100,25 +90,28 @@ export function createListingRoutes(app: FastifyInstance) {
       haunting_type: HauntingType;
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["owner_email"]);
-    const { owner_email } = request.body;
+    const data = createBody(request.body, ["token", "uid"]);
+    const { token, uid } = request.body;
 
     try {
-      const { success, entity: owner } = await find(
+      const authUser = verifyToken(token, uid);
+
+      const { success, entity: user } = await find(
         request,
         reply,
         User,
-        { email: owner_email },
-        { errorMessage: `User with email ${owner_email} not found` }
+        { email: authUser.email },
+        { errorMessage: `User with email ${authUser.email} not found` }
       );
 
-      if (success) {
-        data["owner"] = owner;
-      } else {
+      if (!success) {
         return reply;
       }
 
-      const listing = await request.em.create(Listing, data);
+      const listing = await request.em.create(Listing, {
+        owner: user,
+        ...data,
+      });
       await request.em.flush();
 
       app.log.info("Created new listing: ", listing);
@@ -132,6 +125,8 @@ export function createListingRoutes(app: FastifyInstance) {
   // region PUT - update a listing
   app.put<{
     Body: {
+      token: string;
+      uid: string;
       id: number;
       name?: string;
       description?: string;
@@ -144,6 +139,8 @@ export function createListingRoutes(app: FastifyInstance) {
     };
   }>("/listings", async (request, reply) => {
     const {
+      token,
+      uid,
       id,
       name,
       description,
@@ -156,6 +153,8 @@ export function createListingRoutes(app: FastifyInstance) {
     } = request.body;
 
     try {
+      const authUser = verifyToken(token, uid);
+
       const { success, entity: listing } = await find(
         request,
         reply,
@@ -163,12 +162,22 @@ export function createListingRoutes(app: FastifyInstance) {
         { id },
         {
           errorMessage: `Listing with ID ${id} not found`,
-          populate: ["offers"],
+          populate: ["owner", "offers"],
         }
       );
 
       if (!success) {
         return reply;
+      }
+
+      const user = await request.em.findOne(User, { email: authUser.email });
+
+      if (user.id != listing.owner.id) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `User does not have permission to modify listing with ID ${id}`
+        );
       }
 
       if (listing.purchased_at !== null) {
@@ -203,6 +212,10 @@ export function createListingRoutes(app: FastifyInstance) {
         listing.price = price;
       }
 
+      if (haunting_type !== undefined) {
+        listing.haunting_type = haunting_type;
+      }
+
       if (buyer_email !== undefined) {
         const { success, entity: buyer } = await find(
           request,
@@ -220,16 +233,13 @@ export function createListingRoutes(app: FastifyInstance) {
         listing.purchased_by = buyer;
         listing.purchased_at = new Date();
 
+        // TODO: find offer to accept
         // TODO: close/reject all offers
         listing.offers.forEach((offer) => {
           if (offer.status == "open") {
             offer.status = "rejected";
           }
         });
-      }
-
-      if (haunting_type !== undefined) {
-        listing.haunting_type = haunting_type;
       }
 
       await request.em.flush();
@@ -242,44 +252,58 @@ export function createListingRoutes(app: FastifyInstance) {
   // endregion
 
   // region DELETE - mark a listing as deleted
-  app.delete<{ Body: { id: number } }>("/listings", async (request, reply) => {
-    const { id } = request.body;
+  app.delete<{ Body: { token: string; uid: string; id: number } }>(
+    "/listings",
+    async (request, reply) => {
+      const { token, uid, id } = request.body;
 
-    // TODO: require authentication (?)
-    try {
-      const { success, entity: listing } = await find(
-        request,
-        reply,
-        Listing,
-        { id },
-        {
-          errorMessage: `Listing with ID ${id} not found`,
-          populate: ["offers"],
-        }
-      );
+      try {
+        const authUser = verifyToken(token, uid);
 
-      if (!success) {
-        return reply;
-      }
-
-      // TODO: test
-      if (listing.purchased_at !== null) {
-        return error(
+        const { success, entity: listing } = await find(
+          request,
           reply,
-          HttpStatus.FORBIDDEN,
-          `Listing with ID ${id} has been purchased and is not modifiable`
+          Listing,
+          { id },
+          {
+            errorMessage: `Listing with ID ${id} not found`,
+            populate: ["owner", "offers"],
+          }
         );
+
+        if (!success) {
+          return reply;
+        }
+
+        const user = await request.em.findOne(User, { email: authUser.email });
+
+        if (user.id != listing.owner.id) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            `User does not have permission to modify listing with ID ${id}`
+          );
+        }
+
+        // TODO: test
+        if (listing.purchased_at !== null) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            `Listing with ID ${id} has been purchased and is not modifiable`
+          );
+        }
+
+        // TODO: close/reject all offers
+        await request.em.remove(listing);
+        await request.em.flush();
+
+        app.log.info(listing);
+        return reply.send(listing);
+      } catch (err) {
+        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
       }
-
-      // TODO: close/reject all offers
-      await request.em.remove(listing);
-      await request.em.flush();
-
-      app.log.info(listing);
-      return reply.send(listing);
-    } catch (err) {
-      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
     }
-  });
+  );
   // endregion
 }
