@@ -19,25 +19,13 @@ export function createUserRoutes(app: FastifyInstance) {
   app.search<{
     Body: {
       email: string;
-      populate_listings?: boolean;
-      populate_offers?: boolean;
       filter_deleted?: boolean;
+      populate?: boolean;
     };
   }>("/users", async (request, reply) => {
-    const { email, populate_listings, populate_offers, filter_deleted } =
-      request.body;
+    const { email, filter_deleted, populate } = request.body;
 
     try {
-      const populate = [];
-
-      if (populate_listings) {
-        populate.push("created_listings");
-      }
-
-      if (populate_offers) {
-        populate.push("created_offers", "created_offers.listing");
-      }
-
       const { success, entity: user } = await find(
         request,
         reply,
@@ -45,7 +33,7 @@ export function createUserRoutes(app: FastifyInstance) {
         { email },
         {
           errorMessage: `User with email ${email} not found`,
-          populate: populate,
+          populate,
           filterDeleted: filter_deleted,
         }
       );
@@ -104,9 +92,9 @@ export function createUserRoutes(app: FastifyInstance) {
     const { token, uid, email, name } = request.body;
 
     try {
-      const authenticated = verifyToken(token, uid);
+      const authUser = verifyToken(token, uid);
 
-      if (!authenticated) {
+      if (!authUser) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,

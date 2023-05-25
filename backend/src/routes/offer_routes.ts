@@ -1,10 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { Offer } from "../db/entities/Offer.js";
-import { error, find } from "../utils.js";
+import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
 import verifyToken from "../firebase/verify_token.js";
+import { OfferStatus } from "../types.js";
 
 export function createOfferRoutes(app: FastifyInstance) {
   // region GET - get all offers
@@ -16,58 +17,42 @@ export function createOfferRoutes(app: FastifyInstance) {
   // region SEARCH - find an offer
   app.search<{
     Body: {
-      buyer_email?: string;
-      listing_name?: string;
+      id?: number;
+      buyer_id?: number;
+      listing_id?: number;
       price?: number;
+      status?: OfferStatus;
       filter_deleted?: boolean;
+      populate?: string[];
     };
   }>("/offers", async (request, reply) => {
-    const data = {};
-    const { buyer_email, listing_name, price, filter_deleted } = request.body;
-    let listings = null;
+    const data = createBody(request.body, ["id", "filter_deleted", "populate"]);
 
-    // TODO: populate offer listing
+    const { id, filter_deleted, populate } = request.body;
+
     try {
-      if (buyer_email !== undefined) {
-        const { success, entity: buyer } = await find(
+      if (id !== undefined) {
+        const { success, entity: offer } = await find(
           request,
           reply,
-          User,
+          Offer,
+          { id },
           {
-            email: buyer_email,
-          },
-          { filterDeleted: filter_deleted }
+            errorMessage: `Offer with ID ${id} not found`,
+            populate,
+            filterDeleted: filter_deleted,
+          }
         );
 
-        if (success) {
-          data["buyer"] = buyer;
-        } else {
-          return error(reply, HttpStatus.NOT_FOUND, "No offers found");
+        if (!success) {
+          return reply;
         }
+
+        app.log.info(offer);
+        return reply.send(offer);
       }
 
-      if (listing_name !== undefined) {
-        listings = await request.em.find(Listing, { name: listing_name });
-
-        if (listings.length === 0) {
-          return error(reply, HttpStatus.NOT_FOUND, "No offers found");
-        }
-      }
-
-      if (price !== undefined) {
-        data["price"] = price;
-      }
-
-      let offers = [];
-
-      if (listings?.length > 0) {
-        for (const listing of listings) {
-          const dataListing = Object.assign({}, { listing }, data);
-          offers = offers.concat(await request.em.find(Offer, dataListing));
-        }
-      } else {
-        offers = await request.em.find(Offer, data);
-      }
+      const offers = await request.em.find(Offer, data, { populate });
 
       if (offers.length === 0) {
         return error(reply, HttpStatus.NOT_FOUND, `No offers found`);
@@ -93,22 +78,14 @@ export function createOfferRoutes(app: FastifyInstance) {
     const { token, uid, listing_id, price } = request.body;
 
     try {
-      const user = verifyToken(token, uid);
-
-      if (!user) {
-        return error(
-          reply,
-          HttpStatus.FORBIDDEN,
-          "Invalid user authentication token"
-        );
-      }
+      const authUser = verifyToken(token, uid);
 
       const buyer = await find(
         request,
         reply,
         User,
-        { email: user.email },
-        { errorMessage: `User with email ${user.email} not found` }
+        { email: authUser.email },
+        { errorMessage: `User with email ${authUser.email} not found` }
       );
 
       if (!buyer.success) {
@@ -156,27 +133,31 @@ export function createOfferRoutes(app: FastifyInstance) {
     const { token, uid, id, price, status } = request.body;
 
     try {
-      const authenticated = verifyToken(token, uid);
+      const authUser = verifyToken(token, uid);
 
-      if (!authenticated) {
-        return error(
-          reply,
-          HttpStatus.FORBIDDEN,
-          "Invalid user authentication token"
-        );
-      }
-
-      // TODO: ensure specified user owns offer
       const { success, entity: offer } = await find(
         request,
         reply,
         Offer,
         { id },
-        { errorMessage: `Offer with ID ${id} not found` }
+        {
+          errorMessage: `Offer with ID ${id} not found`,
+          populate: ["buyer", "listing.owner"],
+        }
       );
 
       if (!success) {
         return reply;
+      }
+
+      const user = await request.em.findOne(User, { email: authUser.email });
+
+      if (user.id != offer.buyer.id || user.id != offer.listing.owner.id) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `User does not have permission to modify offer with ID ${id}`
+        );
       }
 
       if (offer.closed_at !== null) {
@@ -191,7 +172,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         offer.price = price;
       }
 
-      if (offer.status !== status) {
+      if (status !== undefined) {
         offer.status = status;
       }
 
@@ -216,26 +197,31 @@ export function createOfferRoutes(app: FastifyInstance) {
 
       // TODO: ensure user owns offer
       try {
-        const user = verifyToken(token, uid);
-
-        if (!user) {
-          return error(
-            reply,
-            HttpStatus.FORBIDDEN,
-            "Invalid user authentication token"
-          );
-        }
+        const authUser = verifyToken(token, uid);
 
         const { success, entity: offer } = await find(
           request,
           reply,
           Offer,
           { id },
-          { errorMessage: `Offer with ID ${id} not found` }
+          {
+            errorMessage: `Offer with ID ${id} not found`,
+            populate: ["buyer", "listing.owner"],
+          }
         );
 
         if (!success) {
           return reply;
+        }
+
+        const user = await request.em.findOne(User, { email: authUser.email });
+
+        if (user.id != offer.buyer.id || user.id != offer.listing.owner.id) {
+          return error(
+            reply,
+            HttpStatus.FORBIDDEN,
+            `User does not have permission to modify offer with ID ${id}`
+          );
         }
 
         if (offer.closed_at !== null) {

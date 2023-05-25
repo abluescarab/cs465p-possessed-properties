@@ -19,9 +19,8 @@ const Profile = () => {
         url: "http://localhost:8080/users",
         data: {
           email: user.email,
-          populate_listings: true,
-          populate_offers: true,
           filter_deleted: false,
+          populate: ["listings", "offers"],
         },
       })
         .then((request) => {
@@ -46,8 +45,8 @@ const Profile = () => {
           <h2 className={"profile-name"}>{dbUser.name}</h2>
           <section className={"profile-section"}>
             <h3>Listings</h3>
-            {dbUser.created_listings.length > 0 ? (
-              dbUser.created_listings.map((listing) => (
+            {dbUser.listings.length > 0 ? (
+              dbUser.listings.map((listing) => (
                 <ListingCard
                   key={listing.id}
                   listingId={listing.id}
@@ -65,7 +64,7 @@ const Profile = () => {
           </section>
           <section className={"profile-section"}>
             <h3>Offers</h3>
-            {dbUser.created_offers.length > 0 ? (
+            {dbUser.offers.length > 0 ? (
               <table className={"offer-table"}>
                 <thead>
                   <tr>
@@ -77,7 +76,7 @@ const Profile = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dbUser.created_offers.map((offer) => {
+                  {dbUser.offers.map((offer) => {
                     return (
                       <tr key={offer.id}>
                         <td>
