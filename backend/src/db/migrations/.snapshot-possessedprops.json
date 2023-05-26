@@ -230,6 +230,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "img_uri": {
+          "name": "img_uri",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "purchased_at": {
           "name": "purchased_at",
           "type": "timestamptz(0)",

@@ -82,6 +82,12 @@ export class Listing extends ProjectBaseEntity {
   haunting_type!: HauntingType;
 
   /**
+   * The uploaded image URI.
+   */
+  @Property()
+  imgUri!: string;
+
+  /**
    * When the property was purchased and the listing closed.
    */
   @Property()
