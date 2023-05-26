@@ -20,6 +20,7 @@ interface TextInputProps extends ComponentBaseProps {
   minLength?: number;
   min?: string | number;
   max?: string | number;
+  accept?: string;
 }
 
 const TextInput: ComponentBase<TextInputProps> = forwardRef(
@@ -40,16 +41,17 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
       minLength = 0,
       min = null,
       max = null,
+      accept = "",
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
       <div className={"input-wrapper"}>
-        {id && label ? (
+        {id && label && (
           <p className={`label-wrapper ${required ? "required" : ""}`}>
             <label htmlFor={id}>{label}</label>
           </p>
-        ) : null}
+        )}
         <div className={"input-box-wrapper"}>
           {leftText && <span className={"input-left"}>{leftText}</span>}
           <input
@@ -73,6 +75,7 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             minLength={minLength}
             min={min}
             max={max}
+            accept={accept}
           />
           {rightText && <span className={"input-right"}>{rightText}</span>}
         </div>
