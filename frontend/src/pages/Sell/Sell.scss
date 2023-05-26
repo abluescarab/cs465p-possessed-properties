@@ -1,0 +1,37 @@
+@use "../../theme/abstracts/variables" as *;
+
+#sell-page {
+  .card-content {
+    //flex-flow: row wrap;
+  }
+
+  #listing-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    width: 100%;
+    gap: var(--padding-lg);
+
+    .form-col {
+      display: flex;
+      flex-flow: column wrap;
+      gap: var(--padding-md);
+    }
+
+    select, textarea {
+      min-width: 100%;
+      width: calc(100% - var(--padding-md) * 2);
+    }
+
+    .span-full {
+      grid-column: span 2;
+      text-align:center;
+    }
+  }
+}
+
+@media screen and (max-width: $window-md) {
+  .form-col {
+    grid-column: span 2;
+  }
+}
