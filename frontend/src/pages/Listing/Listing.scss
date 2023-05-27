@@ -5,6 +5,10 @@
     gap: var(--padding-md);
     max-width: var(--page-width);
 
+    .card {
+      width: 100%;
+    }
+
     .listing-image {
       align-self: center;
 
