@@ -38,6 +38,7 @@ const Profile = () => {
     }
   }, [doFetch, user, dbUser]);
 
+  // TODO: let user reopen listing?
   return (
     <article id={"profile-page"} className={"page"}>
       {dbUser ? (

@@ -32,7 +32,11 @@ const ListingCard: ComponentBase<ListingProps> = ({
     <Card
       className={"listing-card"}
       shadow={"hover"}
-      onClick={() => navigate(`/listings/${listingId}`)}
+      onClick={() => {
+        if (!cancelled) {
+          navigate(`/listings/${listingId}`);
+        }
+      }}
     >
       <CardImage
         src={`http://localhost:9000/possessedprops/${image}`}
