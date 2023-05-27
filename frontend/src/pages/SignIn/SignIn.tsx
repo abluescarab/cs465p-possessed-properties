@@ -2,19 +2,21 @@ import "./SignIn.scss";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Location, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { setTitle } from "@/utils.tsx";
+import { navigateLast, setTitle } from "@/utils.tsx";
 import firebaseApp from "@/firebase.ts";
 import {
   getAuth,
   signInWithEmailAndPassword,
   AuthErrorCodes,
 } from "firebase/auth";
+import { Routes } from "@/AppRouter.tsx";
 
 const SignIn = () => {
   const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
+  const location: Location = useLocation();
 
   const userEmail = useRef<HTMLInputElement>(null);
   const userPassword = useRef<HTMLInputElement>(null);
@@ -43,7 +45,12 @@ const SignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         notice.current.innerText = "";
-        navigate(-1);
+
+        if (location.state) {
+          navigateLast(navigate, location);
+        } else {
+          navigate(Routes.home.path);
+        }
       })
       .catch((err) => {
         if (err.code == AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {

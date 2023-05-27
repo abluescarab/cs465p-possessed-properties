@@ -1,7 +1,7 @@
 import "./Listing.scss";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
-import { setTitle } from "@/utils.tsx";
+import { navigateNext, setTitle } from "@/utils.tsx";
 import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
@@ -20,6 +20,8 @@ const Listing = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const loaderData: any = useLoaderData();
+  const location = useLocation();
+
   const listing = loaderData.result;
   const offerInput = useRef<HTMLInputElement>(null);
 
@@ -201,6 +203,10 @@ const Listing = () => {
                       color={"primary"}
                       className={"action-button"}
                       onClick={() => {
+                        if (!user) {
+                          navigateNext(navigate, location, "/signin");
+                        }
+
                         setPopup(buyPopup);
                         setShowPopup(true);
                       }}
@@ -212,6 +218,10 @@ const Listing = () => {
                       color={"secondary"}
                       className={"action-button"}
                       onClick={() => {
+                        if (!user) {
+                          navigateNext(navigate, location, "/signin");
+                        }
+
                         setPopup(offerPopup);
                         setShowPopup(true);
                       }}

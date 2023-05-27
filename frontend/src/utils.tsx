@@ -1,3 +1,5 @@
+import { Location, NavigateFunction, useNavigate } from "react-router-dom";
+
 const siteTitle = "Possessed Properties";
 
 export function capitalize(str: string) {
@@ -32,4 +34,16 @@ export function resetTitle() {
 
 export function setTitle(pageTitle: string) {
   document.title = `${pageTitle} | ${siteTitle}`;
+}
+
+export function navigateNext(
+  navigate: NavigateFunction,
+  location: Location,
+  next: string
+) {
+  navigate(next, { state: { prev: location.pathname } });
+}
+
+export function navigateLast(navigate: NavigateFunction, location: Location) {
+  navigate(location.state.prev);
 }
