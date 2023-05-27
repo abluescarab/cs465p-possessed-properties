@@ -66,6 +66,10 @@ export async function find<T extends typeof ProjectBaseEntity>(
 export function createBody(body, remove: Array<string> = []) {
   const data = {};
 
+  if (!body) {
+    return data;
+  }
+
   for (const [key, value] of Object.entries(body)) {
     if (!remove.includes(key)) {
       data[key] = value;

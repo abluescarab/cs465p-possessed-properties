@@ -6,6 +6,7 @@ import { HttpStatus } from "../status_codes.js";
 import type { HauntingType } from "../types.js";
 import verifyToken from "../firebase/verify_token.js";
 import { uploadFile } from "../minio.js";
+import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
@@ -60,13 +61,16 @@ export function createListingRoutes(app: FastifyInstance) {
 
       const listings = await request.em.find(Listing, data, {
         populate,
+        filters: {
+          [SOFT_DELETABLE_FILTER]: filterDeleted ?? true,
+        },
       });
 
       if (listings.length === 0) {
         return error(reply, HttpStatus.NOT_FOUND, "No listings found");
       }
 
-      app.log.info(listings);
+      app.log.info(`Found ${listings.length} listings`);
       return reply.send(listings);
     } catch (err) {
       return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
