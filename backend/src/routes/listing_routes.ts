@@ -122,7 +122,7 @@ export function createListingRoutes(app: FastifyInstance) {
 
       const listing = await request.em.create(Listing, {
         owner: user,
-        imgUri: allData.filename,
+        imageUri: allData.filename,
         ...data,
       });
 

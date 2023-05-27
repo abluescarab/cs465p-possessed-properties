@@ -230,8 +230,8 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "img_uri": {
-          "name": "img_uri",
+        "image_uri": {
+          "name": "image_uri",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,

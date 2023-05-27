@@ -85,7 +85,7 @@ export class Listing extends ProjectBaseEntity {
    * The uploaded image URI.
    */
   @Property()
-  imgUri!: string;
+  imageUri!: string;
 
   /**
    * When the property was purchased and the listing closed.
