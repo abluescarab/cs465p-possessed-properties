@@ -1,13 +1,16 @@
 import "./Sell.scss";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "@/App.tsx";
 
 const Sell = () => {
+  const { user } = useContext(UserContext);
+
   const listingData = useRef<HTMLFormElement>(null);
   const listingType = useRef<HTMLSelectElement>(null);
   const listingImage = useRef<HTMLInputElement>(null);
@@ -24,6 +27,21 @@ const Sell = () => {
   const createListing = async (e) => {
     e.preventDefault();
 
+    let valid = true;
+
+    Array.from(listingData.current.elements).forEach((elem) => {
+      // @ts-ignore
+      elem.checkValidity();
+      // @ts-ignore
+      if (!elem.reportValidity()) {
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      return;
+    }
+
     const type = listingType.current;
     const image = listingImage.current;
     const name = listingName.current;
@@ -36,17 +54,21 @@ const Sell = () => {
     const price = listingPrice.current;
     const description = listingDescription.current;
 
-    const data = new FormData(listingData.current);
-    // data.append("name", listingName.current.value);
-    // data.append("address", listingAddress.current.value);
-    // data.append("region", listingRegion.current.value);
-    // data.append("country", listingCountry.current.value);
-    // data.append("description", listingDescription.current.value);
-    // data.append("bedrooms", listingBedrooms.current.value);
-    // data.append("bathrooms", listingBathrooms.current.value);
-    // data.append("area", listingArea.current.value);
-    // data.append("price", listingPrice.current.value);
-    // data.append("haunting_type", listingType.current.value);
+    const data = new FormData();
+    data.append("token", user.accessToken);
+    data.append("uid", user.uid);
+    data.append("haunting_type", type.value);
+    data.append("name", name.value);
+    data.append("address", address.value);
+    data.append("region", region.value);
+    data.append("country", country.value);
+    data.append("bedrooms", bedrooms.value);
+    data.append("bathrooms", bathrooms.value);
+    data.append("area", area.value);
+    data.append("price", price.value);
+    data.append("description", description.value);
+    data.append("file", image.files[0]);
+    data.append("fileName", image.files[0].name);
     console.log(data);
 
     await axios({
@@ -99,7 +121,7 @@ const Sell = () => {
                   id={"listing-image"}
                   label={"Listing image"}
                   type={"file"}
-                  name={"file"}
+                  name={"image"}
                   style={"none"}
                   required
                   accept={".jpeg,.jpg,.png"}

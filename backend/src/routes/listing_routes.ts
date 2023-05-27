@@ -5,6 +5,7 @@ import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import type { HauntingType } from "../types.js";
 import verifyToken from "../firebase/verify_token.js";
+import { uploadFile } from "../minio.js";
 
 export function createListingRoutes(app: FastifyInstance) {
   // region GET - get all listings
@@ -90,10 +91,19 @@ export function createListingRoutes(app: FastifyInstance) {
       haunting_type: HauntingType;
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["token", "uid"]);
-    const { token, uid } = request.body;
-
     try {
+      const allData = await request.file();
+      const body = Object.fromEntries(
+        Object.keys(allData.fields).map((key) => [
+          key,
+          // @ts-ignore
+          allData.fields[key].value,
+        ])
+      );
+
+      const data = createBody(body, ["token", "uid"]);
+      const { token, uid } = body;
+
       const authUser = verifyToken(token, uid);
 
       const { success, entity: user } = await find(
@@ -108,10 +118,14 @@ export function createListingRoutes(app: FastifyInstance) {
         return reply;
       }
 
+      await uploadFile(allData);
+
       const listing = await request.em.create(Listing, {
         owner: user,
+        imgUri: allData.filename,
         ...data,
       });
+
       await request.em.flush();
 
       app.log.info("Created new listing: ", listing);
