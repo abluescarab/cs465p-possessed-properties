@@ -20,7 +20,7 @@ export class ListingSeeder extends Seeder {
       area: 15000,
       price: 250000000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "draculas-castle.jpg",
     });
 
     em.create(Listing, {
@@ -41,7 +41,7 @@ export class ListingSeeder extends Seeder {
       area: 3600,
       price: 984600,
       hauntingType: "inhuman",
-      imageUri: "draculas-castle.png",
+      imageUri: "amityville-horror-house.jpg",
     });
 
     em.create(Listing, {
@@ -63,7 +63,7 @@ export class ListingSeeder extends Seeder {
       area: 24000,
       price: 50000000,
       hauntingType: "intelligent",
-      imageUri: "draculas-castle.png",
+      imageUri: "winchester-mystery-house.jpg",
     });
 
     em.create(Listing, {
@@ -93,7 +93,7 @@ export class ListingSeeder extends Seeder {
       area: 4463,
       price: 1875000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "lizzie-borden-house.jpg",
     });
 
     em.create(Listing, {
@@ -118,7 +118,7 @@ export class ListingSeeder extends Seeder {
       area: 16000,
       price: 2500000,
       hauntingType: "intelligent",
-      imageUri: "draculas-castle.png",
+      imageUri: "pittock-mansion.jpg",
     });
 
     em.create(Listing, {
@@ -141,7 +141,7 @@ export class ListingSeeder extends Seeder {
       area: 10284,
       price: 3550000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "lalaurie-mansion.jpg",
     });
 
     em.create(Listing, {
@@ -162,7 +162,7 @@ export class ListingSeeder extends Seeder {
       area: 7932,
       price: 4050000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "the-castle.jpg",
     });
 
     em.create(Listing, {
@@ -182,7 +182,7 @@ export class ListingSeeder extends Seeder {
       area: 4750,
       price: 4373000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "the-house-of-death.jpg",
     });
 
     em.create(Listing, {
@@ -204,7 +204,7 @@ export class ListingSeeder extends Seeder {
       area: 1328,
       price: 450000,
       hauntingType: "intelligent",
-      imageUri: "draculas-castle.png",
+      imageUri: "molly-brown-house.jpg",
     });
 
     em.create(Listing, {
@@ -225,7 +225,7 @@ export class ListingSeeder extends Seeder {
       area: 1464,
       price: 400000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "sallie-house.jpg",
     });
 
     em.create(Listing, {
@@ -244,7 +244,7 @@ export class ListingSeeder extends Seeder {
       area: 3084,
       price: 0,
       hauntingType: "poltergeist",
-      imageUri: "draculas-castle.png",
+      imageUri: "snedeker-house.jpg",
     });
 
     em.create(Listing, {
@@ -264,7 +264,7 @@ export class ListingSeeder extends Seeder {
       area: 3200,
       price: 750000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "monte-cristo-homestead.jpg",
     });
 
     em.create(Listing, {
@@ -285,7 +285,7 @@ export class ListingSeeder extends Seeder {
       area: 14000,
       price: 550000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "hull-house.jpg",
     });
 
     em.create(Listing, {
@@ -304,7 +304,7 @@ export class ListingSeeder extends Seeder {
       area: 1566,
       price: 457000,
       hauntingType: "unknown",
-      imageUri: "draculas-castle.png",
+      imageUri: "dudley-house.jpg",
     });
 
     em.create(Listing, {
@@ -315,7 +315,7 @@ export class ListingSeeder extends Seeder {
       country: "United States",
       description:
         "After the deceased were removed, a family moved in. This DEFINITELY " +
-        "did not result in a pocket dimension, complete with addition " +
+        "did not result in a pocket dimension, complete with additional " +
         "timeloop. This 3000 sq ft house is COMPLETELY FILLED with evil spirits " +
         "and malicious nightmares... free to whoever is willing to risk it.",
       bedrooms: 5,
@@ -323,7 +323,7 @@ export class ListingSeeder extends Seeder {
       area: 3084,
       price: 0,
       hauntingType: "poltergeist",
-      imageUri: "draculas-castle.png",
+      imageUri: "hallahan-funeral-home.jpg",
     });
 
     em.create(Listing, {
@@ -343,7 +343,7 @@ export class ListingSeeder extends Seeder {
       area: 1475,
       price: 375000,
       hauntingType: "residual",
-      imageUri: "draculas-castle.png",
+      imageUri: "villisca-axe-murder-house.jpg",
     });
   }
 }

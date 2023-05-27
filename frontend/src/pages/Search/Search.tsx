@@ -30,6 +30,7 @@ const Search = () => {
               bedrooms={listing.bedrooms}
               bathrooms={listing.bathrooms}
               area={listing.area}
+              image={listing.imageUri}
             />
           );
         })}

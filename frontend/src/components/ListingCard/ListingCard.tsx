@@ -1,5 +1,4 @@
 import "./ListingCard.scss";
-import propertyImage from "@images/property.png";
 import Card, { CardContent, CardImage } from "@/components/Card/Card.tsx";
 import ComponentBase, {
   ComponentBaseProps,
@@ -13,6 +12,7 @@ interface ListingProps extends ComponentBaseProps {
   bedrooms: number;
   bathrooms: number;
   area: number;
+  image: string;
   cancelled?: boolean;
 }
 
@@ -23,6 +23,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
   bedrooms,
   bathrooms,
   area,
+  image,
   cancelled = false,
 }) => {
   const navigate = useNavigate();
@@ -33,7 +34,10 @@ const ListingCard: ComponentBase<ListingProps> = ({
       shadow={"hover"}
       onClick={() => navigate(`/listings/${listingId}`)}
     >
-      <CardImage src={propertyImage} alt={`Image of ${name}`} />
+      <CardImage
+        src={`http://localhost:9000/possessedprops/${image}`}
+        alt={`Image of ${name}`}
+      />
       <CardContent>
         <p className={"bold font-lg"}>
           {cancelled ? "Not for sale" : `$${price.toLocaleString()}`}

@@ -23,6 +23,7 @@ const Home = () => {
       <section className={"home-section"}>
         <h2 className={"home-header"}>Trending Properties</h2>
         <Carousel>
+          {/* TODO: trending properties */}
           <ListingCard
             listingId={1}
             name={"Dracula's Castle"}
@@ -30,6 +31,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
           <ListingCard
             listingId={1}
@@ -38,6 +40,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
           <ListingCard
             listingId={1}
@@ -46,6 +49,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
           <ListingCard
             listingId={1}
@@ -54,6 +58,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
           <ListingCard
             listingId={1}
@@ -62,6 +67,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
           <ListingCard
             listingId={1}
@@ -70,6 +76,7 @@ const Home = () => {
             bathrooms={15.5}
             area={15000}
             price={250000000}
+            image={""}
           />
         </Carousel>
       </section>

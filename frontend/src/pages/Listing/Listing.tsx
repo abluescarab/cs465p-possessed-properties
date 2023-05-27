@@ -2,7 +2,6 @@ import "./Listing.scss";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { navigateNext, setTitle } from "@/utils.tsx";
-import propertyImage from "@images/property.png";
 import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";
@@ -157,7 +156,10 @@ const Listing = () => {
         />
         <article className={"listing-article"}>
           <div className={"listing-image"}>
-            <img src={propertyImage} alt={`Image of ${listing.name}`} />
+            <img
+              src={`http://localhost:9000/possessedprops/${listing.imageUri}`}
+              alt={`Image of ${listing.name}`}
+            />
           </div>
           <Card>
             <CardTitle>{listing.name}</CardTitle>
