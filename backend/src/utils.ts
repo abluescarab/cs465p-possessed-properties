@@ -40,8 +40,7 @@ export async function find<T extends typeof ProjectBaseEntity>(
   const entity = await request.em.findOne(type, mapping, {
     populate: options.populate,
     filters: {
-      [SOFT_DELETABLE_FILTER]:
-        options.filterDeleted != null ? options.filterDeleted : true,
+      [SOFT_DELETABLE_FILTER]: options.filterDeleted ?? true,
     },
   });
 
