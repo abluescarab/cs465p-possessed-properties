@@ -104,6 +104,4 @@ export class Listing extends ProjectBaseEntity {
    */
   @OneToMany(() => Offer, (offer) => offer.listing, { cascade: [Cascade.ALL] })
   offers!: Collection<Offer>;
-
-  // TODO: implement photo(s) field
 }

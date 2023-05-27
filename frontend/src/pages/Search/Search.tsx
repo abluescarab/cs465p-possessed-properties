@@ -7,7 +7,9 @@ import Sidebar from "@/components/Sidebar/Sidebar.tsx";
 
 const Search = () => {
   const loaderData: any = useLoaderData();
-  const listings = loaderData.result;
+  const listings = loaderData.result.sort(
+    (l1, l2) => l1.name.toLowerCase() > l2.name.toLowerCase()
+  );
   const terms = Object.values(loaderData.data).join(", ");
 
   useEffect(() => {

@@ -195,7 +195,6 @@ export function createOfferRoutes(app: FastifyInstance) {
     async (request, reply) => {
       const { token, uid, id } = request.body;
 
-      // TODO: ensure user owns offer
       try {
         const authUser = verifyToken(token, uid);
 
