@@ -45,13 +45,11 @@ const Listing = () => {
   const validateAndSend = async () => {
     const amount = offerInput.current;
 
-    if (amount.validity.rangeUnderflow || amount.validity.valueMissing) {
-      amount.setCustomValidity("Number must be 0 or more");
-      amount.reportValidity();
+    amount.checkValidity();
+    if (!amount.reportValidity()) {
       return;
     }
 
-    amount.setCustomValidity("");
     await sendOffer(amount.value);
   };
 

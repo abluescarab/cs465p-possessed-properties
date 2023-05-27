@@ -17,17 +17,13 @@ const ForgotPassword = () => {
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    const email = userEmail.current;
+    userEmail.current.checkValidity();
 
-    if (email.validity.typeMismatch) {
-      email.setCustomValidity("Must be a valid email");
-      email.reportValidity();
+    if (!userEmail.current.reportValidity()) {
       return;
-    } else {
-      email.setCustomValidity("");
     }
 
-    await sendPasswordResetEmail(auth, email.value)
+    await sendPasswordResetEmail(auth, userEmail.current.value)
       .then(() => {
         notice.current.classList.remove("invalid");
         notice.current.innerText =

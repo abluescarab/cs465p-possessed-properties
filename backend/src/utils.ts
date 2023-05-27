@@ -64,7 +64,7 @@ export async function find<T extends typeof ProjectBaseEntity>(
  * @param body body to copy
  * @param remove entries to remove
  */
-export function createBody(body, remove: Array<string>) {
+export function createBody(body, remove: Array<string> = []) {
   const data = {};
 
   for (const [key, value] of Object.entries(body)) {
