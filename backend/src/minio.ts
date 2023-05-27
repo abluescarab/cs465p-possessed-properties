@@ -1,4 +1,5 @@
 import { Client } from "minio";
+import app from "./app.js";
 
 export const minioClient = new Client({
   endPoint: "127.0.0.1",
@@ -8,28 +9,21 @@ export const minioClient = new Client({
   secretKey: "password",
 });
 
-export const uploadFile = async (file: any): Promise<boolean> => {
-  let success = false;
-
+export const uploadFile = async (file: any): Promise<void> => {
   try {
     await minioClient.putObject(
-      "minio-possessedprops",
+      "possessedprops",
       file.filename,
       file.file,
       (error: any, etag: any) => {
         if (error) {
-          console.log(`Failed to upload file: ${error}`);
-          success = false;
+          app.log.error(`Failed to upload file: ${error}`);
         } else {
-          console.log("File upload successful");
-          success = true;
+          app.log.info("File upload successful");
         }
       }
     );
   } catch (error) {
-    console.log(`Failed to upload file: ${error}`);
-    success = false;
+    app.log.error(`Failed to upload file: ${error}`);
   }
-
-  return success;
 };
