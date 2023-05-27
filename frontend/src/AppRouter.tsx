@@ -21,7 +21,7 @@ import Guide from "@/pages/Guide/Guide.tsx";
 import SignOut from "@/pages/SignOut/SignOut.tsx";
 
 export const Routes = {
-  home: { path: "/", element: <Home /> },
+  home: { path: "/", element: <Home />, loader: searchLoader },
   guide: { path: "/guide", element: <Guide /> },
   search: { path: "/listings", element: <Search />, loader: searchLoader },
   listing: {

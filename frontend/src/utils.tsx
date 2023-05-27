@@ -47,3 +47,21 @@ export function navigateNext(
 export function navigateLast(navigate: NavigateFunction, location: Location) {
   navigate(location.state.prev);
 }
+
+export function randomElement(array, count) {
+  if (count > array.length || count < 0) {
+    return null;
+  }
+
+  const indices = [...Array(array.length).keys()];
+  const selected = [];
+
+  while (count--) {
+    const idx = Math.floor(Math.random() * indices.length);
+    const select = indices[idx];
+    selected.push(array[select]);
+    indices.splice(idx, 1);
+  }
+
+  return selected;
+}
