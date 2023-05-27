@@ -79,7 +79,7 @@ export class Listing extends ProjectBaseEntity {
    * The type of haunting on the property.
    */
   @Property()
-  haunting_type!: HauntingType;
+  hauntingType!: HauntingType;
 
   /**
    * The uploaded image URI.
@@ -91,13 +91,13 @@ export class Listing extends ProjectBaseEntity {
    * When the property was purchased and the listing closed.
    */
   @Property()
-  purchased_at?: Date = null;
+  purchasedAt?: Date = null;
 
   /**
    * Who purchased the property and closed the listing.
    */
   @ManyToOne()
-  purchased_by?: Rel<User>;
+  purchasedBy?: Rel<User>;
 
   /**
    * Offers placed on the property.

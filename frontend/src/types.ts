@@ -16,5 +16,5 @@ export type ListingType = {
   bathrooms: number;
   area: number;
   price: number;
-  haunting_type: HauntingType;
+  hauntingType: HauntingType;
 };

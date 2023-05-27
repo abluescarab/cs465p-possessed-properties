@@ -18,7 +18,7 @@ const Sidebar = ({ id = "", className = "" }) => {
     allListings.result.forEach((listing) => {
       const region = listing.region;
       const country = listing.country;
-      const haunting = capitalize(listing.haunting_type);
+      const haunting = capitalize(listing.hauntingType);
 
       regionList[region] = (regionList[region] || 0) + 1;
       countryList[country] = (countryList[country] || 0) + 1;

@@ -42,7 +42,7 @@ export class User extends ProjectBaseEntity {
   /**
    * Properties purchased on the platform.
    */
-  @OneToMany(() => Listing, (listing) => listing.purchased_by, {
+  @OneToMany(() => Listing, (listing) => listing.purchasedBy, {
     cascade: [Cascade.ALL],
   })
   purchases!: Collection<Listing>;

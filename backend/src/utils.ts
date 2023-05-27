@@ -45,7 +45,7 @@ export async function find<T extends typeof ProjectBaseEntity>(
     },
   });
 
-  if (entity === null || entity.deleted_at !== null) {
+  if (entity === null || entity.deletedAt !== null) {
     if (options.errorMessage !== undefined) {
       await error(reply, HttpStatus.NOT_FOUND, options.errorMessage);
     }

@@ -19,7 +19,7 @@ const Profile = () => {
         url: "http://localhost:8080/users",
         data: {
           email: user.email,
-          filter_deleted: false,
+          filterDeleted: false,
           populate: ["listings", "offers.listing"],
         },
       })
@@ -55,7 +55,7 @@ const Profile = () => {
                   bedrooms={listing.bedrooms}
                   bathrooms={listing.bathrooms}
                   area={listing.area}
-                  cancelled={listing.deleted_at}
+                  cancelled={listing.deletedAt}
                 />
               ))
             ) : (
@@ -79,22 +79,19 @@ const Profile = () => {
                   {dbUser.offers
                     .sort(
                       (o1, o2) =>
-                        new Date(o1.created_at) < new Date(o2.created_at)
+                        new Date(o1.createdAt) < new Date(o2.createdAt)
                     )
                     .map((offer) => {
                       return (
                         <tr key={offer.id}>
                           <td>
-                            {new Date(offer.created_at).toLocaleString(
-                              "en-US",
-                              {
-                                dateStyle: "short",
-                                timeStyle: "short",
-                              }
-                            )}
+                            {new Date(offer.createdAt).toLocaleString("en-US", {
+                              dateStyle: "short",
+                              timeStyle: "short",
+                            })}
                           </td>
                           <td>
-                            {offer.listing.deleted_at == null ? (
+                            {offer.listing.deletedAt == null ? (
                               <Link to={`/listings/${offer.listing.id}`}>
                                 {offer.listing.name}
                               </Link>

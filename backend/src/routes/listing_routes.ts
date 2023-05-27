@@ -18,7 +18,7 @@ export function createListingRoutes(app: FastifyInstance) {
   app.search<{
     Body: {
       id?: number;
-      owner_id?: number;
+      ownerId?: number;
       name?: string;
       address?: string;
       region?: string;
@@ -28,13 +28,13 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms?: number;
       area?: number;
       price?: number;
-      haunting_type?: HauntingType;
-      filter_deleted?: boolean;
+      hauntingType?: HauntingType;
+      filterDeleted?: boolean;
       populate?: string[];
     };
   }>("/listings", async (request, reply) => {
-    const data = createBody(request.body, ["filter_deleted", "populate"]);
-    const { id, filter_deleted, populate } = request.body;
+    const data = createBody(request.body, ["filterDeleted", "populate"]);
+    const { id, filterDeleted, populate } = request.body;
 
     try {
       if (id !== undefined) {
@@ -46,7 +46,7 @@ export function createListingRoutes(app: FastifyInstance) {
           {
             errorMessage: `Listing with ID ${id} not found`,
             populate,
-            filterDeleted: filter_deleted,
+            filterDeleted,
           }
         );
 
@@ -88,7 +88,7 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms: number;
       area: number;
       price: number;
-      haunting_type: HauntingType;
+      hauntingType: HauntingType;
     };
   }>("/listings", async (request, reply) => {
     try {
@@ -148,8 +148,8 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms?: number;
       area?: number;
       price?: number;
-      buyer_email?: string;
-      haunting_type?: HauntingType;
+      buyerEmail?: string;
+      hauntingType?: HauntingType;
     };
   }>("/listings", async (request, reply) => {
     const {
@@ -162,8 +162,8 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms,
       area,
       price,
-      buyer_email,
-      haunting_type,
+      buyerEmail,
+      hauntingType,
     } = request.body;
 
     try {
@@ -194,7 +194,7 @@ export function createListingRoutes(app: FastifyInstance) {
         );
       }
 
-      if (listing.purchased_at !== null) {
+      if (listing.purchasedAt !== null) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
@@ -226,26 +226,26 @@ export function createListingRoutes(app: FastifyInstance) {
         listing.price = price;
       }
 
-      if (haunting_type !== undefined) {
-        listing.haunting_type = haunting_type;
+      if (hauntingType !== undefined) {
+        listing.hauntingType = hauntingType;
       }
 
-      if (buyer_email !== undefined) {
+      if (buyerEmail !== undefined) {
         const { success, entity: buyer } = await find(
           request,
           reply,
           User,
-          { email: buyer_email },
-          { errorMessage: `User with email ${buyer_email} not found` }
+          { email: buyerEmail },
+          { errorMessage: `User with email ${buyerEmail} not found` }
         );
 
         if (!success) {
           return reply;
         }
 
-        buyer.purchased_properties.add(listing);
-        listing.purchased_by = buyer;
-        listing.purchased_at = new Date();
+        buyer.purchasedProperties.add(listing);
+        listing.purchasedBy = buyer;
+        listing.purchasedAt = new Date();
 
         // TODO: find offer to accept
         // TODO: close/reject all offers
@@ -300,7 +300,7 @@ export function createListingRoutes(app: FastifyInstance) {
         }
 
         // TODO: test
-        if (listing.purchased_at !== null) {
+        if (listing.purchasedAt !== null) {
           return error(
             reply,
             HttpStatus.FORBIDDEN,

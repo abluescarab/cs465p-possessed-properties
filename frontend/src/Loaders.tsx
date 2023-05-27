@@ -40,6 +40,6 @@ export async function searchCountryLoader({ params }) {
 
 export async function searchTypeLoader({ params }) {
   return searchListings({
-    haunting_type: params.listingType.toLowerCase(),
+    hauntingType: params.listingType.toLowerCase(),
   });
 }

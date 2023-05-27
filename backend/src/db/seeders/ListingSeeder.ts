@@ -19,7 +19,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 15.5,
       area: 15000,
       price: 250000000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -40,7 +40,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 4,
       area: 3600,
       price: 984600,
-      haunting_type: "inhuman",
+      hauntingType: "inhuman",
       imgUri: "draculas-castle.png",
     });
 
@@ -62,7 +62,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 13,
       area: 24000,
       price: 50000000,
-      haunting_type: "intelligent",
+      hauntingType: "intelligent",
       imgUri: "draculas-castle.png",
     });
 
@@ -92,7 +92,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 3.5,
       area: 4463,
       price: 1875000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -117,7 +117,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 6,
       area: 16000,
       price: 2500000,
-      haunting_type: "intelligent",
+      hauntingType: "intelligent",
       imgUri: "draculas-castle.png",
     });
 
@@ -140,7 +140,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 7,
       area: 10284,
       price: 3550000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -161,7 +161,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 6,
       area: 7932,
       price: 4050000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -181,7 +181,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 5,
       area: 4750,
       price: 4373000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -203,7 +203,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 2,
       area: 1328,
       price: 450000,
-      haunting_type: "intelligent",
+      hauntingType: "intelligent",
       imgUri: "draculas-castle.png",
     });
 
@@ -224,7 +224,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 1.5,
       area: 1464,
       price: 400000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -243,7 +243,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 2,
       area: 3084,
       price: 0,
-      haunting_type: "poltergeist",
+      hauntingType: "poltergeist",
       imgUri: "draculas-castle.png",
     });
 
@@ -263,7 +263,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 4,
       area: 3200,
       price: 750000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -284,7 +284,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 8,
       area: 14000,
       price: 550000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -303,7 +303,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 2,
       area: 1566,
       price: 457000,
-      haunting_type: "unknown",
+      hauntingType: "unknown",
       imgUri: "draculas-castle.png",
     });
 
@@ -322,7 +322,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 2,
       area: 3084,
       price: 0,
-      haunting_type: "poltergeist",
+      hauntingType: "poltergeist",
       imgUri: "draculas-castle.png",
     });
 
@@ -342,7 +342,7 @@ export class ListingSeeder extends Seeder {
       bathrooms: 2,
       area: 1475,
       price: 375000,
-      haunting_type: "residual",
+      hauntingType: "residual",
       imgUri: "draculas-castle.png",
     });
   }

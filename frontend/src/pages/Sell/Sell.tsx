@@ -57,7 +57,7 @@ const Sell = () => {
     const data = new FormData();
     data.append("token", user.accessToken);
     data.append("uid", user.uid);
-    data.append("haunting_type", type.value);
+    data.append("hauntingType", type.value);
     data.append("name", name.value);
     data.append("address", address.value);
     data.append("region", region.value);
@@ -104,7 +104,7 @@ const Sell = () => {
                 <select
                   className={"underline"}
                   id={"listing-haunting"}
-                  name={"haunting_type"}
+                  name={"hauntingType"}
                   required
                   ref={listingType}
                 >

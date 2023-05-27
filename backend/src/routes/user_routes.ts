@@ -20,18 +20,18 @@ export function createUserRoutes(app: FastifyInstance) {
       id?: number;
       email?: string;
       name?: string;
-      filter_deleted?: boolean;
+      filterDeleted?: boolean;
       populate?: boolean;
     };
   }>("/users", async (request, reply) => {
-    const data = createBody(request.body, ["filter_deleted", "populate"]);
-    const { populate, filter_deleted } = request.body;
+    const data = createBody(request.body, ["filterDeleted", "populate"]);
+    const { populate, filterDeleted } = request.body;
 
     try {
       const { success, entity: user } = await find(request, reply, User, data, {
         errorMessage: `User not found`,
         populate,
-        filterDeleted: filter_deleted,
+        filterDeleted,
       });
 
       if (!success) {

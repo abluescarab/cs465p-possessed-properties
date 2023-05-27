@@ -36,7 +36,7 @@ const Listing = () => {
       data: {
         token: user.accessToken,
         uid: user.uid,
-        listing_id: listing.id,
+        listingId: listing.id,
         price,
       },
     }).then(() => {

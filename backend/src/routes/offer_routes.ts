@@ -18,17 +18,17 @@ export function createOfferRoutes(app: FastifyInstance) {
   app.search<{
     Body: {
       id?: number;
-      buyer_id?: number;
-      listing_id?: number;
+      buyerId?: number;
+      listingId?: number;
       price?: number;
       status?: OfferStatus;
-      filter_deleted?: boolean;
+      filterDeleted?: boolean;
       populate?: string[];
     };
   }>("/offers", async (request, reply) => {
-    const data = createBody(request.body, ["id", "filter_deleted", "populate"]);
+    const data = createBody(request.body, ["id", "filterDeleted", "populate"]);
 
-    const { id, filter_deleted, populate } = request.body;
+    const { id, filterDeleted, populate } = request.body;
 
     try {
       if (id !== undefined) {
@@ -40,7 +40,7 @@ export function createOfferRoutes(app: FastifyInstance) {
           {
             errorMessage: `Offer with ID ${id} not found`,
             populate,
-            filterDeleted: filter_deleted,
+            filterDeleted,
           }
         );
 
@@ -71,11 +71,11 @@ export function createOfferRoutes(app: FastifyInstance) {
     Body: {
       token: string;
       uid: string;
-      listing_id: number;
+      listingId: number;
       price: number;
     };
   }>("/offers", async (request, reply) => {
-    const { token, uid, listing_id, price } = request.body;
+    const { token, uid, listingId, price } = request.body;
 
     try {
       const authUser = verifyToken(token, uid);
@@ -96,8 +96,8 @@ export function createOfferRoutes(app: FastifyInstance) {
         request,
         reply,
         Listing,
-        { id: listing_id },
-        { errorMessage: `Listing with ID ${listing_id} not found` }
+        { id: listingId },
+        { errorMessage: `Listing with ID ${listingId} not found` }
       );
 
       if (!listing.success) {
@@ -160,7 +160,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         );
       }
 
-      if (offer.closed_at !== null) {
+      if (offer.closedAt !== null) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
@@ -177,7 +177,7 @@ export function createOfferRoutes(app: FastifyInstance) {
       }
 
       if (offer.status !== "open") {
-        offer.closed_at = new Date();
+        offer.closedAt = new Date();
       }
 
       await request.em.flush();
@@ -223,7 +223,7 @@ export function createOfferRoutes(app: FastifyInstance) {
           );
         }
 
-        if (offer.closed_at !== null) {
+        if (offer.closedAt !== null) {
           return error(
             reply,
             HttpStatus.FORBIDDEN,
