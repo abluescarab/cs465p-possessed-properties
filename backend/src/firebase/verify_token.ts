@@ -16,6 +16,7 @@ const getTokens = async () => {
 
 const secureTokens = await getTokens();
 
+// Modified from https://stackoverflow.com/a/55987674/567983
 const verifyToken = (token, uid) => {
   if (!token) {
     throw new Error("No user token provided");

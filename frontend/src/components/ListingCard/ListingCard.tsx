@@ -28,6 +28,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  // TODO: regular pointer when cancelled
   return (
     <Card
       className={"listing-card"}

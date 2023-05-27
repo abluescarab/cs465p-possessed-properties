@@ -16,6 +16,7 @@ const Search = () => {
     setTitle(`Search for ${terms}`);
   }, [terms]);
 
+  // TODO: add back to top link
   return (
     <div id={"search-page"} className={"page"}>
       <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
