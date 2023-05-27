@@ -18,10 +18,9 @@ import TextInput from "@/components/TextInput/TextInput.tsx";
 const Listing = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const loaderData: any = useLoaderData();
   const location = useLocation();
+  const listing = (useLoaderData() as any).result;
 
-  const listing = loaderData.result;
   const offerInput = useRef<HTMLInputElement>(null);
 
   const [showPopup, setShowPopup] = useState(false);
