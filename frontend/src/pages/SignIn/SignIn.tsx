@@ -27,6 +27,16 @@ const SignIn = () => {
   const signIn = async (e) => {
     e.preventDefault();
 
+    userEmail.current.checkValidity();
+    userPassword.current.checkValidity();
+
+    if (
+      !userEmail.current.reportValidity() ||
+      !userPassword.current.reportValidity()
+    ) {
+      return;
+    }
+
     const email = userEmail.current.value;
     const password = userPassword.current.value;
 

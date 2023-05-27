@@ -46,6 +46,7 @@ const Listing = () => {
     const amount = offerInput.current;
 
     amount.checkValidity();
+
     if (!amount.reportValidity()) {
       return;
     }

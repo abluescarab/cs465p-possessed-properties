@@ -1,10 +1,6 @@
 @use "../../theme/abstracts/variables" as *;
 
 #sell-page {
-  .card-content {
-    //flex-flow: row wrap;
-  }
-
   #listing-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
