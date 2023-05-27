@@ -123,8 +123,7 @@ const Listing = () => {
       primaryButton={"OK"}
       onPrimaryClick={() => setShowPopup(false)}
     >
-      You have successfully sent an offer in the amount of $
-      {price.toLocaleString()}.
+      You have successfully sent an offer of ${price.toLocaleString()}.
     </Popup>
   );
 
