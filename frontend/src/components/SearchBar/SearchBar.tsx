@@ -13,11 +13,20 @@ const SearchBar = ({ small = false }) => {
   const searchBar = useRef(null);
 
   const fetch = async () => {
-    const { data } = await axios.get("http://localhost:8080/listings");
-    return data.map((listing) => ({
-      id: listing.id,
-      name: listing.name,
-    }));
+    let listings = [];
+
+    await axios({
+      method: "SEARCH",
+      url: "http://localhost:8080/listings",
+      data: {},
+    }).then((reply) => {
+      listings = reply.data.map((listing) => ({
+        id: listing.id,
+        name: listing.name,
+      }));
+    });
+
+    return listings;
   };
 
   const filter = (searchTerm: string) => {
