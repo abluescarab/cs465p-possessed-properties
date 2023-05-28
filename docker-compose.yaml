@@ -18,6 +18,21 @@ services:
       timeout: 5s
       retries: 5
 
+  minio:
+    container_name: minio-possessedprops
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_DEFAULT_BUCKETS=possessedprops:public
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=password
+      - MINIO_SERVER_ACCESS_KEY=admin
+      - MINIO_SERVER_SECRET_KEY=password
+    volumes:
+      - minio_data:/data
+
   backend:
     container_name: backend-possessedprops
     build: ./backend/
@@ -36,21 +51,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-
-  minio:
-    container_name: minio-possessedprops
-    image: docker.io/bitnami/minio:latest
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      - MINIO_DEFAULT_BUCKETS=possessedprops:public
-      - MINIO_ROOT_USER=admin
-      - MINIO_ROOT_PASSWORD=password
-      - MINIO_SERVER_ACCESS_KEY=admin
-      - MINIO_SERVER_SECRET_KEY=password
-    volumes:
-      - minio_data:/data
+      minio:
+        condition: service_healthy
 
 volumes:
   db:
