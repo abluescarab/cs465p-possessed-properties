@@ -28,10 +28,9 @@ const ListingCard: ComponentBase<ListingProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  // TODO: regular pointer when cancelled
   return (
     <Card
-      className={"listing-card"}
+      className={`listing-card ${cancelled && "cancelled"}`}
       shadow={"hover"}
       onClick={() => {
         if (!cancelled) {

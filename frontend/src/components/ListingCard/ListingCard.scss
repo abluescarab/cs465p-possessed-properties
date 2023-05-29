@@ -3,6 +3,11 @@
   overflow: hidden;
   min-width: var(--listing-width);
 
+  &.cancelled {
+    cursor: default;
+    color: var(--cancelled-color);
+  }
+
   &:first-child {
     margin-left: 0;
   }
