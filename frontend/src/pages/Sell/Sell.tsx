@@ -4,12 +4,14 @@ import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import React, { useContext, useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
 import Button from "@/components/Button/Button.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "@/App.tsx";
+import { HttpStatus } from "@/status_codes.ts";
 
 const Sell = () => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const listingData = useRef<HTMLFormElement>(null);
   const listingType = useRef<HTMLSelectElement>(null);
@@ -78,6 +80,12 @@ const Sell = () => {
       headers: {
         "content-type": "multipart/form-data",
       },
+    }).then((response) => {
+      // TODO: fix data length/type fail
+      // (response fails if data type too large, i.e. area = 3000000000000)
+      if (response.status === HttpStatus.OK) {
+        navigate(`/listings/${response.data.id}`);
+      }
     });
   };
 
