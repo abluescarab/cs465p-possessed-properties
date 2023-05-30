@@ -26,6 +26,13 @@ export async function listingLoader({ params }) {
   });
 }
 
+export async function offersLoader({ params }) {
+  return searchListings({
+    id: params.listingId,
+    populate: ["owner", "offers"],
+  });
+}
+
 export async function searchRegionLoader({ params }) {
   return searchListings({
     region: params.listingRegion,

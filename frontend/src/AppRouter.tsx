@@ -15,19 +15,37 @@ import {
   listingLoader,
   searchLoader,
   searchRegionLoader,
+  offersLoader,
 } from "@/Loaders.tsx";
 import Sell from "@/pages/Sell/Sell.tsx";
 import Guide from "@/pages/Guide/Guide.tsx";
 import SignOut from "@/pages/SignOut/SignOut.tsx";
+import Offers from "@/pages/Offers/Offers.tsx";
 
 export const Routes = {
-  home: { path: "/", element: <Home />, loader: searchLoader },
-  guide: { path: "/guide", element: <Guide /> },
-  search: { path: "/listings", element: <Search />, loader: searchLoader },
+  home: {
+    path: "/",
+    element: <Home />,
+    loader: searchLoader,
+  },
+  guide: {
+    path: "/guide",
+    element: <Guide />,
+  },
+  search: {
+    path: "/listings",
+    element: <Search />,
+    loader: searchLoader,
+  },
   listing: {
     path: "/listings/:listingId",
     element: <Listing />,
     loader: listingLoader,
+  },
+  listingOffers: {
+    path: "/listings/:listingId/offers",
+    element: <Offers />,
+    loader: offersLoader,
   },
   searchRegion: {
     path: "/listings/region/:listingRegion",
@@ -44,12 +62,30 @@ export const Routes = {
     element: <Search />,
     loader: searchTypeLoader,
   },
-  profile: { path: "/profile", element: <Profile /> },
-  signIn: { path: "/signin", element: <SignIn /> },
-  signUp: { path: "/signup", element: <SignUp /> },
-  signOut: { path: "/signout", element: <SignOut /> },
-  forgotPassword: { path: "/forgotpassword", element: <ForgotPassword /> },
-  sell: { path: "/sell", element: <Sell /> },
+  profile: {
+    path: "/profile",
+    element: <Profile />,
+  },
+  sell: {
+    path: "/sell",
+    element: <Sell />,
+  },
+  signIn: {
+    path: "/signin",
+    element: <SignIn />,
+  },
+  signUp: {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  signOut: {
+    path: "/signout",
+    element: <SignOut />,
+  },
+  forgotPassword: {
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
+  },
 };
 
 const AppRouter = createBrowserRouter([
@@ -61,16 +97,17 @@ const AppRouter = createBrowserRouter([
       Routes.home,
       Routes.guide,
       Routes.listing,
+      Routes.listingOffers,
       Routes.search,
       Routes.searchRegion,
       Routes.searchCountry,
       Routes.searchType,
+      Routes.profile,
       Routes.sell,
       Routes.signUp,
       Routes.signIn,
       Routes.signOut,
       Routes.forgotPassword,
-      Routes.profile,
     ],
   },
 ]);

@@ -127,10 +127,6 @@ const Listing = () => {
     </Popup>
   );
 
-  const seeOffers = () => {
-    // TODO: make new route in approuter?
-  };
-
   useEffect(() => {
     setTitle(listing.name);
   }, [listing]);
@@ -181,7 +177,7 @@ const Listing = () => {
                       type={"button"}
                       color={"primary"}
                       className={"action-button"}
-                      onClick={seeOffers}
+                      onClick={() => navigate(`/listings/${listing.id}/offers`)}
                     >
                       See Offers
                     </Button>
