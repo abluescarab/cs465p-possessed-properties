@@ -3,7 +3,7 @@ import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";
 import Carousel from "@/components/Carousel/Carousel.tsx";
 import { useEffect, useState } from "react";
-import { randomElement, resetTitle } from "@/utils.tsx";
+import { randomElement, resetTitle } from "@/utils.ts";
 import { useLoaderData } from "react-router-dom";
 
 const Home = () => {

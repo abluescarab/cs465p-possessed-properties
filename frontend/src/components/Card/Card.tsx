@@ -3,7 +3,7 @@ import React, { MouseEventHandler } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
-import { getClasses } from "@/utils.tsx";
+import { getClasses } from "@/utils.ts";
 
 interface CardProps extends ComponentBaseProps {
   shadow?: "none" | "normal" | "hover";

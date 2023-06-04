@@ -2,7 +2,7 @@ import "./Sell.scss";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import React, { useContext, useEffect, useRef } from "react";
-import { setTitle } from "@/utils.tsx";
+import { setTitle } from "@/utils.ts";
 import Button from "@/components/Button/Button.tsx";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "@/App.tsx";

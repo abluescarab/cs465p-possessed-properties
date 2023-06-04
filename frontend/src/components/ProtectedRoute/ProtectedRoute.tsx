@@ -2,7 +2,7 @@ import "./ProtectedRoute.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";
-import { navigateNext } from "@/utils.tsx";
+import { navigateNext } from "@/utils.ts";
 
 const ProtectedRoute = ({ children, ifSignedIn = false }) => {
   const navigate = useNavigate();

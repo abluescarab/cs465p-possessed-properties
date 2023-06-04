@@ -2,7 +2,6 @@ import "./Sidebar.scss";
 import { useEffect, useState } from "react";
 import { searchLoader } from "@/Loaders.tsx";
 import { Link } from "react-router-dom";
-import { capitalize } from "@/utils.tsx";
 
 const Sidebar = ({ id = "", className = "" }) => {
   const [regions, setRegions] = useState({});
@@ -18,7 +17,7 @@ const Sidebar = ({ id = "", className = "" }) => {
     allListings.result.forEach((listing) => {
       const region = listing.region;
       const country = listing.country;
-      const haunting = capitalize(listing.hauntingType);
+      const haunting = listing.hauntingType;
 
       regionList[region] = (regionList[region] || 0) + 1;
       countryList[country] = (countryList[country] || 0) + 1;
@@ -51,7 +50,10 @@ const Sidebar = ({ id = "", className = "" }) => {
                 .sort()
                 .map((hauntingType) => (
                   <li key={hauntingType}>
-                    <Link to={`/listings/type/${hauntingType}`}>
+                    <Link
+                      to={`/listings/type/${hauntingType}`}
+                      className={"capitalize"}
+                    >
                       {hauntingType}
                     </Link>{" "}
                     ({hauntings[hauntingType]})

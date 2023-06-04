@@ -1,9 +1,8 @@
 import "./Profile.scss";
 import { useContext, useEffect, useState } from "react";
-import { capitalize, setTitle } from "@/utils.tsx";
+import { setTitle } from "@/utils.ts";
 import { UserContext } from "@/App.tsx";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
-import { Link } from "react-router-dom";
 import { httpClient } from "@/http_client.ts";
 import OfferTable from "@/components/OfferTable/OfferTable.tsx";
 

@@ -1,7 +1,7 @@
 import "./Listing.scss";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
-import { navigateNext, setTitle } from "@/utils.tsx";
+import { navigateNext, setTitle } from "@/utils.ts";
 import Button from "@/components/Button/Button.tsx";
 import Crumbs from "@/components/Crumbs/Crumbs.tsx";
 import SearchBar from "@/components/SearchBar/SearchBar.tsx";

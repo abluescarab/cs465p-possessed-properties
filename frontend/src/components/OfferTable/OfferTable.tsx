@@ -2,7 +2,6 @@ import "./OfferTable.scss";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
-import { capitalize } from "@/utils.tsx";
 import { Link } from "react-router-dom";
 import Button from "@/components/Button/Button.tsx";
 
@@ -71,7 +70,9 @@ const OfferTable: ComponentBase<OfferTableProps> = ({
         );
       case "status":
         return (
-          <td key={`offer-${offer.id}-status`}>{capitalize(offer.status)}</td>
+          <td key={`offer-${offer.id}-status`} className={"capitalize"}>
+            {offer.status}
+          </td>
         );
       case "actions":
         return (
@@ -96,7 +97,9 @@ const OfferTable: ComponentBase<OfferTableProps> = ({
       <thead>
         <tr>
           {columns.map((col) => (
-            <th key={col}>{capitalize(col)}</th>
+            <th key={col} className={"capitalize"}>
+              {col}
+            </th>
           ))}
         </tr>
       </thead>

@@ -4,7 +4,7 @@ import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { setTitle } from "@/utils.tsx";
+import { setTitle } from "@/utils.ts";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebaseApp from "@/firebase.ts";
 

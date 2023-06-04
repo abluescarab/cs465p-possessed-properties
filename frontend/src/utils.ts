@@ -1,10 +1,6 @@
-import { Location, NavigateFunction, useNavigate } from "react-router-dom";
+import { Location, NavigateFunction } from "react-router-dom";
 
 const siteTitle = "Possessed Properties";
-
-export function capitalize(str: string) {
-  return str[0].toUpperCase() + str.slice(1);
-}
 
 export function getClasses(
   className?: string,

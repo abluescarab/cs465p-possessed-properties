@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, ForwardedRef, forwardRef } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
-import { getClasses } from "@/utils.tsx";
+import { getClasses } from "@/utils.ts";
 
 interface TextInputProps extends ComponentBaseProps {
   type?: string;

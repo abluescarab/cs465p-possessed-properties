@@ -1,7 +1,7 @@
 import "./Search.scss";
 import { useLoaderData } from "react-router-dom";
 import { useEffect } from "react";
-import { setTitle } from "@/utils.tsx";
+import { setTitle } from "@/utils.ts";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import Sidebar from "@/components/Sidebar/Sidebar.tsx";
 import BackToTop from "@/components/BackToTop/BackToTop.tsx";

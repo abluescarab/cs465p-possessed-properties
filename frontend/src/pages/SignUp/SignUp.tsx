@@ -1,6 +1,6 @@
 import "./SignUp.scss";
 import { useEffect, useRef } from "react";
-import { setTitle } from "@/utils.tsx";
+import { setTitle } from "@/utils.ts";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
