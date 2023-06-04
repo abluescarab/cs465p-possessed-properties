@@ -31,7 +31,7 @@ export async function listingLoader({ params }) {
 export async function offersLoader({ params }) {
   return searchListings({
     id: params.listingId,
-    populate: ["owner", "offers"],
+    populate: ["owner", "offers.buyer"],
   });
 }
 
