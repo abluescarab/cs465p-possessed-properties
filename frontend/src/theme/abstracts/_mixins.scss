@@ -46,3 +46,10 @@
     padding-#{$side}: $size;
   }
 }
+
+@mixin flex-buttons($children, $padding) {
+  button:first-child:nth-last-child(#{$children}),
+  button:first-child:nth-last-child(#{$children}) ~ button {
+    flex: calc((100% / #{$children}) - #{$padding});
+  }
+}
