@@ -2,9 +2,9 @@ import "./Profile.scss";
 import { useContext, useEffect, useState } from "react";
 import { capitalize, setTitle } from "@/utils.tsx";
 import { UserContext } from "@/App.tsx";
-import axios from "axios";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { Link } from "react-router-dom";
+import { httpClient } from "@/http_client.ts";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -14,21 +14,22 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      await axios({
-        method: "SEARCH",
-        url: "http://localhost:8080/users",
-        data: {
-          email: user.email,
-          filterDeleted: false,
-          populate: ["listings", "offers.listing"],
-        },
-      })
+      await httpClient
+        .request({
+          method: "SEARCH",
+          url: "/users",
+          data: {
+            email: user.email,
+            filterDeleted: false,
+            populate: ["listings", "offers.listing"],
+          },
+        })
         .then((request) => {
           setDbUser(request.data);
           setTitle(`${request.data.name}'s Profile`);
         })
-        .catch(() => {
-          // ignore
+        .catch((err) => {
+          console.log(err);
         });
     };
 

@@ -10,10 +10,10 @@ import Card, {
   CardSubtitle,
   CardTitle,
 } from "@/components/Card/Card.tsx";
-import axios from "axios";
 import { UserContext } from "@/App.tsx";
 import Popup from "@/components/Popup/Popup.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
+import { httpClient } from "@/http_client.ts";
 
 const Listing = () => {
   const { user } = useContext(UserContext);
@@ -28,18 +28,20 @@ const Listing = () => {
   const [popup, setPopup] = useState(null);
 
   const sendOffer = async (price) => {
-    await axios({
-      method: "POST",
-      url: "http://localhost:8080/offers",
-      data: {
-        token: user.accessToken,
-        uid: user.uid,
-        listingId: listing.id,
-        price,
-      },
-    }).then(() => {
-      setPopup(successPopup(price));
-    });
+    await httpClient
+      .request({
+        method: "POST",
+        url: "/offers",
+        data: {
+          token: user.accessToken,
+          uid: user.uid,
+          listingId: listing.id,
+          price,
+        },
+      })
+      .then(() => {
+        setPopup(successPopup(price));
+      });
   };
 
   const validateAndSend = async () => {
@@ -55,17 +57,19 @@ const Listing = () => {
   };
 
   const cancelListing = async () => {
-    await axios({
-      method: "DELETE",
-      url: "http://localhost:8080/listings",
-      data: {
-        token: user.accessToken,
-        uid: user.uid,
-        id: listing.id,
-      },
-    }).then(() => {
-      navigate(-1);
-    });
+    await httpClient
+      .request({
+        method: "DELETE",
+        url: "/listings",
+        data: {
+          token: user.accessToken,
+          uid: user.uid,
+          id: listing.id,
+        },
+      })
+      .then(() => {
+        navigate(-1);
+      });
   };
 
   const buyPopup = (

@@ -5,9 +5,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import { setTitle } from "@/utils.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { UserContext } from "@/App.tsx";
 import { HttpStatus } from "@/status_codes.ts";
+import { httpClient } from "@/http_client.ts";
 
 const Sell = () => {
   const { user } = useContext(UserContext);
@@ -73,20 +73,22 @@ const Sell = () => {
     data.append("fileName", image.files[0].name);
     console.log(data);
 
-    await axios({
-      method: "POST",
-      url: "http://localhost:8080/listings",
-      data,
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    }).then((response) => {
-      // TODO: fix data length/type fail
-      // (response fails if data type too large, i.e. area = 3000000000000)
-      if (response.status === HttpStatus.OK) {
-        navigate(`/listings/${response.data.id}`);
-      }
-    });
+    await httpClient
+      .request({
+        method: "POST",
+        url: "/listings",
+        data,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // TODO: fix data length/type fail
+        // (response fails if data type too large, i.e. area = 3000000000000)
+        if (response.status === HttpStatus.OK) {
+          navigate(`/listings/${response.data.id}`);
+        }
+      });
   };
 
   useEffect(() => {

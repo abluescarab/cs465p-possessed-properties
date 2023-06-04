@@ -5,10 +5,10 @@ import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "@/firebase.ts";
 import { HttpStatus } from "@/status_codes.ts";
+import { httpClient } from "@/http_client.ts";
 
 const SignUp = () => {
   const auth = getAuth(firebaseApp);
@@ -55,15 +55,16 @@ const SignUp = () => {
       confirm.setCustomValidity("");
     }
 
-    await axios({
-      method: "POST",
-      url: "http://localhost:8080/users",
-      data: {
-        email: email.value,
-        name: userName.current.value,
-        password: password.value,
-      },
-    })
+    await httpClient
+      .request({
+        method: "POST",
+        url: "/users",
+        data: {
+          email: email.value,
+          name: userName.current.value,
+          password: password.value,
+        },
+      })
       .then(() => {
         signInWithEmailAndPassword(auth, email.value, password.value).then(
           () => {

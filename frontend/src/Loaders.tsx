@@ -1,16 +1,18 @@
-import axios from "axios";
+import { httpClient } from "@/http_client.ts";
 
 async function searchListings(data: {}) {
   let result = null;
 
-  await axios({
-    method: "SEARCH",
-    url: `http://localhost:8080/listings`,
-    data: data,
-  }).then((response) => {
-    result = response.data;
-    return { data, result };
-  });
+  await httpClient
+    .request({
+      method: "SEARCH",
+      url: "/listings",
+      data: data,
+    })
+    .then((response) => {
+      result = response.data;
+      return { data, result };
+    });
 
   return { data, result };
 }

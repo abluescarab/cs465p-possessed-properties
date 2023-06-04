@@ -3,8 +3,8 @@ import Card, { CardContent } from "@/components/Card/Card.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import Button from "@/components/Button/Button.tsx";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { httpClient } from "@/http_client.ts";
 
 const SearchBar = ({ small = false }) => {
   const [allListings, setAllListings] = useState([]);
@@ -15,16 +15,18 @@ const SearchBar = ({ small = false }) => {
   const fetch = async () => {
     let listings = [];
 
-    await axios({
-      method: "SEARCH",
-      url: "http://localhost:8080/listings",
-      data: {},
-    }).then((reply) => {
-      listings = reply.data.map((listing) => ({
-        id: listing.id,
-        name: listing.name,
-      }));
-    });
+    await httpClient
+      .request({
+        method: "SEARCH",
+        url: "/listings",
+        data: {},
+      })
+      .then((reply) => {
+        listings = reply.data.map((listing) => ({
+          id: listing.id,
+          name: listing.name,
+        }));
+      });
 
     return listings;
   };
