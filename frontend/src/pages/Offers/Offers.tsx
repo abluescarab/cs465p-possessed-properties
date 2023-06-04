@@ -3,6 +3,7 @@ import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from "@/App.tsx";
 import OfferTable from "@/components/OfferTable/OfferTable.tsx";
+import BackToTop from "@/components/BackToTop/BackToTop.tsx";
 
 const Offers = () => {
   const { user } = useContext(UserContext);
