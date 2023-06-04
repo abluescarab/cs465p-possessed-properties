@@ -4,6 +4,7 @@ import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
 import { useNavigate } from "react-router-dom";
+import { formatCurrencyString } from "@/utils.ts";
 
 interface ListingProps extends ComponentBaseProps {
   listingId: number;
@@ -44,7 +45,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
       />
       <CardContent>
         <p className={"bold font-lg"}>
-          {cancelled ? "Not for sale" : `$${price.toLocaleString()}`}
+          {cancelled ? "Not for sale" : formatCurrencyString(price)}
         </p>
         <div className={"listing-card-content"}>
           <div className={"listing-card-content-item"}>

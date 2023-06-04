@@ -2,6 +2,37 @@ import { Location, NavigateFunction } from "react-router-dom";
 
 const siteTitle = "Possessed Properties";
 
+export const formatCurrencyString = (str) => {
+  return `$${str.toLocaleString()}`;
+};
+
+export const formatDateString = (str) => {
+  return new Date(str).toLocaleString("en-US", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+};
+
+export function compare(a, b, descending) {
+  let val1 = a;
+  let val2 = b;
+
+  if (descending) {
+    val1 = b;
+    val2 = a;
+  }
+
+  if (val1 < val2) {
+    return -1;
+  }
+
+  if (val1 > val2) {
+    return 1;
+  }
+
+  return 0;
+}
+
 export function getClasses(
   className?: string,
   ...extras: { prop: any; mappings: { value: any; cssClass: string }[] }[]
