@@ -5,6 +5,7 @@ import { UserContext } from "@/App.tsx";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { Link } from "react-router-dom";
 import { httpClient } from "@/http_client.ts";
+import OfferTable from "@/components/OfferTable/OfferTable.tsx";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -67,52 +68,10 @@ const Profile = () => {
           </section>
           <section className={"profile-section"}>
             <h3>Offers</h3>
-            {dbUser.offers.length > 0 ? (
-              <table className={"offer-table"}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Listing</th>
-                    <th>Price</th>
-                    <th>Offer</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dbUser.offers
-                    .sort(
-                      (o1, o2) =>
-                        new Date(o1.createdAt) < new Date(o2.createdAt)
-                    )
-                    .map((offer) => {
-                      return (
-                        <tr key={offer.id}>
-                          <td>
-                            {new Date(offer.createdAt).toLocaleString("en-US", {
-                              dateStyle: "short",
-                              timeStyle: "short",
-                            })}
-                          </td>
-                          <td>
-                            {offer.listing.deletedAt == null ? (
-                              <Link to={`/listings/${offer.listing.id}`}>
-                                {offer.listing.name}
-                              </Link>
-                            ) : (
-                              offer.listing.name
-                            )}
-                          </td>
-                          <td>${offer.listing.price.toLocaleString()}</td>
-                          <td>${offer.price.toLocaleString()}</td>
-                          <td>{capitalize(offer.status)}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            ) : (
-              <p>No offers made.</p>
-            )}
+            <OfferTable
+              offers={dbUser.offers}
+              columns={["date", "listing", "price", "offer", "status"]}
+            />
           </section>
         </>
       ) : (
