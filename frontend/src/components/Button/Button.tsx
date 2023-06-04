@@ -5,7 +5,7 @@ import ComponentBase, {
 } from "@/components/ComponentBase.tsx";
 
 export interface ButtonProps extends ComponentBaseProps {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | string;
   onClick?: MouseEventHandler;
   type?: "button" | "submit" | "reset";
 }
