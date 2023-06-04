@@ -17,7 +17,7 @@
     "seed:create": "pnpm mikro-orm-esm seeder:create",
     "seed:run": "pnpm mikro-orm-esm seeder:run",
     "db:reset": "pnpm schema:drop && pnpm schema:update && pnpm seed:run",
-    "start:prod": "pnpm migration:up && pnpm start",
+    "start:prod": "pnpm migration:fresh && pnpm start",
     "migration:create": "pnpm mikro-orm-esm migration:create --name ",
     "migration:up": "pnpm mikro-orm-esm migration:up",
     "migration:down": "pnpm mikro-orm-esm migration:down",
