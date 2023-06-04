@@ -24,8 +24,8 @@ const SignOut = () => {
       {signedOut && (
         <>
           <p>You have been successfully signed out.</p>
-          <Button onClick={() => navigate(-1)} color={"primary"}>
-            Go back
+          <Button onClick={() => navigate("/")} color={"primary"}>
+            Go home
           </Button>
         </>
       )}
