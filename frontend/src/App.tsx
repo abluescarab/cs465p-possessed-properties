@@ -32,7 +32,8 @@ function App() {
     } else {
       if (
         location.pathname == Routes.sell.path ||
-        location.pathname == Routes.profile.path
+        location.pathname == Routes.profile.path ||
+        location.pathname == Routes.listingOffers.path
       ) {
         navigate(Routes.signIn.path);
       }
