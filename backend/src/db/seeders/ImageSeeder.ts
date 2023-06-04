@@ -1,6 +1,6 @@
 import type { EntityManager } from "@mikro-orm/core";
 import { Seeder } from "@mikro-orm/seeder";
-import { uploadFile } from "../../minio.js";
+import { uploadFile } from "../../plugins/minio.js";
 import * as fs from "fs";
 
 export class ImageSeeder extends Seeder {

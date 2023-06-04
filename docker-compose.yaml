@@ -53,6 +53,8 @@ services:
       - DB_USER=admin
       - DB_PASS=password
       - NODE_ENV=development
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,7 +62,7 @@ services:
         condition: service_healthy
 
   frontend:
-    container_name: frontend
+    container_name: frontend-possessedprops
     build: ./frontend/
     restart: always
     ports:
