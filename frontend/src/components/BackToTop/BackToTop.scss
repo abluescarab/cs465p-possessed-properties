@@ -1,9 +1,8 @@
 #back-to-top {
   position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  bottom: var(--padding-sm);
+  right: var(--padding-sm);
   text-align: end;
   padding: var(--padding-md);
-  background-color: var(--background-color-light);
+  z-index: 1;
 }
