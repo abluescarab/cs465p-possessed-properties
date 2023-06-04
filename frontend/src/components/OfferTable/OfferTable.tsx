@@ -3,7 +3,6 @@ import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
 import { capitalize } from "@/utils.tsx";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@/components/Button/Button.tsx";
 
@@ -93,7 +92,7 @@ const OfferTable: ComponentBase<OfferTableProps> = ({
   };
 
   return (
-    <table className={"offer-table"}>
+    <table id={id} className={`offer-table ${className}`}>
       <thead>
         <tr>
           {columns.map((col) => (
