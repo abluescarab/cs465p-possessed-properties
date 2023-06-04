@@ -1,16 +1,22 @@
 import "./Profile.scss";
 import { useContext, useEffect, useState } from "react";
-import { setTitle } from "@/utils.ts";
+import { formatCurrencyString, formatDateString, setTitle } from "@/utils.ts";
 import { UserContext } from "@/App.tsx";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { httpClient } from "@/http_client.ts";
-import OfferTable from "@/components/OfferTable/OfferTable.tsx";
+import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
 
   const [dbUser, setDbUser] = useState(null);
   const [doFetch, setDoFetch] = useState(true);
+
+  // TODO: close offer
+  const closeOffer = (offer) => {};
+
+  // TODO: reopen offer
+  const reopenOffer = (offer) => {};
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,7 +45,6 @@ const Profile = () => {
     }
   }, [doFetch, user, dbUser]);
 
-  // TODO: let user reopen listing?
   return (
     <article id={"profile-page"} className={"page"}>
       {dbUser ? (
@@ -67,9 +72,52 @@ const Profile = () => {
           </section>
           <section className={"profile-section"}>
             <h3>Offers</h3>
-            <OfferTable
-              offers={dbUser.offers}
-              columns={["date", "listing", "price", "offer", "status"]}
+            <SortedTable
+              data={dbUser.offers}
+              buttons={[
+                {
+                  label: "Close",
+                  onClick: closeOffer,
+                  color: "primary",
+                  visible: (item) => !item.deletedAt,
+                },
+                {
+                  label: "Reopen",
+                  onClick: reopenOffer,
+                  color: "primary",
+                  visible: (item) => item.deletedAt,
+                },
+              ]}
+              columns={[
+                {
+                  name: "date",
+                  label: "Date",
+                  display: (item) => formatDateString(item.createdAt),
+                  descendByDefault: true,
+                },
+                {
+                  name: "listing",
+                  label: "Listing",
+                  display: (item) => item.listing.name,
+                },
+                {
+                  name: "price",
+                  label: "Price",
+                  display: (item) => formatCurrencyString(item.listing.price),
+                },
+                {
+                  name: "offer",
+                  label: "Offer",
+                  display: (item) => formatCurrencyString(item.price),
+                },
+                {
+                  name: "status",
+                  label: "Status",
+                  display: (item) => (
+                    <span className={"capitalize"}>{item.status}</span>
+                  ),
+                },
+              ]}
             />
           </section>
         </>
