@@ -43,7 +43,10 @@ await app.register(FastifySearchHttpMethodPlugin);
 await app.register(FastifyFirebasePlugin, firebaseConfig);
 await app.register(multipart);
 await app.register(cors, {
-  origin: false,
+  origin: (origin, cb) => {
+    cb(null, true);
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "SEARCH"],
 });
 
 await app.register(AppRoutes);
