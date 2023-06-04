@@ -21,6 +21,7 @@ import Sell from "@/pages/Sell/Sell.tsx";
 import Guide from "@/pages/Guide/Guide.tsx";
 import SignOut from "@/pages/SignOut/SignOut.tsx";
 import Offers from "@/pages/Offers/Offers.tsx";
+import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute.tsx";
 
 export const Routes = {
   home: {
@@ -44,7 +45,11 @@ export const Routes = {
   },
   listingOffers: {
     path: "/listings/:listingId/offers",
-    element: <Offers />,
+    element: (
+      <ProtectedRoute>
+        <Offers />
+      </ProtectedRoute>
+    ),
     loader: offersLoader,
   },
   searchRegion: {
@@ -64,19 +69,35 @@ export const Routes = {
   },
   profile: {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
   sell: {
     path: "/sell",
-    element: <Sell />,
+    element: (
+      <ProtectedRoute>
+        <Sell />
+      </ProtectedRoute>
+    ),
   },
   signIn: {
     path: "/signin",
-    element: <SignIn />,
+    element: (
+      <ProtectedRoute ifSignedIn>
+        <SignIn />
+      </ProtectedRoute>
+    ),
   },
   signUp: {
     path: "/signup",
-    element: <SignUp />,
+    element: (
+      <ProtectedRoute ifSignedIn>
+        <SignUp />
+      </ProtectedRoute>
+    ),
   },
   signOut: {
     path: "/signout",
@@ -84,7 +105,11 @@ export const Routes = {
   },
   forgotPassword: {
     path: "/forgotpassword",
-    element: <ForgotPassword />,
+    element: (
+      <ProtectedRoute ifSignedIn>
+        <ForgotPassword />
+      </ProtectedRoute>
+    ),
   },
 };
 

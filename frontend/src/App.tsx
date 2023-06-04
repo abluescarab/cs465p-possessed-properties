@@ -1,52 +1,31 @@
 import "@css/App.scss";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navigation from "@/components/Navigation/Navigation.tsx";
 import Footer from "@/components/Footer/Footer.tsx";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseApp from "@/firebase.ts";
-import { Routes } from "@/AppRouter.tsx";
 import { createContext, useState } from "react";
 
 export const UserContext = createContext(null);
 
 function App() {
   const auth = getAuth(firebaseApp);
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const [currentUser, setCurrentUser] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      if (
-        location.pathname == Routes.signUp.path ||
-        location.pathname == Routes.signIn.path ||
-        location.pathname == Routes.forgotPassword.path
-      ) {
-        navigate(Routes.home.path);
-      }
+    if (!initialized) {
+      setInitialized(true);
+    }
 
-      if (!currentUser) {
-        setCurrentUser(user);
-      }
-    } else {
-      if (
-        location.pathname == Routes.sell.path ||
-        location.pathname == Routes.profile.path ||
-        location.pathname == Routes.listingOffers.path
-      ) {
-        navigate(Routes.signIn.path);
-      }
-
-      if (currentUser) {
-        setCurrentUser(user);
-      }
+    if (currentUser !== user) {
+      setCurrentUser(user);
     }
   });
 
   return (
     <>
-      <UserContext.Provider value={{ user: currentUser }}>
+      <UserContext.Provider value={{ initialized, user: currentUser }}>
         <Navigation />
         <main id={"container"}>
           <Outlet />
