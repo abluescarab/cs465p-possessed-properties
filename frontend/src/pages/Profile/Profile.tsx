@@ -11,7 +11,7 @@ import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { httpClient } from "@/http_client.ts";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Routes } from "@/AppRouter.tsx";
 
 const Profile = () => {
@@ -139,7 +139,14 @@ const Profile = () => {
                   {
                     name: "listing",
                     label: "Listing",
-                    display: (item) => item.listing.name,
+                    display: (item) =>
+                      item.listing.deletedAt === null ? (
+                        <Link to={Routes.listing.replace(item.listing.id)}>
+                          {item.listing.name}
+                        </Link>
+                      ) : (
+                        item.listing.name
+                      ),
                   },
                   {
                     name: "price",
