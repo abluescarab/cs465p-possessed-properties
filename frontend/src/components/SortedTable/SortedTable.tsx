@@ -90,7 +90,7 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
       setTableData(data);
     };
 
-    if (doSort) {
+    if (data && doSort) {
       sort(sortedColumn, descending);
       setDoSort(false);
     }
