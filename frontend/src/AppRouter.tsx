@@ -44,7 +44,7 @@ export const Routes = {
     element: <Listing />,
     loader: listingLoader,
   },
-  listingOffers: {
+  offers: {
     replace: (str) => `/listings/${str}/offers`,
     path: "/listings/:listingId/offers",
     element: (
@@ -55,19 +55,16 @@ export const Routes = {
     loader: offersLoader,
   },
   searchRegion: {
-    replace: (str) => `/listings/region/${str}`,
     path: "/listings/region/:listingRegion",
     element: <Search />,
     loader: searchRegionLoader,
   },
   searchCountry: {
-    replace: (str) => `/listings/country/${str}`,
     path: "/listings/country/:listingCountry",
     element: <Search />,
     loader: searchCountryLoader,
   },
   searchType: {
-    replace: (str) => `/listings/type/${str}`,
     path: "/listings/type/:listingType",
     element: <Search />,
     loader: searchTypeLoader,
@@ -127,7 +124,7 @@ const AppRouter = createBrowserRouter([
       Routes.home,
       Routes.guide,
       Routes.listing,
-      Routes.listingOffers,
+      Routes.offers,
       Routes.search,
       Routes.searchRegion,
       Routes.searchCountry,

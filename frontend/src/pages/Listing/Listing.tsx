@@ -189,7 +189,7 @@ const Listing = () => {
                       color={"primary"}
                       className={"action-button"}
                       onClick={() =>
-                        navigate(Routes.listingOffers.replace(listing.id))
+                        navigate(Routes.offers.replace(listing.id))
                       }
                     >
                       See Offers
