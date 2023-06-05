@@ -5,12 +5,14 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { compare, formatCurrencyString, formatDateString } from "@/utils.ts";
+import { confirmPopup } from "@/static_components.tsx";
 
 const Offers = () => {
   const { initialized, user } = useContext(UserContext);
   const listing = (useLoaderData() as any).result;
 
   const [canView, setCanView] = useState(false);
+  const [popup, setPopup] = useState(null);
 
   // TODO: accept offer
   const acceptOffer = (offer) => {};
@@ -37,7 +39,19 @@ const Offers = () => {
           buttons={[
             {
               label: "Accept",
-              onClick: acceptOffer,
+              onClick: (item) =>
+                setPopup(
+                  confirmPopup(
+                    "Accept Offer",
+                    `Are you sure you want to accept the offer from ${
+                      item.buyer.name
+                    } for ${formatCurrencyString(item.price)} on ${
+                      listing.name
+                    }?`,
+                    () => acceptOffer(item),
+                    () => setPopup(null)
+                  )
+                ),
               color: "primary",
             },
             {
@@ -81,6 +95,7 @@ const Offers = () => {
         />
       </div>
       <BackToTop />
+      {popup}
     </>
   );
 };
