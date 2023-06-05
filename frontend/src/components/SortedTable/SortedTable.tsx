@@ -70,7 +70,7 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
   };
 
   useEffect(() => {
-    setTableData(data);
+    setDoSort(true);
   }, [data]);
 
   useEffect(() => {
