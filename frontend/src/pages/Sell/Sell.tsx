@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "@/App.tsx";
 import { HttpStatus } from "@/status_codes.ts";
 import { httpClient } from "@/http_client.ts";
+import { Routes } from "@/AppRouter.tsx";
 
 const Sell = () => {
   const { user } = useContext(UserContext);
@@ -86,7 +87,8 @@ const Sell = () => {
         // TODO: fix data length/type fail
         // (response fails if data type too large, i.e. area = 3000000000000)
         if (response.status === HttpStatus.OK) {
-          navigate(`/listings/${response.data.id}`);
+          // TODO: test this
+          navigate(Routes.listing.replace(response.data.id));
         }
       });
   };

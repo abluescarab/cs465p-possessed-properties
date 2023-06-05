@@ -36,9 +36,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
       shadow={"hover"}
       onClick={() => {
         if (!cancelled) {
-          navigate(
-            Routes.listing.path.replace(":listingId", listingId.toString())
-          );
+          navigate(Routes.listing.replace(listingId));
         }
       }}
     >

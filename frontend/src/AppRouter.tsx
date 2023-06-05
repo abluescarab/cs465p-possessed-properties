@@ -39,11 +39,13 @@ export const Routes = {
     loader: searchLoader,
   },
   listing: {
+    replace: (str) => `/listings/${str}`,
     path: "/listings/:listingId",
     element: <Listing />,
     loader: listingLoader,
   },
   listingOffers: {
+    replace: (str) => `/listings/${str}/offers`,
     path: "/listings/:listingId/offers",
     element: (
       <ProtectedRoute>
@@ -53,16 +55,19 @@ export const Routes = {
     loader: offersLoader,
   },
   searchRegion: {
+    replace: (str) => `/listings/region/${str}`,
     path: "/listings/region/:listingRegion",
     element: <Search />,
     loader: searchRegionLoader,
   },
   searchCountry: {
+    replace: (str) => `/listings/country/${str}`,
     path: "/listings/country/:listingCountry",
     element: <Search />,
     loader: searchCountryLoader,
   },
   searchType: {
+    replace: (str) => `/listings/type/${str}`,
     path: "/listings/type/:listingType",
     element: <Search />,
     loader: searchTypeLoader,

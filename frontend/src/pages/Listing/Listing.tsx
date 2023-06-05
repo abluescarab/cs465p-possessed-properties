@@ -14,6 +14,7 @@ import { UserContext } from "@/App.tsx";
 import Popup from "@/components/Popup/Popup.tsx";
 import TextInput from "@/components/TextInput/TextInput.tsx";
 import { httpClient } from "@/http_client.ts";
+import { Routes } from "@/AppRouter.tsx";
 
 const Listing = () => {
   const { initialized, user } = useContext(UserContext);
@@ -187,7 +188,9 @@ const Listing = () => {
                       type={"button"}
                       color={"primary"}
                       className={"action-button"}
-                      onClick={() => navigate(`/listings/${listing.id}/offers`)}
+                      onClick={() =>
+                        navigate(Routes.listingOffers.replace(listing.id))
+                      }
                     >
                       See Offers
                     </Button>
