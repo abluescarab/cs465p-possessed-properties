@@ -9,6 +9,10 @@
     padding: var(--padding-sm);
   }
 
+  td {
+    height: var(--button-height);
+  }
+
   .table-title {
     display: flex;
     flex-flow: row wrap;

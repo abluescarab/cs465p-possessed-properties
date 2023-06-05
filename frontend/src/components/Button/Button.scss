@@ -1,7 +1,8 @@
 @use "../../theme/abstracts/mixins" as *;
 
 button {
-  padding: var(--padding-md);
+  padding: 0 var(--padding-md);
+  height: var(--button-height);
   margin: 0;
   background-color: var(--background-color-light);
   color: var(--text-color-light);
