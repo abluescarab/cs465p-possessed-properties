@@ -1,21 +1,53 @@
 import "./Offers.scss";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import BackToTop from "@/components/BackToTop/BackToTop.tsx";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { compare, formatCurrencyString, formatDateString } from "@/utils.ts";
-import { confirmPopup } from "@/static_components.tsx";
+import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
+import { httpClient } from "@/http_client.ts";
+import { Routes } from "@/AppRouter.tsx";
 
 const Offers = () => {
   const { initialized, user } = useContext(UserContext);
   const listing = (useLoaderData() as any).result;
+  const navigate = useNavigate();
 
   const [canView, setCanView] = useState(false);
   const [popup, setPopup] = useState(null);
 
   // TODO: accept offer
-  const acceptOffer = (offer) => {};
+  const acceptOffer = async (offer) => {
+    await httpClient
+      .request({
+        method: "PUT",
+        url: "/offers",
+        data: {
+          token: user.accessToken,
+          uid: user.uid,
+          id: offer.id,
+          status: "accepted",
+        },
+      })
+      .then((response) => {
+        const item = response.data;
+
+        setPopup(
+          okPopup(
+            "Offer Accepted",
+            `You have accepted the offer for ${formatCurrencyString(
+              item.price
+            )} on ${listing.name}.`,
+            () => navigate(Routes.profile.path)
+          )
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        setPopup(errorPopup(() => setPopup(null)));
+      });
+  };
 
   // TODO: reject offer
   const rejectOffer = (offer) => {};
