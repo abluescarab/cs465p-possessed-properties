@@ -16,12 +16,14 @@ import {
   searchLoader,
   searchRegionLoader,
   offersLoader,
+  userLoader,
 } from "@/Loaders.tsx";
 import Sell from "@/pages/Sell/Sell.tsx";
 import Guide from "@/pages/Guide/Guide.tsx";
 import SignOut from "@/pages/SignOut/SignOut.tsx";
 import Offers from "@/pages/Offers/Offers.tsx";
 import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute.tsx";
+import ProfileRedirect from "@/pages/Profile/ProfileRedirect.tsx";
 
 export const Routes = {
   home: {
@@ -69,13 +71,23 @@ export const Routes = {
     element: <Search />,
     loader: searchTypeLoader,
   },
-  profile: {
+  profileRedirect: {
     path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <ProfileRedirect />
+      </ProtectedRoute>
+    ),
+  },
+  profile: {
+    replace: (str) => `/profile/${str}`,
+    path: "/profile/:userId",
     element: (
       <ProtectedRoute>
         <Profile />
       </ProtectedRoute>
     ),
+    loader: userLoader,
   },
   sell: {
     path: "/sell",
@@ -129,6 +141,7 @@ const AppRouter = createBrowserRouter([
       Routes.searchRegion,
       Routes.searchCountry,
       Routes.searchType,
+      Routes.profileRedirect,
       Routes.profile,
       Routes.sell,
       Routes.signUp,

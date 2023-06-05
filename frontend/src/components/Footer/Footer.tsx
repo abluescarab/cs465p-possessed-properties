@@ -8,7 +8,7 @@ const Footer = () => {
       <Link to={Routes.search.path}>Buy</Link>
       <Link to={Routes.sell.path}>Sell</Link>
       <Link to={Routes.guide.path}>Guide</Link>
-      <Link to={Routes.profile.path}>Profile</Link>
+      <Link to={Routes.profileRedirect.path}>Profile</Link>
       <div className={"full-width"}>&copy; Possessed Properties, Inc.</div>
     </footer>
   );

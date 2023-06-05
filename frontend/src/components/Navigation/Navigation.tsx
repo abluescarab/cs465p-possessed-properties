@@ -23,7 +23,7 @@ const Navigation = () => {
       <div className={"nav-column"}>
         {user ? (
           <>
-            <Link to={Routes.profile.path}>Profile</Link>
+            <Link to={Routes.profileRedirect.path}>Profile</Link>
             <Link to={Routes.signOut.path}>Sign out</Link>
           </>
         ) : (

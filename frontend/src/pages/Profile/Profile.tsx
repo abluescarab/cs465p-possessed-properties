@@ -11,15 +11,15 @@ import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { httpClient } from "@/http_client.ts";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useRevalidator } from "react-router-dom";
 import { Routes } from "@/AppRouter.tsx";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
+  const loaderData = (useLoaderData() as any).result;
+  const revalidator = useRevalidator();
 
   const [dbUser, setDbUser] = useState(null);
-  const [doFetch, setDoFetch] = useState(true);
   const [popup, setPopup] = useState(null);
 
   const closeOffer = async (offer) => {
@@ -41,7 +41,7 @@ const Profile = () => {
             `Your offer on ${response.data.listing.name} has been closed.`,
             () => {
               setPopup(null);
-              setDoFetch(true);
+              revalidator.revalidate();
             }
           )
         );
@@ -52,32 +52,9 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      await httpClient
-        .request({
-          method: "SEARCH",
-          url: "/users",
-          data: {
-            email: user.email,
-            filterDeleted: false,
-            populate: ["listings", "offers.listing"],
-          },
-        })
-        .then((request) => {
-          setDbUser(request.data);
-          setTitle(`${request.data.name}'s Profile`);
-        })
-        .catch((err) => {
-          console.log(err);
-          setPopup(errorPopup(() => navigate(Routes.home.path)));
-        });
-    };
-
-    if (user && doFetch) {
-      fetchUser();
-      setDoFetch(false);
-    }
-  }, [doFetch, user, dbUser, navigate]);
+    setDbUser(loaderData);
+    setTitle(`${loaderData.name}'s Profile`);
+  }, [loaderData]);
 
   return (
     <>
@@ -87,7 +64,7 @@ const Profile = () => {
             <h2 className={"profile-name"}>{dbUser.name}</h2>
             <section className={"profile-section"}>
               <h3>Listings</h3>
-              {dbUser.listings.length > 0 ? (
+              {dbUser.listings && dbUser.listings.length > 0 ? (
                 dbUser.listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
                 ))

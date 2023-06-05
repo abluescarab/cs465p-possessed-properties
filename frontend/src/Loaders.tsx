@@ -1,13 +1,13 @@
 import { httpClient } from "@/http_client.ts";
 
-async function searchListings(data: {}) {
+async function search(url, data: {}) {
   let result = null;
 
   await httpClient
     .request({
       method: "SEARCH",
-      url: "/listings",
-      data: data,
+      url,
+      data,
     })
     .then((response) => {
       result = response.data;
@@ -15,6 +15,18 @@ async function searchListings(data: {}) {
     });
 
   return { data, result };
+}
+
+async function searchListings(data: {}) {
+  return search("/listings", data);
+}
+
+export async function userLoader({ params }) {
+  return search("/users", {
+    id: params.userId,
+    populate: ["listings", "offers.listing"],
+    filterDeleted: false,
+  });
 }
 
 export async function searchLoader() {
