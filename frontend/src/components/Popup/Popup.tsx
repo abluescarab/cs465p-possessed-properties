@@ -27,7 +27,7 @@ const Popup: ComponentBase<PopupProps> = ({
   return (
     <div id={id} className={`popup-container ${className}`}>
       <Card className={"popup"}>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className={"capitalize"}>{title}</CardTitle>
         <CardContent>
           {children}
           {(primaryButton || secondaryButton) && (
