@@ -31,18 +31,10 @@ const Home = () => {
       <section className={"home-section"}>
         <h2 className={"home-header"}>Trending Properties</h2>
         <Carousel>
-          {trending.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listingId={listing.id}
-              name={listing.name}
-              bedrooms={listing.bedrooms}
-              bathrooms={listing.bathrooms}
-              area={listing.area}
-              price={listing.price}
-              image={listing.imageUri}
-            />
-          ))}
+          {trending &&
+            trending.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
         </Carousel>
       </section>
     </div>

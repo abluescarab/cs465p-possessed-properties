@@ -89,17 +89,7 @@ const Profile = () => {
               <h3>Listings</h3>
               {dbUser.listings.length > 0 ? (
                 dbUser.listings.map((listing) => (
-                  <ListingCard
-                    key={listing.id}
-                    listingId={listing.id}
-                    name={listing.name}
-                    price={listing.price}
-                    bedrooms={listing.bedrooms}
-                    bathrooms={listing.bathrooms}
-                    area={listing.area}
-                    image={listing.imageUri}
-                    closed={listing.deletedAt}
-                  />
+                  <ListingCard key={listing.id} listing={listing} />
                 ))
               ) : (
                 <p>No created listings.</p>

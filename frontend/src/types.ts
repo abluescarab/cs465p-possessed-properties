@@ -7,14 +7,13 @@ export type HauntingType =
   | "inhuman";
 
 export type ListingType = {
+  id: number;
   name: string;
-  address: string;
-  region: string;
-  country: string;
-  description: string;
+  price: number;
   bedrooms: number;
   bathrooms: number;
   area: number;
-  price: number;
-  hauntingType: HauntingType;
+  imageUri: string;
+  deletedAt: string;
+  purchasedAt: string;
 };
