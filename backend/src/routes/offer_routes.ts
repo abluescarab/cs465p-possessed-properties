@@ -5,7 +5,7 @@ import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
 import verifyToken from "../firebase/verify_token.js";
-import { OfferStatus } from "../types.js";
+import { OfferStatus, OfferStatusStrings } from "../types.js";
 
 export function createOfferRoutes(app: FastifyInstance) {
   // region GET - get all offers
@@ -28,7 +28,15 @@ export function createOfferRoutes(app: FastifyInstance) {
   }>("/offers", async (request, reply) => {
     const data = createBody(request.body, ["id", "filterDeleted", "populate"]);
 
-    const { id, filterDeleted, populate } = request.body;
+    const { id, filterDeleted, populate, status } = request.body;
+
+    if (!OfferStatusStrings.includes(status)) {
+      return error(
+        reply,
+        HttpStatus.BAD_REQUEST,
+        `Offer status must be one of: ${OfferStatusStrings}`
+      );
+    }
 
     try {
       if (id !== undefined) {
@@ -127,10 +135,18 @@ export function createOfferRoutes(app: FastifyInstance) {
       uid: string;
       id: number;
       price?: number;
-      status?: string;
+      status?: OfferStatus;
     };
   }>("/offers", async (request, reply) => {
     const { token, uid, id, price, status } = request.body;
+
+    if (!OfferStatusStrings.includes(status)) {
+      return error(
+        reply,
+        HttpStatus.BAD_REQUEST,
+        `Offer status must be one of: ${OfferStatusStrings}`
+      );
+    }
 
     try {
       const authUser = verifyToken(token, uid);
@@ -190,56 +206,65 @@ export function createOfferRoutes(app: FastifyInstance) {
   // endregion
 
   // region DELETE - mark an offer as deleted
-  app.delete<{ Body: { token: string; uid: string; id: number } }>(
-    "/offers",
-    async (request, reply) => {
-      const { token, uid, id } = request.body;
+  app.delete<{
+    Body: { token: string; uid: string; id: number; status: OfferStatus };
+  }>("/offers", async (request, reply) => {
+    const { token, uid, id, status } = request.body;
 
-      try {
-        const authUser = verifyToken(token, uid);
-
-        const { success, entity: offer } = await find(
-          request,
-          reply,
-          Offer,
-          { id },
-          {
-            errorMessage: `Offer with ID ${id} not found`,
-            populate: ["buyer", "listing.owner"],
-          }
-        );
-
-        if (!success) {
-          return reply;
-        }
-
-        const user = await request.em.findOne(User, { email: authUser.email });
-
-        if (user.id != offer.buyer.id || user.id != offer.listing.owner.id) {
-          return error(
-            reply,
-            HttpStatus.FORBIDDEN,
-            `User does not have permission to modify offer with ID ${id}`
-          );
-        }
-
-        if (offer.closedAt !== null) {
-          return error(
-            reply,
-            HttpStatus.FORBIDDEN,
-            `Offer with ID ${id} has been accepted and is not modifiable`
-          );
-        }
-
-        await request.em.remove(offer);
-        await request.em.flush();
-
-        app.log.info(offer);
-        return reply.send(offer);
-      } catch (err) {
-        return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
-      }
+    if (!OfferStatusStrings.includes(status)) {
+      return error(
+        reply,
+        HttpStatus.BAD_REQUEST,
+        `Offer status must be one of: ${OfferStatusStrings}`
+      );
     }
-  );
+
+    try {
+      const authUser = verifyToken(token, uid);
+
+      const { success, entity: offer } = await find(
+        request,
+        reply,
+        Offer,
+        { id },
+        {
+          errorMessage: `Offer with ID ${id} not found`,
+          populate: ["buyer", "listing.owner"],
+        }
+      );
+
+      if (!success) {
+        return reply;
+      }
+
+      const user = await request.em.findOne(User, { email: authUser.email });
+
+      if (user.id != offer.buyer.id && user.id != offer.listing.owner.id) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `User does not have permission to modify offer with ID ${id}`
+        );
+      }
+
+      if (offer.closedAt !== null) {
+        return error(
+          reply,
+          HttpStatus.FORBIDDEN,
+          `Offer with ID ${id} has been accepted and is not modifiable`
+        );
+      }
+
+      offer.status = status;
+      await request.em.flush();
+      await request.em.remove(offer);
+      await request.em.flush();
+
+      app.log.info(offer);
+      return reply.send(offer);
+    } catch (err) {
+      return error(reply, HttpStatus.INTERNAL_SERVER_ERROR, err.message);
+    }
+  });
   // endregion
 }
