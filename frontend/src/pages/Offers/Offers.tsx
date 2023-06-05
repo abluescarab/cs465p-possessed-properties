@@ -1,24 +1,24 @@
 import "./Offers.scss";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useRevalidator } from "react-router-dom";
 import BackToTop from "@/components/BackToTop/BackToTop.tsx";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { compare, formatCurrencyString, formatDateString } from "@/utils.ts";
 import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
-import { httpClient } from "@/http_client.ts";
 import { Routes } from "@/AppRouter.tsx";
+import { httpClient } from "@/http_client.ts";
 
 const Offers = () => {
   const { initialized, user } = useContext(UserContext);
   const listing = (useLoaderData() as any).result;
   const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
   const [canView, setCanView] = useState(false);
   const [popup, setPopup] = useState(null);
 
-  // TODO: accept offer
-  const acceptOffer = async (offer) => {
+  const modifyOffer = async (offer, status, onClick) => {
     await httpClient
       .request({
         method: "PUT",
@@ -27,19 +27,20 @@ const Offers = () => {
           token: user.accessToken,
           uid: user.uid,
           id: offer.id,
-          status: "accepted",
+          status,
         },
       })
-      .then((response) => {
-        const item = response.data;
-
+      .then(() => {
         setPopup(
           okPopup(
-            "Offer Accepted",
-            `You have accepted the offer for ${formatCurrencyString(
-              item.price
-            )} on ${listing.name}.`,
-            () => navigate(Routes.profile.path)
+            `Offer ${status}`,
+            `You have ${status} the offer from ${
+              offer.buyer.name
+            } for ${formatCurrencyString(offer.price)} on ${listing.name}.`,
+            () => {
+              onClick();
+              revalidator.revalidate();
+            }
           )
         );
       })
@@ -49,8 +50,15 @@ const Offers = () => {
       });
   };
 
-  // TODO: reject offer
-  const rejectOffer = (offer) => {};
+  const acceptOffer = async (offer) => {
+    await modifyOffer(offer, "accepted", () =>
+      navigate(Routes.profileRedirect.path)
+    );
+  };
+
+  const rejectOffer = async (offer) => {
+    await modifyOffer(offer, "rejected", () => setPopup(null));
+  };
 
   useEffect(() => {
     if (initialized && user.email === listing.owner.email) {
@@ -91,7 +99,19 @@ const Offers = () => {
             },
             {
               label: "Reject",
-              onClick: rejectOffer,
+              onClick: (item) =>
+                setPopup(
+                  confirmPopup(
+                    "Reject Offer",
+                    `Are you sure you want to reject the offer from ${
+                      item.buyer.name
+                    } for ${formatCurrencyString(item.price)} on ${
+                      listing.name
+                    }?`,
+                    () => rejectOffer(item),
+                    () => setPopup(null)
+                  )
+                ),
               color: "secondary",
               visible: (item) =>
                 item.deletedAt === null && item.status === "open",
