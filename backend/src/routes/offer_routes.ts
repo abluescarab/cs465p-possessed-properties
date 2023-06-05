@@ -192,7 +192,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         offer.status = status;
       }
 
-      if (offer.status !== "open") {
+      if (offer.status === "accepted") {
         const offers = await request.em.find(Offer, {
           id: { $ne: offer.id },
           listing: offer.listing,
@@ -203,19 +203,14 @@ export function createOfferRoutes(app: FastifyInstance) {
           otherOffer.status = "rejected";
         }
 
-        if (offer.status === "accepted") {
           offer.listing.purchasedAt = new Date();
           offer.listing.purchasedBy = offer.buyer;
-        }
 
         // flush and remove
         await request.em.flush();
         await request.em.remove(offer);
         await request.em.remove(offers);
-
-        if (offer.listing.purchasedAt) {
-          await request.em.remove(offer.listing);
-        }
+        await request.em.remove(offer.listing);
       }
 
       // flush remaining status changes and deletions
