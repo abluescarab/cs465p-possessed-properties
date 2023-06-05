@@ -2,7 +2,7 @@ import "./SortedTable.scss";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { compare } from "@/utils.ts";
 import Button from "@/components/Button/Button.tsx";
 
@@ -18,7 +18,7 @@ interface SortedTableProps extends ComponentBaseProps {
   }[];
   buttons?: {
     label: string;
-    onClick: MouseEventHandler;
+    onClick: (item) => void;
     color: string;
     visible?: (item) => boolean;
   }[];
@@ -43,7 +43,7 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
       return;
     }
 
-    if (sortedColumn !== column) {
+    if (sortedColumn.name !== column.name) {
       setDescending(column.descendByDefault);
       setSortedColumn(column);
     } else {
@@ -127,7 +127,7 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
                           <Button
                             type={"button"}
                             key={button.label}
-                            onClick={button.onClick}
+                            onClick={() => button.onClick(item)}
                             color={button.color}
                           >
                             {button.label}
