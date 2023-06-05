@@ -378,16 +378,6 @@
           "nullable": true,
           "default": "'open'",
           "mappedType": "string"
-        },
-        "closed_at": {
-          "name": "closed_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 6,
-          "mappedType": "datetime"
         }
       },
       "name": "offers",

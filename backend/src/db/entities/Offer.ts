@@ -31,10 +31,4 @@ export class Offer extends ProjectBaseEntity {
    */
   @Property()
   status?: OfferStatus = "open";
-
-  /**
-   * When the offer was closed, i.e., has any {@link OfferStatus} other than open.
-   */
-  @Property()
-  closedAt?: Date = null;
 }

@@ -176,7 +176,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         );
       }
 
-      if (offer.closedAt !== null) {
+      if (offer.status === "accepted") {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
@@ -193,7 +193,7 @@ export function createOfferRoutes(app: FastifyInstance) {
       }
 
       if (offer.status !== "open") {
-        offer.closedAt = new Date();
+        offer.deletedAt = new Date();
       }
 
       await request.em.flush();
@@ -247,7 +247,7 @@ export function createOfferRoutes(app: FastifyInstance) {
         );
       }
 
-      if (offer.closedAt !== null) {
+      if (offer.status === "accepted") {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
