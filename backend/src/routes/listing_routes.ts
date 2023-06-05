@@ -166,7 +166,6 @@ export function createListingRoutes(app: FastifyInstance) {
       bathrooms,
       area,
       price,
-      buyerEmail,
       hauntingType,
     } = request.body;
 
@@ -232,32 +231,6 @@ export function createListingRoutes(app: FastifyInstance) {
 
       if (hauntingType !== undefined) {
         listing.hauntingType = hauntingType;
-      }
-
-      if (buyerEmail !== undefined) {
-        const { success, entity: buyer } = await find(
-          request,
-          reply,
-          User,
-          { email: buyerEmail },
-          { errorMessage: `User with email ${buyerEmail} not found` }
-        );
-
-        if (!success) {
-          return reply;
-        }
-
-        buyer.purchasedProperties.add(listing);
-        listing.purchasedBy = buyer;
-        listing.purchasedAt = new Date();
-
-        // TODO: find offer to accept
-        // TODO: close/reject all offers
-        listing.offers.forEach((offer) => {
-          if (offer.status == "open") {
-            offer.status = "rejected";
-          }
-        });
       }
 
       await request.em.flush();
