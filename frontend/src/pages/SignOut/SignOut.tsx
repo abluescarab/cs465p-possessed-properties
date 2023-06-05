@@ -4,6 +4,7 @@ import firebaseApp from "@/firebase.ts";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
+import { Routes } from "@/AppRouter.tsx";
 
 const SignOut = () => {
   const auth = getAuth(firebaseApp);
@@ -24,7 +25,7 @@ const SignOut = () => {
       {signedOut && (
         <>
           <p>You have been successfully signed out.</p>
-          <Button onClick={() => navigate("/")} color={"primary"}>
+          <Button onClick={() => navigate(Routes.home.path)} color={"primary"}>
             Go home
           </Button>
         </>

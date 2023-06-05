@@ -5,6 +5,7 @@ import ComponentBase, {
 } from "@/components/ComponentBase.tsx";
 import { useNavigate } from "react-router-dom";
 import { formatCurrencyString } from "@/utils.ts";
+import { Routes } from "@/AppRouter.tsx";
 
 interface ListingProps extends ComponentBaseProps {
   listingId: number;
@@ -35,7 +36,9 @@ const ListingCard: ComponentBase<ListingProps> = ({
       shadow={"hover"}
       onClick={() => {
         if (!cancelled) {
-          navigate(`/listings/${listingId}`);
+          navigate(
+            Routes.listing.path.replace(":listingId", listingId.toString())
+          );
         }
       }}
     >
