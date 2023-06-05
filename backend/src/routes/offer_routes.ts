@@ -193,9 +193,32 @@ export function createOfferRoutes(app: FastifyInstance) {
       }
 
       if (offer.status !== "open") {
-        offer.deletedAt = new Date();
+        const offers = await request.em.find(Offer, {
+          id: { $ne: offer.id },
+          listing: offer.listing,
+        });
+
+        // change entity properties before deletion
+        for (const otherOffer of offers) {
+          otherOffer.status = "rejected";
+        }
+
+        if (offer.status === "accepted") {
+          offer.listing.purchasedAt = new Date();
+          offer.listing.purchasedBy = offer.buyer;
+        }
+
+        // flush and remove
+        await request.em.flush();
+        await request.em.remove(offer);
+        await request.em.remove(offers);
+
+        if (offer.listing.purchasedAt) {
+          await request.em.remove(offer.listing);
+        }
       }
 
+      // flush remaining status changes and deletions
       await request.em.flush();
       app.log.info(offer);
       return reply.send(offer);
