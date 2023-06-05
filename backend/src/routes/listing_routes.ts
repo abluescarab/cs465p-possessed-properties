@@ -197,7 +197,7 @@ export function createListingRoutes(app: FastifyInstance) {
         );
       }
 
-      if (listing.purchasedAt !== null) {
+      if (listing.purchasedBy !== null) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
@@ -277,7 +277,7 @@ export function createListingRoutes(app: FastifyInstance) {
         }
 
         // TODO: test
-        if (listing.purchasedAt !== null) {
+        if (listing.purchasedBy !== null) {
           return error(
             reply,
             HttpStatus.FORBIDDEN,
@@ -285,7 +285,6 @@ export function createListingRoutes(app: FastifyInstance) {
           );
         }
 
-        // TODO: close/reject all offers
         await request.em.remove(listing);
         await request.em.flush();
 

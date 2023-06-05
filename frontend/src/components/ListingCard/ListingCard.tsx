@@ -25,23 +25,23 @@ const ListingCard: ComponentBase<ListingProps> = ({
     area,
     imageUri,
     deletedAt,
-    purchasedAt,
+    purchasedBy,
   } = listing;
   const navigate = useNavigate();
 
   const statusText = () => {
     if (deletedAt) return "Closed";
-    if (purchasedAt) return "Sold";
+    if (purchasedBy) return "Sold";
 
     return formatCurrencyString(price);
   };
 
   return (
     <Card
-      className={`listing-card ${(deletedAt || purchasedAt) && "closed"}`}
+      className={`listing-card ${(deletedAt || purchasedBy) && "closed"}`}
       shadow={"hover"}
       onClick={() => {
-        if (!deletedAt && !purchasedAt) {
+        if (!deletedAt && !purchasedBy) {
           navigate(Routes.listing.replace(listing.id));
         }
       }}

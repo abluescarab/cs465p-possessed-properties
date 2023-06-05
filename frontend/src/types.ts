@@ -15,5 +15,5 @@ export type ListingType = {
   area: number;
   imageUri: string;
   deletedAt: string;
-  purchasedAt: string;
+  purchasedBy: number;
 };

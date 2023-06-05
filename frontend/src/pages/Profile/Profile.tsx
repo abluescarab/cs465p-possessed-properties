@@ -130,7 +130,7 @@ const Profile = () => {
                     name: "listing",
                     label: "Listing",
                     display: (item) =>
-                      !item.listing.deletedAt && !item.listing.purchasedAt ? (
+                      !item.listing.deletedAt && !item.listing.purchasedBy ? (
                         <Link to={Routes.listing.replace(item.listing.id)}>
                           {item.listing.name}
                         </Link>

@@ -239,16 +239,6 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "purchased_at": {
-          "name": "purchased_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 6,
-          "mappedType": "datetime"
-        },
         "purchased_by_id": {
           "name": "purchased_by_id",
           "type": "int",

@@ -203,8 +203,7 @@ export function createOfferRoutes(app: FastifyInstance) {
           otherOffer.status = "rejected";
         }
 
-          offer.listing.purchasedAt = new Date();
-          offer.listing.purchasedBy = offer.buyer;
+        offer.listing.purchasedBy = offer.buyer;
 
         // flush and remove
         await request.em.flush();

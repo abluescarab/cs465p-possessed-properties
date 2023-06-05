@@ -88,12 +88,6 @@ export class Listing extends ProjectBaseEntity {
   imageUri!: string;
 
   /**
-   * When the property was purchased and the listing closed.
-   */
-  @Property()
-  purchasedAt?: Date = null;
-
-  /**
    * Who purchased the property and closed the listing.
    */
   @ManyToOne()

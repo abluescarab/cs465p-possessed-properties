@@ -17,7 +17,9 @@ const Home = () => {
   useEffect(() => {
     setTrending(
       randomElement(
-        listings.filter((l) => !l.deletedAt && !l.purchasedAt),
+        listings.filter(
+          (listing) => !listing.deletedAt && !listing.purchasedBy
+        ),
         6
       )
     );
