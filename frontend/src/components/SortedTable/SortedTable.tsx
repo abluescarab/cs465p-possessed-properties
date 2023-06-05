@@ -70,6 +70,10 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
   };
 
   useEffect(() => {
+    setTableData(data);
+  }, [data]);
+
+  useEffect(() => {
     const sort = (column, descending) => {
       if (column.sortFunc) {
         data.sort((d1, d2) => column.sortFunc(d1, d2, descending));
