@@ -17,25 +17,13 @@ const Search = () => {
     setTitle(`Search for ${terms}`);
   }, [terms]);
 
-  // TODO: add back to top link
   return (
     <>
       <div id={"search-page"} className={"page"}>
         <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
         <section className={"listing-search"}>
           {listings.map((listing: any) => {
-            return (
-              <ListingCard
-                key={listing.id}
-                listingId={listing.id}
-                name={listing.name}
-                price={listing.price}
-                bedrooms={listing.bedrooms}
-                bathrooms={listing.bathrooms}
-                area={listing.area}
-                image={listing.imageUri}
-              />
-            );
+            return <ListingCard key={listing.id} listing={listing} />;
           })}
         </section>
         <Sidebar />
