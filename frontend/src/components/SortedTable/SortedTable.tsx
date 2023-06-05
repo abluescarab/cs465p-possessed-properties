@@ -114,7 +114,7 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
         </tr>
       </thead>
       <tbody>
-        {tableData &&
+        {tableData?.length > 0 ? (
           tableData.map((item) => (
             <tr key={item.id}>
               {columns.map(({ name, display }) => (
@@ -143,7 +143,17 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
                 </td>
               )}
             </tr>
-          ))}
+          ))
+        ) : (
+          <tr>
+            <td
+              colSpan={columns.length + (buttons.length > 0 ? 1 : 0)}
+              className={"center-text"}
+            >
+              No data found.
+            </td>
+          </tr>
+        )}
       </tbody>
     </table>
   );
