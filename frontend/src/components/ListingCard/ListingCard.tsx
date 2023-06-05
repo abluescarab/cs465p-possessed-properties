@@ -15,7 +15,7 @@ interface ListingProps extends ComponentBaseProps {
   bathrooms: number;
   area: number;
   image: string;
-  cancelled?: boolean;
+  closed?: boolean;
 }
 
 const ListingCard: ComponentBase<ListingProps> = ({
@@ -26,16 +26,16 @@ const ListingCard: ComponentBase<ListingProps> = ({
   bathrooms,
   area,
   image,
-  cancelled = false,
+  closed = false,
 }) => {
   const navigate = useNavigate();
 
   return (
     <Card
-      className={`listing-card ${cancelled && "cancelled"}`}
+      className={`listing-card ${closed && "closed"}`}
       shadow={"hover"}
       onClick={() => {
-        if (!cancelled) {
+        if (!closed) {
           navigate(Routes.listing.replace(listingId));
         }
       }}
@@ -46,7 +46,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
       />
       <CardContent>
         <p className={"bold font-lg"}>
-          {cancelled ? "Not for sale" : formatCurrencyString(price)}
+          {closed ? "Not for sale" : formatCurrencyString(price)}
         </p>
         <div className={"listing-card-content"}>
           <div className={"listing-card-content-item"}>

@@ -98,7 +98,7 @@ const Profile = () => {
                     bathrooms={listing.bathrooms}
                     area={listing.area}
                     image={listing.imageUri}
-                    cancelled={listing.deletedAt}
+                    closed={listing.deletedAt}
                   />
                 ))
               ) : (
