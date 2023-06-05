@@ -68,6 +68,7 @@ const Offers = () => {
         <h2>Offers for {listing.name}</h2>
         <SortedTable
           data={listing.offers}
+          defaultSortColumn={"offer"}
           buttons={[
             {
               label: "Accept",

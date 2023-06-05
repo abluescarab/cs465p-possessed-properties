@@ -16,6 +16,7 @@ interface SortedTableProps extends ComponentBaseProps {
     sortable?: boolean;
     descendByDefault?: boolean;
   }[];
+  defaultSortColumn?: string;
   buttons?: {
     label: string;
     onClick: (item) => void;
@@ -29,13 +30,16 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
   className = "",
   data,
   columns,
+  defaultSortColumn = "",
   buttons = null,
 }) => {
   const [tableData, setTableData] = useState(null);
   const [doSort, setDoSort] = useState(true);
-  const [sortedColumn, setSortedColumn] = useState(columns[0]);
+  const [sortedColumn, setSortedColumn] = useState(
+    columns.find((c) => c.name === defaultSortColumn) ?? columns[0]
+  );
   const [descending, setDescending] = useState(
-    columns[0].descendByDefault ?? false
+    sortedColumn.descendByDefault ?? false
   );
 
   const headerClick = (column) => {
