@@ -76,8 +76,12 @@ export function navigateLast(navigate: NavigateFunction, location: Location) {
 }
 
 export function randomElement(array, count) {
-  if (count > array.length || count < 0) {
-    return null;
+  if (count < 1) {
+    return [];
+  }
+
+  if (count >= array.length) {
+    return array;
   }
 
   const indices = [...Array(array.length).keys()];

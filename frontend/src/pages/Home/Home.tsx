@@ -15,7 +15,12 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    setTrending(randomElement(listings, 6));
+    setTrending(
+      randomElement(
+        listings.filter((l) => !l.deletedAt && !l.purchasedAt),
+        6
+      )
+    );
   }, [listings]);
 
   return (
