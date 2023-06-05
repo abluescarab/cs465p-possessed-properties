@@ -12,7 +12,7 @@ interface SortedTableProps extends ComponentBaseProps {
     name: string;
     label: string;
     display: (item) => React.ReactNode;
-    sortFunc?: (item1, item2, descending: boolean) => number;
+    sortFunction?: (item1, item2, descending: boolean) => number;
     sortable?: boolean;
     descendByDefault?: boolean;
   }[];
@@ -75,8 +75,8 @@ const SortedTable: ComponentBase<SortedTableProps> = ({
 
   useEffect(() => {
     const sort = (column, descending) => {
-      if (column.sortFunc) {
-        data.sort((d1, d2) => column.sortFunc(d1, d2, descending));
+      if (column.sortFunction) {
+        data.sort((d1, d2) => column.sortFunction(d1, d2, descending));
       } else {
         data.sort((d1, d2) =>
           compare(column.display(d1), column.display(d2), descending)
