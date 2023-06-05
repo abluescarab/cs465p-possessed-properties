@@ -1,3 +1,5 @@
+export const OfferStatusStrings = ["open", "closed", "accepted", "rejected"];
+
 /**
  * The current status of an {@link Offer}.
  *
@@ -9,7 +11,7 @@
  *
  * <em>rejected</em>: The offer was rejected by the listing owner.
  */
-export type OfferStatus = "open" | "closed" | "accepted" | "rejected";
+export type OfferStatus = (typeof OfferStatusStrings)[number];
 
 /**
  * <em>unknown</em>: Usually reserved for locations with multiple hauntings or
