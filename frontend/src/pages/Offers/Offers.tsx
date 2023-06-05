@@ -53,11 +53,15 @@ const Offers = () => {
                   )
                 ),
               color: "primary",
+              visible: (item) =>
+                item.deletedAt === null && item.status === "open",
             },
             {
               label: "Reject",
               onClick: rejectOffer,
               color: "secondary",
+              visible: (item) =>
+                item.deletedAt === null && item.status === "open",
             },
           ]}
           columns={[
