@@ -10,8 +10,7 @@ import { UserContext } from "@/App.tsx";
 import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { httpClient } from "@/http_client.ts";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
-import Popup from "@/components/Popup/Popup.tsx";
-import { errorPopup } from "@/static_components.tsx";
+import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "@/AppRouter.tsx";
 
@@ -36,38 +35,21 @@ const Profile = () => {
         },
       })
       .then((response) => {
-        setPopup(confirmationPopup(response.data));
+        setPopup(
+          okPopup(
+            "Offer Closed",
+            `Your offer on ${response.data.listing.name} has been closed.`,
+            () => {
+              setPopup(null);
+              setDoFetch(true);
+            }
+          )
+        );
       })
       .catch(() => {
         setPopup(errorPopup(() => setPopup(null)));
       });
   };
-
-  const closePopup = (offer) => (
-    <Popup
-      title={"Close Offer"}
-      primaryButton={"Yes"}
-      secondaryButton={"No"}
-      onPrimaryClick={() => closeOffer(offer)}
-      onSecondaryClick={() => setPopup(null)}
-    >
-      Are you sure you want to close your offer on {offer.listing.name} for{" "}
-      {formatCurrencyString(offer.price)}?
-    </Popup>
-  );
-
-  const confirmationPopup = (offer) => (
-    <Popup
-      title={"Offer Closed"}
-      primaryButton={"OK"}
-      onPrimaryClick={() => {
-        setPopup(null);
-        setDoFetch(true);
-      }}
-    >
-      Your offer on {offer.listing.name} has been closed.
-    </Popup>
-  );
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -130,7 +112,17 @@ const Profile = () => {
                 buttons={[
                   {
                     label: "Close",
-                    onClick: (item) => setPopup(closePopup(item)),
+                    onClick: (item) =>
+                      setPopup(
+                        confirmPopup(
+                          "Close Offer",
+                          `Are you sure you want to close your offer on ${
+                            item.listing.name
+                          } for ${formatCurrencyString(item.price)}?`,
+                          () => closeOffer(item),
+                          () => setPopup(null)
+                        )
+                      ),
                     color: "primary",
                     visible: (item) => !item.deletedAt,
                   },
