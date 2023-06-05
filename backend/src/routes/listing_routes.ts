@@ -285,6 +285,12 @@ export function createListingRoutes(app: FastifyInstance) {
           );
         }
 
+        // TODO: use subscribers?
+        for (const offer of listing.offers) {
+          offer.status = "closed";
+        }
+
+        await request.em.flush();
         await request.em.remove(listing);
         await request.em.flush();
 
