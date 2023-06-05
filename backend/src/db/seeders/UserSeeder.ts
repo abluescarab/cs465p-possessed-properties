@@ -7,12 +7,12 @@ export class UserSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
     em.create(User, {
       email: "email@email.com",
-      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+      name: `${faker.person.firstName()} ${faker.person.lastName()}`,
     });
 
     for (let i = 0; i < 9; i++) {
-      const first = faker.name.firstName();
-      const last = faker.name.lastName();
+      const first = faker.person.firstName();
+      const last = faker.person.lastName();
 
       em.create(User, {
         email: `email${i}@email.com`,

@@ -168,7 +168,7 @@ export function createOfferRoutes(app: FastifyInstance) {
 
       const user = await request.em.findOne(User, { email: authUser.email });
 
-      if (user.id != offer.buyer.id || user.id != offer.listing.owner.id) {
+      if (user.id != offer.buyer.id && user.id != offer.listing.owner.id) {
         return error(
           reply,
           HttpStatus.FORBIDDEN,
