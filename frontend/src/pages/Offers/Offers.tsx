@@ -4,7 +4,7 @@ import BackToTop from "@/components/BackToTop/BackToTop.tsx";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
-import { formatCurrencyString, formatDateString } from "@/utils.ts";
+import { compare, formatCurrencyString, formatDateString } from "@/utils.ts";
 
 const Offers = () => {
   const { initialized, user } = useContext(UserContext);
@@ -52,6 +52,8 @@ const Offers = () => {
               label: "Date",
               display: (item) => formatDateString(item.createdAt),
               descendByDefault: true,
+              sortFunction: (item1, item2, descending) =>
+                compare(item1.createdAt, item2.createdAt, descending),
             },
             {
               name: "buyer",
@@ -62,6 +64,9 @@ const Offers = () => {
               name: "offer",
               label: "Offer",
               display: (item) => formatCurrencyString(item.price),
+              descendByDefault: true,
+              sortFunction: (item1, item2, descending) =>
+                compare(item1.price, item2.price, descending),
             },
             {
               name: "status",
@@ -69,6 +74,8 @@ const Offers = () => {
               display: (item) => (
                 <span className={"capitalize"}>{item.status}</span>
               ),
+              sortFunction: (item1, item2, descending) =>
+                compare(item1.status, item2.status, descending),
             },
           ]}
         />
