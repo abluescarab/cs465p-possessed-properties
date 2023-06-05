@@ -16,14 +16,14 @@ import TextInput from "@/components/TextInput/TextInput.tsx";
 import { httpClient } from "@/http_client.ts";
 
 const Listing = () => {
-  const { user } = useContext(UserContext);
+  const { initialized, user } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
   const listing = (useLoaderData() as any).result;
 
   const offerInput = useRef<HTMLInputElement>(null);
 
-  const [showPopup, setShowPopup] = useState(false);
+  const [signInRequired, setSignInRequired] = useState(false);
   const [userIsOwner, setUserIsOwner] = useState(false);
   const [popup, setPopup] = useState(null);
 
@@ -78,7 +78,7 @@ const Listing = () => {
       primaryButton={"Yes"}
       secondaryButton={"No"}
       onPrimaryClick={() => sendOffer(listing.price)}
-      onSecondaryClick={() => setShowPopup(false)}
+      onSecondaryClick={() => setPopup(null)}
     >
       This action will send an offer for the full price of the listing. Are you
       sure you want to continue?
@@ -88,10 +88,10 @@ const Listing = () => {
   const offerPopup = (
     <Popup
       title={"Confirm Offer"}
-      primaryButton={"Yes"}
-      secondaryButton={"No"}
+      primaryButton={"Send"}
+      secondaryButton={"Cancel"}
       onPrimaryClick={() => validateAndSend()}
-      onSecondaryClick={() => setShowPopup(false)}
+      onSecondaryClick={() => setPopup(null)}
     >
       <TextInput
         id={"offer-amount"}
@@ -114,7 +114,7 @@ const Listing = () => {
       primaryButton={"Yes"}
       secondaryButton={"No"}
       onPrimaryClick={() => cancelListing()}
-      onSecondaryClick={() => setShowPopup(false)}
+      onSecondaryClick={() => setPopup(null)}
     >
       This action will close the listing and cancel all current offers. Are you
       sure you want to continue?
@@ -125,7 +125,7 @@ const Listing = () => {
     <Popup
       title={"Offer Sent"}
       primaryButton={"OK"}
-      onPrimaryClick={() => setShowPopup(false)}
+      onPrimaryClick={() => setPopup(null)}
     >
       You have successfully sent an offer of ${price.toLocaleString()}.
     </Popup>
@@ -134,6 +134,12 @@ const Listing = () => {
   useEffect(() => {
     setTitle(listing.name);
   }, [listing]);
+
+  useEffect(() => {
+    if (initialized) {
+      setSignInRequired(user == null);
+    }
+  }, [initialized, user]);
 
   useEffect(() => {
     if (user && listing && listing.owner.email === user.email) {
@@ -191,7 +197,6 @@ const Listing = () => {
                       className={"action-button"}
                       onClick={() => {
                         setPopup(cancelPopup);
-                        setShowPopup(true);
                       }}
                     >
                       Cancel Listing
@@ -204,12 +209,11 @@ const Listing = () => {
                       color={"primary"}
                       className={"action-button"}
                       onClick={() => {
-                        if (!user) {
+                        if (signInRequired) {
                           navigateNext(navigate, location, "/signin");
                         }
 
                         setPopup(buyPopup);
-                        setShowPopup(true);
                       }}
                     >
                       Buy
@@ -219,12 +223,11 @@ const Listing = () => {
                       color={"secondary"}
                       className={"action-button"}
                       onClick={() => {
-                        if (!user) {
+                        if (signInRequired) {
                           navigateNext(navigate, location, "/signin");
                         }
 
                         setPopup(offerPopup);
-                        setShowPopup(true);
                       }}
                     >
                       Make Offer
@@ -236,7 +239,7 @@ const Listing = () => {
           </Card>
         </article>
       </div>
-      {showPopup && popup}
+      {popup}
     </>
   );
 };
