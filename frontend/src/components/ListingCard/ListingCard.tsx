@@ -38,7 +38,10 @@ const ListingCard: ComponentBase<ListingProps> = ({
 
   return (
     <Card
-      className={`listing-card ${(deletedAt || purchasedBy) && "closed"}`}
+      id={id}
+      className={`listing-card ${
+        (deletedAt || purchasedBy) && "closed"
+      } ${className}`}
       shadow={"hover"}
       onClick={() => {
         if (!deletedAt && !purchasedBy) {
