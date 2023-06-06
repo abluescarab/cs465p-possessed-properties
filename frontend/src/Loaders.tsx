@@ -11,7 +11,9 @@ async function search(url, data: {}) {
     })
     .then((response) => {
       result = response.data;
-      return { data, result };
+    })
+    .catch((err) => {
+      result = err;
     });
 
   return { data, result };
