@@ -5,6 +5,7 @@ import ComponentBase, {
 } from "@/components/ComponentBase.tsx";
 import React, { MouseEventHandler, useEffect, useRef } from "react";
 import Button from "@/components/Button/Button.tsx";
+import FocusTrap from "focus-trap-react";
 
 interface PopupProps extends ComponentBaseProps {
   title?: string;
@@ -39,42 +40,44 @@ const Popup: ComponentBase<PopupProps> = ({
   }, []);
 
   return (
-    <div
-      id={id}
-      className={`popup-container ${className}`}
-      onKeyDown={onKeyDown}
-      tabIndex={0}
-      ref={container}
-    >
-      <Card className={"popup"}>
-        <CardTitle className={"capitalize"}>{title}</CardTitle>
-        <CardContent>
-          {children}
-          {(primaryButton || secondaryButton) && (
-            <div className={"popup-buttons"}>
-              {primaryButton && (
-                <Button
-                  className={"action-button"}
-                  color={"primary"}
-                  onClick={onPrimaryClick}
-                >
-                  {primaryButton}
-                </Button>
-              )}
-              {secondaryButton && (
-                <Button
-                  className={"action-button"}
-                  color={"secondary"}
-                  onClick={onSecondaryClick}
-                >
-                  {secondaryButton}
-                </Button>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <FocusTrap>
+      <div
+        id={id}
+        className={`popup-container ${className}`}
+        onKeyDown={onKeyDown}
+        tabIndex={0}
+        ref={container}
+      >
+        <Card className={"popup"}>
+          <CardTitle className={"capitalize"}>{title}</CardTitle>
+          <CardContent>
+            {children}
+            {(primaryButton || secondaryButton) && (
+              <div className={"popup-buttons"}>
+                {primaryButton && (
+                  <Button
+                    className={"action-button"}
+                    color={"primary"}
+                    onClick={onPrimaryClick}
+                  >
+                    {primaryButton}
+                  </Button>
+                )}
+                {secondaryButton && (
+                  <Button
+                    className={"action-button"}
+                    color={"secondary"}
+                    onClick={onSecondaryClick}
+                  >
+                    {secondaryButton}
+                  </Button>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </FocusTrap>
   );
 };
 
