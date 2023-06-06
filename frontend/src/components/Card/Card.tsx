@@ -1,5 +1,5 @@
 import "./Card.scss";
-import React, { MouseEventHandler } from "react";
+import React, { KeyboardEventHandler, MouseEventHandler } from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
@@ -8,6 +8,7 @@ import { getClasses } from "@/utils.ts";
 interface CardProps extends ComponentBaseProps {
   shadow?: "none" | "normal" | "hover";
   onClick?: MouseEventHandler;
+  onKeyDown?: KeyboardEventHandler;
 }
 
 interface CardImageProps extends ComponentBaseProps {
@@ -21,6 +22,7 @@ const Card: ComponentBase<CardProps> = ({
   children = null,
   shadow = "normal",
   onClick = null,
+  onKeyDown = null,
 }) => {
   return (
     <div
@@ -36,6 +38,8 @@ const Card: ComponentBase<CardProps> = ({
           ],
         }
       )}`}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
     >
       {children}
     </div>

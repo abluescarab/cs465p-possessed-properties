@@ -36,6 +36,12 @@ const ListingCard: ComponentBase<ListingProps> = ({
     return formatCurrencyString(price);
   };
 
+  const goToPage = () => {
+    if (!deletedAt && !purchasedBy) {
+      navigate(Routes.listing.replace(listing.id));
+    }
+  };
+
   return (
     <Card
       id={id}
@@ -43,11 +49,12 @@ const ListingCard: ComponentBase<ListingProps> = ({
         (deletedAt || purchasedBy) && "closed"
       } ${className}`}
       shadow={"hover"}
-      onClick={() => {
-        if (!deletedAt && !purchasedBy) {
-          navigate(Routes.listing.replace(listing.id));
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          goToPage();
         }
       }}
+      onClick={goToPage}
     >
       <CardImage
         src={`http://localhost:9000/possessedprops/${imageUri}`}
