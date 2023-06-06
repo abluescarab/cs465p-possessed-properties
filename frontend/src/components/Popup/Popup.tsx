@@ -3,7 +3,7 @@ import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler, useEffect, useRef } from "react";
 import Button from "@/components/Button/Button.tsx";
 
 interface PopupProps extends ComponentBaseProps {
@@ -24,8 +24,28 @@ const Popup: ComponentBase<PopupProps> = ({
   secondaryButton = "",
   onSecondaryClick = null,
 }) => {
+  const container = useRef<HTMLDivElement>(null);
+
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onPrimaryClick(e);
+    } else if (e.key === "Escape") {
+      onSecondaryClick(e);
+    }
+  };
+
+  useEffect(() => {
+    container.current.focus();
+  }, []);
+
   return (
-    <div id={id} className={`popup-container ${className}`}>
+    <div
+      id={id}
+      className={`popup-container ${className}`}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      ref={container}
+    >
       <Card className={"popup"}>
         <CardTitle className={"capitalize"}>{title}</CardTitle>
         <CardContent>
