@@ -30,8 +30,8 @@ const ListingCard: ComponentBase<ListingProps> = ({
   const navigate = useNavigate();
 
   const statusText = () => {
-    if (deletedAt) return "Closed";
     if (purchasedBy) return "Sold";
+    if (deletedAt) return "Closed";
 
     return formatCurrencyString(price);
   };
