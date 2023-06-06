@@ -29,9 +29,9 @@ const Home = () => {
     <div id={"home-page"}>
       <div id={"intro-container"}>
         <section className={"home-section"}>
-          <h2 className={"text-shadow-dark home-header"}>
+          <h1 className={"text-shadow-dark home-header"}>
             Find your haunted dream home today.
-          </h2>
+          </h1>
           <SearchBar />
         </section>
       </div>

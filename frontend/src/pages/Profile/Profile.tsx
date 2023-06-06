@@ -71,9 +71,9 @@ const Profile = () => {
       <article id={"profile-page"} className={"page"}>
         {dbUser ? (
           <>
-            <h2 className={"profile-name"}>{dbUser.name}</h2>
+            <h1 className={"profile-name"}>{dbUser.name}</h1>
             <section className={"profile-section"}>
-              <h3>Listings</h3>
+              <h2>Listings</h2>
               {dbUser.listings && dbUser.listings.length > 0 ? (
                 dbUser.listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
@@ -83,7 +83,7 @@ const Profile = () => {
               )}
             </section>
             <section className={"profile-section"}>
-              <h3>Offers</h3>
+              <h2>Offers</h2>
               <SortedTable
                 data={dbUser.offers}
                 buttons={[

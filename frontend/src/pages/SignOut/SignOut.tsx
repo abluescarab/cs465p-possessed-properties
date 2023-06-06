@@ -24,7 +24,7 @@ const SignOut = () => {
     <div id={"sign-out-page"}>
       {signedOut && (
         <>
-          <p>You have been successfully signed out.</p>
+          <h1>You have been successfully signed out.</h1>
           <Button onClick={() => navigate(Routes.home.path)} color={"primary"}>
             Go home
           </Button>

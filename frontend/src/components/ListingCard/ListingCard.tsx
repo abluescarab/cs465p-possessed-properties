@@ -58,10 +58,10 @@ const ListingCard: ComponentBase<ListingProps> = ({
     >
       <CardImage
         src={`http://localhost:9000/possessedprops/${imageUri}`}
-        alt={`Image of ${name}`}
+        alt={`Listing card for ${name}`}
       />
       <CardContent>
-        <p className={"bold font-lg"}>{statusText()}</p>
+        <h3>{statusText()}</h3>
         <div className={"listing-card-content"}>
           <div className={"listing-card-content-item"}>
             <span className={"bold"}>{bedrooms}</span> bds

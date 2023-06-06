@@ -52,9 +52,9 @@ export const CardTitle: ComponentBase = ({
   children = null,
 }) => {
   return (
-    <div id={id} className={`card-title ${className}`}>
+    <h1 id={id} className={`card-title ${className}`}>
       {children}
-    </div>
+    </h1>
   );
 };
 

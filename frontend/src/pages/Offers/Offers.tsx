@@ -73,7 +73,7 @@ const Offers = () => {
   return (
     <>
       <div id={"offers-page"} className={"page"}>
-        <h2>Offers for {listing.name}</h2>
+        <h1>Offers for {listing.name}</h1>
         <SortedTable
           data={listing.offers}
           defaultSortColumn={"offer"}

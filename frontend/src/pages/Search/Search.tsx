@@ -20,7 +20,7 @@ const Search = () => {
   return (
     <>
       <div id={"search-page"} className={"page"}>
-        <h2>{terms ? `Search for ${terms}` : "Browse all listings"}</h2>
+        <h1>{terms ? `Search for ${terms}` : "Browse all listings"}</h1>
         <section className={"listing-search"}>
           {listings.map((listing: any) => {
             return <ListingCard key={listing.id} listing={listing} />;
