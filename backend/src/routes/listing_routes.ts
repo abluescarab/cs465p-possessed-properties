@@ -276,7 +276,6 @@ export function createListingRoutes(app: FastifyInstance) {
           );
         }
 
-        // TODO: test
         if (listing.purchasedBy !== null) {
           return error(
             reply,
@@ -285,7 +284,6 @@ export function createListingRoutes(app: FastifyInstance) {
           );
         }
 
-        // TODO: use subscribers?
         for (const offer of listing.offers) {
           offer.status = "closed";
         }

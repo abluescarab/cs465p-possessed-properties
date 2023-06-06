@@ -133,8 +133,12 @@ const Listing = () => {
   );
 
   useEffect(() => {
-    setTitle(listing.name);
-  }, [listing]);
+    if (listing) {
+      setTitle(listing.name);
+    } else {
+      navigate(Routes.search.path);
+    }
+  }, [listing, navigate]);
 
   useEffect(() => {
     if (initialized) {
@@ -149,6 +153,10 @@ const Listing = () => {
       setUserIsOwner(false);
     }
   }, [listing, user]);
+
+  if (!listing) {
+    return <></>;
+  }
 
   // TODO: let user edit listing
   return (
