@@ -28,6 +28,7 @@ const SearchBar = ({ small = false }) => {
         }));
       });
 
+    listings.sort((l1, l2) => l1.name.localeCompare(l2.name));
     return listings;
   };
 
@@ -40,8 +41,6 @@ const SearchBar = ({ small = false }) => {
           listingItems.push({ id: listing.id, name: listing.name });
         }
       });
-
-      listingItems.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     setFiltered(listingItems);
