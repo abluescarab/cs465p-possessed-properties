@@ -11,13 +11,19 @@ import ListingCard from "@/components/ListingCard/ListingCard.tsx";
 import { httpClient } from "@/http_client.ts";
 import SortedTable from "@/components/SortedTable/SortedTable.tsx";
 import { confirmPopup, errorPopup, okPopup } from "@/static_components.tsx";
-import { Link, useLoaderData, useRevalidator } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useRevalidator,
+} from "react-router-dom";
 import { Routes } from "@/AppRouter.tsx";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
   const loaderData = (useLoaderData() as any).result;
   const revalidator = useRevalidator();
+  const navigate = useNavigate();
 
   const [dbUser, setDbUser] = useState(null);
   const [popup, setPopup] = useState(null);
@@ -52,9 +58,13 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    setDbUser(loaderData);
-    setTitle(`${loaderData.name}'s Profile`);
-  }, [loaderData]);
+    if (user.email === loaderData.email) {
+      setDbUser(loaderData);
+      setTitle(`${loaderData.name}'s Profile`);
+    } else {
+      navigate(Routes.profileRedirect.path);
+    }
+  }, [loaderData, navigate, user.email]);
 
   return (
     <>
