@@ -1,5 +1,10 @@
 import "./TextInput.scss";
-import React, { ChangeEventHandler, ForwardedRef, forwardRef } from "react";
+import React, {
+  ChangeEventHandler,
+  FocusEventHandler,
+  ForwardedRef,
+  forwardRef,
+} from "react";
 import ComponentBase, {
   ComponentBaseProps,
 } from "@/components/ComponentBase.tsx";
@@ -11,6 +16,8 @@ interface TextInputProps extends ComponentBaseProps {
   label?: string;
   placeholder?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   autoComplete?: "on" | "off";
   leftText?: string;
   rightText?: string;
@@ -33,6 +40,8 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
       label = "",
       placeholder = "",
       onChange = null,
+      onFocus = null,
+      onBlur = null,
       autoComplete = "on",
       leftText = "",
       rightText = "",
@@ -69,6 +78,8 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             name={name}
             placeholder={placeholder}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
             autoComplete={autoComplete}
             required={required}
             ref={ref}
