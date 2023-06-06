@@ -9,8 +9,18 @@ import { httpClient } from "@/http_client.ts";
 const SearchBar = ({ small = false }) => {
   const [allListings, setAllListings] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+
   const resultsDiv = useRef(null);
-  const searchBar = useRef(null);
+  const searchBar = useRef<HTMLInputElement>(null);
+
+  const toggleResults = (show = true) => {
+    if (show) {
+      resultsDiv.current?.classList.add("open");
+    } else {
+      resultsDiv.current?.classList.remove("open");
+    }
+  };
 
   const fetch = async () => {
     let listings = [];
@@ -47,12 +57,18 @@ const SearchBar = ({ small = false }) => {
   };
 
   const search = (e) => {
-    filter(e.currentTarget.value);
+    const term = e.currentTarget.value;
+
+    setShowResults(term !== "");
+    filter(term);
   };
 
   const reset = () => {
-    searchBar.current.value = "";
-    setFiltered([]);
+    if (searchBar.current) {
+      searchBar.current.value = "";
+      setFiltered([]);
+      setShowResults(false);
+    }
   };
 
   useEffect(() => {
@@ -60,14 +76,8 @@ const SearchBar = ({ small = false }) => {
   }, []);
 
   useEffect(() => {
-    if (resultsDiv.current) {
-      if (filtered.length > 0) {
-        resultsDiv.current.classList.add("open");
-      } else {
-        resultsDiv.current.classList.remove("open");
-      }
-    }
-  }, [filtered]);
+    toggleResults(showResults);
+  }, [showResults]);
 
   return (
     <div className={small ? "small-search-bar" : "search-bar"}>
@@ -79,6 +89,11 @@ const SearchBar = ({ small = false }) => {
               name={"search"}
               placeholder={"Search for listings..."}
               onChange={search}
+              onFocus={() => {
+                if (showResults) {
+                  toggleResults(true);
+                }
+              }}
               autoComplete={"off"}
               style={"none"}
               ref={searchBar}
