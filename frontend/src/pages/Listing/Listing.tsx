@@ -172,7 +172,7 @@ const Listing = () => {
           <div className={"listing-image"}>
             <img
               src={`http://localhost:9000/possessedprops/${listing.imageUri}`}
-              alt={`Image of ${listing.name}`}
+              alt={`Listing for ${listing.name}`}
             />
           </div>
           <Card>
