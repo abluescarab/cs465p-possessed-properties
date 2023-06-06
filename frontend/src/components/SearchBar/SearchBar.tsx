@@ -91,15 +91,21 @@ const SearchBar = ({ small = false }) => {
       </Card>
       <div className={"search-results"} ref={resultsDiv}>
         <ul className={"listings-view"}>
-          {filtered.map((listing) => {
-            return (
-              <li key={listing.id} className={"listings-view-item"}>
-                <Link to={`/listings/${listing.id}`} onClick={reset}>
-                  {listing.name}
-                </Link>
-              </li>
-            );
-          })}
+          {filtered.length > 0 ? (
+            filtered.map((listing) => {
+              return (
+                <li key={listing.id} className={"listings-view-item"}>
+                  <Link to={`/listings/${listing.id}`} onClick={reset}>
+                    {listing.name}
+                  </Link>
+                </li>
+              );
+            })
+          ) : (
+            <li className={"listings-view-item no-hover"}>
+              <span>No listings found.</span>
+            </li>
+          )}
         </ul>
       </div>
     </div>

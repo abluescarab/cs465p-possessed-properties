@@ -45,9 +45,14 @@
     .listings-view {
       list-style: none;
       width: 100%;
+      max-height: calc((var(--search-item-height) + 1px) * var(--search-items-displayed));
+      overflow: scroll;
 
       .listings-view-item {
         user-select: none;
+        height: var(--search-item-height);
+        display: flex;
+        align-items: center;
 
         &:not(:last-child) {
           border-bottom: 1px solid var(--border-color);
@@ -58,16 +63,16 @@
           border-bottom-right-radius: var(--border-radius);
         }
 
-        &:hover {
+        &:not(.no-hover):hover {
           background-color: var(--primary-color);
           color: var(--primary-color-contrast);
           border-bottom: 1px solid var(--primary-color);
           cursor: pointer;
         }
 
-        a {
+        a, span {
           display: block;
-          padding: var(--padding-md) var(--padding-lg);
+          margin-left: var(--padding-lg);
           color: var(--primary-color-contrast);
         }
       }
