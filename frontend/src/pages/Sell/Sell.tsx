@@ -87,7 +87,6 @@ const Sell = () => {
         // TODO: fix data length/type fail
         // (response fails if data type too large, i.e. area = 3000000000000)
         if (response.status === HttpStatus.OK) {
-          // TODO: test this
           navigate(Routes.listing.replace(response.data.id));
         }
       });

@@ -36,7 +36,7 @@ const SearchBar = ({ small = false }) => {
 
     if (searchTerm.length > 0) {
       allListings.forEach((listing) => {
-        if (listing.name.toLowerCase().startsWith(searchTerm)) {
+        if (listing.name.toLowerCase().startsWith(searchTerm.toLowerCase())) {
           listingItems.push({ id: listing.id, name: listing.name });
         }
       });
