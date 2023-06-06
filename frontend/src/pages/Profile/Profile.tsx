@@ -73,7 +73,7 @@ const Profile = () => {
           <>
             <h1 className={"profile-name"}>{dbUser.name}</h1>
             <section className={"profile-section"}>
-              <h2>Listings</h2>
+              <h2>My Listings</h2>
               {dbUser.listings && dbUser.listings.length > 0 ? (
                 dbUser.listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
@@ -83,7 +83,7 @@ const Profile = () => {
               )}
             </section>
             <section className={"profile-section"}>
-              <h2>Offers</h2>
+              <h2>My Offers</h2>
               <SortedTable
                 data={dbUser.offers}
                 buttons={[

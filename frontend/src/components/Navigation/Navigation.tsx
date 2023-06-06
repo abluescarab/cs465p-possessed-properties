@@ -11,23 +11,26 @@ const Navigation = () => {
   return (
     <nav>
       <div className={"nav-column"}>
-        <Link to={"/listings"}>Buy</Link>
-        <Link to={"/sell"}>Sell</Link>
-        <Link to={"/guide"}>Guide</Link>
+        <Link to={Routes.search.path}>Buy</Link>
+        <Link to={Routes.sell.path}>Sell</Link>
+        <Link to={Routes.guide.path}>Guide</Link>
       </div>
       <div className={"nav-column"}>
-        <Link to={"/"} className={"flex"}>
+        <Link to={Routes.home.path} className={"flex"}>
           <img src={banner} alt={"Possessed Properties banner"} />
         </Link>
       </div>
       <div className={"nav-column"}>
         {user ? (
           <>
-            <Link to={Routes.profileRedirect.path}>Profile</Link>
+            <Link to={Routes.profileRedirect.path}>My Profile</Link>
             <Link to={Routes.signOut.path}>Sign out</Link>
           </>
         ) : (
-          <Link to={"/signin"}>Sign in</Link>
+          <>
+            <Link to={Routes.signIn.path}>Sign in</Link>
+            <Link to={Routes.signUp.path}>Sign up</Link>
+          </>
         )}
       </div>
     </nav>
