@@ -30,10 +30,12 @@ const ListingCard: ComponentBase<ListingProps> = ({
   const navigate = useNavigate();
 
   const statusText = () => {
-    if (purchasedBy) return "Sold";
+    const priceString = formatCurrencyString(price);
+
+    if (purchasedBy) return `Sold for ${priceString}`;
     if (deletedAt) return "Closed";
 
-    return formatCurrencyString(price);
+    return priceString;
   };
 
   const goToPage = () => {
