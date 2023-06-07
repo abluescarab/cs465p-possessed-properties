@@ -15,14 +15,16 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    setTrending(
-      randomElement(
-        listings.filter(
-          (listing) => !listing.deletedAt && !listing.purchasedBy
-        ),
-        6
-      )
-    );
+    if (listings) {
+      setTrending(
+        randomElement(
+          listings.filter(
+            (listing) => !listing.deletedAt && !listing.purchasedBy
+          ),
+          6
+        )
+      );
+    }
   }, [listings]);
 
   return (
