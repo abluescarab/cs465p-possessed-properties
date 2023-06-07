@@ -16,6 +16,12 @@
     margin-right: 0;
   }
 
+  .card-image {
+    display: flex;
+    max-width: 250px;
+    min-height: var(--card-image-height);
+  }
+
   .listing-card-content {
     display: flex;
     flex-flow: row wrap;
