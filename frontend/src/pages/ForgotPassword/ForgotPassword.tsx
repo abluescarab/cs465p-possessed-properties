@@ -40,7 +40,10 @@ const ForgotPassword = () => {
   }, []);
 
   return (
-    <div id={"forgot-password-page"}>
+    <div
+      id={"forgot-password-page"}
+      className={"centered-page"}
+    >
       <div className={"notice"} ref={notice}></div>
       <Card className={"card-form"}>
         <CardTitle>Forgot password</CardTitle>

@@ -13,7 +13,7 @@ const ErrorPage = () => {
   }, []);
 
   return (
-    <div id={"error-page"}>
+    <div id={"error-page"} className={"centered-page"}>
       <h1>Error</h1>
       <p>An unexpected error has occurred.</p>
       <p className={"emphasis"}>{error.statusText || error.message}</p>

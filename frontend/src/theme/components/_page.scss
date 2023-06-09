@@ -3,3 +3,25 @@
   max-width: var(--page-width);
   margin: 0 var(--padding-lg);
 }
+
+.centered-page {
+  display: flex;
+  flex-flow: column;
+  min-height: 50vh;
+
+  // cover all my bases
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  justify-self: center;
+  justify-content: center;
+  justify-items: center;
+
+  > * {
+    margin-bottom: var(--padding-md);
+  }
+
+  h1 {
+    width: auto;
+  }
+}

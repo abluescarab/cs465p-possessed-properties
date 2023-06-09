@@ -21,7 +21,7 @@ const SignOut = () => {
   }, [auth]);
 
   return (
-    <div id={"sign-out-page"}>
+    <div id={"sign-out-page"} className={"centered-page"}>
       {signedOut && (
         <>
           <h1>You have been successfully signed out.</h1>
