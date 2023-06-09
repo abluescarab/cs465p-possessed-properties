@@ -36,6 +36,12 @@ const ForgotPassword = () => {
       });
   };
 
+  const onKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      await sendEmail(e);
+    }
+  };
+
   useEffect(() => {
     setTitle("Forgot Password");
   }, []);
@@ -44,6 +50,7 @@ const ForgotPassword = () => {
     <div
       id={"forgot-password-page"}
       className={"centered-page"}
+      onKeyDown={onKeyDown}
     >
       {emailSent ? (
         <>

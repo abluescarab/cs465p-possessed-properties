@@ -84,8 +84,14 @@ const SignUp = () => {
       });
   };
 
+  const onKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      await signUp(e);
+    }
+  };
+
   return (
-    <div id={"sign-up-page"}>
+    <div id={"sign-up-page"} onKeyDown={onKeyDown}>
       <div className={"notice invalid"} ref={notice}></div>
       <Card className={"card-form"}>
         <CardTitle>Sign up</CardTitle>
