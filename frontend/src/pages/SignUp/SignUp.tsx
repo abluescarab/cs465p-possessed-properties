@@ -161,6 +161,9 @@ const SignUp = () => {
         <p className={"center-text font-sm auth-links-paragraph"}>
           Already have an account?&nbsp;<Link to={"/signin"}>Sign in</Link>
         </p>
+        <p className={"auth-links-paragraph center-text font-sm"}>
+          <Link to={"/forgotpassword"}>Forgot your password?</Link>
+        </p>
       </section>
     </div>
   );
