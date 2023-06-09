@@ -3,9 +3,9 @@
   overflow: hidden;
   min-width: var(--listing-width);
 
-  &.closed {
+  &.cancelled {
     cursor: default;
-    color: var(--closed-color);
+    color: var(--cancelled-color);
   }
 
   &:first-child {

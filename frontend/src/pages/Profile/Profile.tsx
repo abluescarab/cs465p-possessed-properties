@@ -28,7 +28,7 @@ const Profile = () => {
   const [dbUser, setDbUser] = useState(null);
   const [popup, setPopup] = useState(null);
 
-  const closeOffer = async (offer) => {
+  const cancelOffer = async (offer) => {
     await httpClient
       .request({
         method: "DELETE",
@@ -37,14 +37,14 @@ const Profile = () => {
           token: user.accessToken,
           uid: user.uid,
           id: offer.id,
-          status: "closed",
+          status: "cancelled",
         },
       })
       .then((response) => {
         setPopup(
           okPopup(
-            "Offer Closed",
-            `Your offer on ${response.data.listing.name} has been closed.`,
+            "Offer Cancelled",
+            `Your offer on ${response.data.listing.name} has been cancelled.`,
             () => {
               setPopup(null);
               revalidator.revalidate();
@@ -88,15 +88,15 @@ const Profile = () => {
                 data={dbUser.offers}
                 buttons={[
                   {
-                    label: "Close",
+                    label: "Cancel",
                     onClick: (item) =>
                       setPopup(
                         confirmPopup(
-                          "Close Offer",
-                          `Are you sure you want to close your offer on ${
+                          "Cancel Offer",
+                          `Are you sure you want to cancel your offer on ${
                             item.listing.name
                           } for ${formatCurrencyString(item.price)}?`,
-                          () => closeOffer(item),
+                          () => cancelOffer(item),
                           () => setPopup(null)
                         )
                       ),

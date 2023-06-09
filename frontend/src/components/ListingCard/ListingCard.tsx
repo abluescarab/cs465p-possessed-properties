@@ -33,7 +33,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
     const priceString = formatCurrencyString(price);
 
     if (purchasedBy) return `Sold for ${priceString}`;
-    if (deletedAt) return "Closed";
+    if (deletedAt) return "Cancelled";
 
     return priceString;
   };
@@ -48,7 +48,7 @@ const ListingCard: ComponentBase<ListingProps> = ({
     <Card
       id={id}
       className={`listing-card ${
-        (deletedAt || purchasedBy) && "closed"
+        (deletedAt || purchasedBy) && "cancelled"
       } ${className}`}
       shadow={"hover"}
       onKeyDown={(e) => {

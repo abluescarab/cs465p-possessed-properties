@@ -285,7 +285,7 @@ export function createListingRoutes(app: FastifyInstance) {
         }
 
         for (const offer of listing.offers) {
-          offer.status = "closed";
+          offer.status = "cancelled";
         }
 
         await request.em.flush();

@@ -228,11 +228,11 @@ export function createOfferRoutes(app: FastifyInstance) {
   }>("/offers", async (request, reply) => {
     const { token, uid, id, status } = request.body;
 
-    if (status !== "closed" && status !== "rejected") {
+    if (status !== "cancelled" && status !== "rejected") {
       return error(
         reply,
         HttpStatus.BAD_REQUEST,
-        `Offer status must be one of: closed, rejected`
+        `Offer status must be one of: cancelled, rejected`
       );
     }
 

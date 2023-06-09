@@ -1,11 +1,11 @@
-export const OfferStatusStrings = ["open", "closed", "accepted", "rejected"];
+export const OfferStatusStrings = ["open", "cancelled", "accepted", "rejected"];
 
 /**
  * The current status of an {@link Offer}.
  *
  * <em>open</em>: The offer is still open.
  *
- * <em>closed</em>: The offer was closed by the buyer.
+ * <em>cancelled</em>: The offer was cancelled by the buyer.
  *
  * <em>accepted</em>: The offer was accepted by the listing owner.
  *
