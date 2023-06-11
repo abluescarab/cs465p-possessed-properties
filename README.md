@@ -14,4 +14,4 @@ Welcome to **Possessed Properties**! May we interest you in a haunted home for y
 2. In a terminal, `cd` into the directory and run `docker compose up`.
 3. In a terminal connected to the `backend` Docker instance, run the command `pnpm db:reset`.
 
-You may now connect to the website at http://localhost:88.
+You may now connect to the website at http://localhost:88. When connecting, ensure that you are using http and not https.
