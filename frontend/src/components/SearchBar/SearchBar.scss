@@ -46,7 +46,19 @@
       list-style: none;
       width: 100%;
       max-height: calc((var(--search-item-height) + 1px) * var(--search-items-displayed));
-      overflow: scroll;
+      overflow-y: scroll;
+
+      // Style the scrollbar on Chrome/Edge/Safari
+      &::-webkit-scrollbar {
+        width: 8px;
+        background-color: var(--background-color-light);
+        border-bottom-right-radius: var(--border-radius);
+
+        &-thumb {
+          background: var(--text-color-md);
+          border-bottom-right-radius: var(--border-radius);
+        }
+      }
 
       .listings-view-item {
         user-select: none;
