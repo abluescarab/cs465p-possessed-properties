@@ -25,6 +25,7 @@ interface TextInputProps extends ComponentBaseProps {
   required?: boolean;
   ref?: ForwardedRef<HTMLInputElement>;
   minLength?: number;
+  maxLength?: number;
   min?: string | number;
   max?: string | number;
   accept?: string;
@@ -84,6 +85,7 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             required={required}
             ref={ref}
             minLength={minLength}
+            maxLength={maxLength}
             min={min}
             max={max}
             accept={accept}
