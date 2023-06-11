@@ -66,10 +66,10 @@ const ListingCard: ComponentBase<ListingProps> = ({
         <h3>{statusText()}</h3>
         <div className={"listing-card-content"}>
           <div className={"listing-card-content-item"}>
-            <span className={"bold"}>{bedrooms}</span> bds
+            <span className={"bold"}>{bedrooms.toLocaleString()}</span> bds
           </div>
           <div className={"listing-card-content-item"}>
-            <span className={"bold"}>{bathrooms}</span> ba
+            <span className={"bold"}>{bathrooms.toLocaleString()}</span> ba
           </div>
           <div className={"listing-card-content-item"}>
             <span className={"bold"}>{area.toLocaleString()}</span> sqft
