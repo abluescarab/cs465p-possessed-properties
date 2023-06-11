@@ -1,7 +1,7 @@
 .listing-card {
   position: relative;
   overflow: hidden;
-  min-width: var(--listing-width);
+  width: var(--listing-width);
 
   &.cancelled {
     cursor: default;
@@ -18,7 +18,7 @@
 
   .card-image {
     display: flex;
-    max-width: 250px;
+    max-width: var(--listing-width);
     min-height: var(--card-image-height);
   }
 
