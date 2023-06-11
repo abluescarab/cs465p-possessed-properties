@@ -158,7 +158,6 @@ const Listing = () => {
     return <></>;
   }
 
-  // TODO: let user edit listing
   return (
     <>
       <div id={"listing-page"} className={"page"}>
