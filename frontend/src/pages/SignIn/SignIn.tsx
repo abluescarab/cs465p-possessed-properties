@@ -53,10 +53,10 @@ const SignIn = () => {
         }
       })
       .catch((err) => {
-        if (err.code == AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
+        if (err.code === AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
           notice.current.innerText =
             "Too many login attempts. Try again later.";
-        } else if (err.code == AuthErrorCodes.INVALID_PASSWORD) {
+        } else if (err.code === AuthErrorCodes.INVALID_PASSWORD) {
           notice.current.innerText =
             "Account not found with that email and password.";
         } else {

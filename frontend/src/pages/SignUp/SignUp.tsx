@@ -74,7 +74,7 @@ const SignUp = () => {
         );
       })
       .catch((err) => {
-        if (err.response.status == HttpStatus.CONFLICT) {
+        if (err.response.status === HttpStatus.CONFLICT) {
           notice.current.innerText =
             "An account with that email already exists.";
         } else {

@@ -581,6 +581,7 @@ const Sell = () => {
                   required
                   className={"underline"}
                   ref={listingDescription}
+                  maxLength={1000}
                 ></textarea>
               </div>
             </div>
