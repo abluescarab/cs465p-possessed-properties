@@ -1,7 +1,8 @@
 .listing-card {
   position: relative;
   overflow: hidden;
-  width: var(--listing-width);
+  min-width: var(--listing-width);
+  max-width: var(--listing-width);
 
   &.cancelled {
     cursor: default;
