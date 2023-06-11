@@ -12,6 +12,7 @@
     font-size: var(--font-lg);
     font-weight: bold;
     margin-bottom: 0;
+    width: auto;
     @include padding(var(--padding-lg), left, right, top);
   }
 
