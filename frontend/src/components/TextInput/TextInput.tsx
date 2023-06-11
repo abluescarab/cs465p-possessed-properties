@@ -49,12 +49,21 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
       style = "underline",
       required = false,
       minLength = 0,
+      maxLength = 255,
       min = null,
       max = null,
       accept = "",
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
+    const limitMax = () => {
+      if (type === "number") {
+        return 1000000000; // limit to 1 billion to stay in postgres constraints
+      } else {
+        return max;
+      }
+    };
+
     return (
       <div className={"input-wrapper"}>
         {id && label && (
@@ -87,7 +96,7 @@ const TextInput: ComponentBase<TextInputProps> = forwardRef(
             minLength={minLength}
             maxLength={maxLength}
             min={min}
-            max={max}
+            max={limitMax()}
             accept={accept}
           />
           {rightText && <span className={"input-right"}>{rightText}</span>}
