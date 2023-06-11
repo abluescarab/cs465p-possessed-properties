@@ -11,16 +11,7 @@ const SearchBar = ({ small = false }) => {
   const [filtered, setFiltered] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  const resultsDiv = useRef(null);
   const searchBar = useRef<HTMLInputElement>(null);
-
-  const toggleResults = (show = true) => {
-    if (show) {
-      resultsDiv.current?.classList.add("open");
-    } else {
-      resultsDiv.current?.classList.remove("open");
-    }
-  };
 
   const fetch = async () => {
     let listings = [];
@@ -75,10 +66,6 @@ const SearchBar = ({ small = false }) => {
     fetch().then(setAllListings);
   }, []);
 
-  useEffect(() => {
-    toggleResults(showResults);
-  }, [showResults]);
-
   return (
     <div className={small ? "small-search-bar" : "search-bar"}>
       <Card shadow={"hover"}>
@@ -89,11 +76,6 @@ const SearchBar = ({ small = false }) => {
               name={"search"}
               placeholder={"Search for listings..."}
               onChange={search}
-              onFocus={() => {
-                if (showResults) {
-                  toggleResults(true);
-                }
-              }}
               autoComplete={"off"}
               style={"none"}
               ref={searchBar}
@@ -104,7 +86,7 @@ const SearchBar = ({ small = false }) => {
           </form>
         </CardContent>
       </Card>
-      <div className={"search-results"} ref={resultsDiv}>
+      <div className={`search-results ${showResults && "open"}`}>
         <ul className={"listings-view"}>
           {filtered.length > 0 ? (
             filtered.map((listing) => {
