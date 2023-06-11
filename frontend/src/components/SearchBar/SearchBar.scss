@@ -50,7 +50,7 @@
 
       .listings-view-item {
         user-select: none;
-        height: var(--search-item-height);
+        min-height: var(--search-item-height);
         display: flex;
         align-items: center;
 
