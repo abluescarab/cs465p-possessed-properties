@@ -5,7 +5,7 @@ Welcome to **Possessed Properties**! May we interest you in a haunted home for y
 
 ## How to run the project
 ### Prerequisites
-* You will need [Docker](https://www.docker.com/), [PostgreSQL](https://www.postgresql.org/), and [pnpm](https://pnpm.io/) installed.
+* You will need [Node.js](https://nodejs.org/) with [pnpm](https://pnpm.io/), [Docker](https://www.docker.com/), and [PostgreSQL](https://www.postgresql.org/) installed.
 * PostgreSQL will need a user named "admin" with the password "password".
 * Close any other servers on the internal ports 88, 5432, 8080, 9000, or 9001.
 
