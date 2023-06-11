@@ -27,6 +27,10 @@ const Sell = () => {
   const listingPrice = useRef<HTMLInputElement>(null);
   const listingDescription = useRef<HTMLTextAreaElement>(null);
 
+  const sanitizeNumber = (text) => {
+    return text.split(".")[0]; // remove the decimal
+  };
+
   const createListing = async (e) => {
     e.preventDefault();
 
@@ -65,14 +69,13 @@ const Sell = () => {
     data.append("address", address.value);
     data.append("region", region.value);
     data.append("country", country.value);
-    data.append("bedrooms", bedrooms.value);
-    data.append("bathrooms", bathrooms.value);
-    data.append("area", area.value);
-    data.append("price", price.value);
+    data.append("bedrooms", sanitizeNumber(bedrooms.value));
+    data.append("bathrooms", sanitizeNumber(bathrooms.value));
+    data.append("area", sanitizeNumber(area.value));
+    data.append("price", sanitizeNumber(price.value));
     data.append("description", description.value);
     data.append("file", image.files[0]);
     data.append("fileName", image.files[0].name);
-    console.log(data);
 
     await httpClient
       .request({
@@ -84,8 +87,6 @@ const Sell = () => {
         },
       })
       .then((response) => {
-        // TODO: fix data length/type fail
-        // (response fails if data type too large, i.e. area = 3000000000000)
         if (response.status === HttpStatus.OK) {
           navigate(Routes.listing.replace(response.data.id));
         }
