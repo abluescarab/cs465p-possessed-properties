@@ -83,8 +83,11 @@
         }
 
         a, span {
-          display: block;
-          margin-left: var(--padding-lg);
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: var(--search-item-height);
+          padding-left: var(--padding-lg);
           color: var(--primary-color-contrast);
         }
       }
