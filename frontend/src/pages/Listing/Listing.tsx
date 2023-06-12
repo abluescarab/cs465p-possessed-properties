@@ -41,7 +41,7 @@ const Listing = () => {
         },
       })
       .then(() => {
-        setPopup(successPopup(price));
+        setPopup(successPopup(Number(price)));
       });
   };
 
