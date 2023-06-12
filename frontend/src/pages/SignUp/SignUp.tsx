@@ -1,4 +1,3 @@
-import "./SignUp.scss";
 import { useEffect, useRef } from "react";
 import { setTitle } from "@/utils.ts";
 import Card, { CardContent, CardTitle } from "@/components/Card/Card.tsx";

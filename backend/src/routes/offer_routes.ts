@@ -4,7 +4,7 @@ import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import { Listing } from "../db/entities/Listing.js";
-import verifyToken from "../firebase/verify_token.js";
+import verifyToken from "../plugins/firebase/verify_token.js";
 import { OfferStatus, OfferStatusStrings } from "../types.js";
 
 export function createOfferRoutes(app: FastifyInstance) {

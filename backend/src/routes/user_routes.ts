@@ -3,7 +3,7 @@ import { User } from "../db/entities/User.js";
 import { createBody, error, find } from "../utils.js";
 import { HttpStatus } from "../status_codes.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import verifyToken from "../firebase/verify_token.js";
+import verifyToken from "../plugins/firebase/verify_token.js";
 
 export function createUserRoutes(app: FastifyInstance) {
   const auth = getAuth(app.firebase);

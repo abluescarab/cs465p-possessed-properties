@@ -1,4 +1,3 @@
-import "./SignOut.scss";
 import { getAuth, signOut } from "firebase/auth";
 import firebaseApp from "@/firebase.ts";
 import { useEffect, useState } from "react";

@@ -1,4 +1,3 @@
-import "./ProtectedRoute.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/App.tsx";

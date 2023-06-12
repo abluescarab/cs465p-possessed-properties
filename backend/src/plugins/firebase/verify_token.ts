@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import { HttpStatus } from "../status_codes.js";
+import { HttpStatus } from "../../status_codes.js";
 
 const getTokens = async () => {
   const api = await axios.get(

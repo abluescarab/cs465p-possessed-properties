@@ -4,7 +4,7 @@ import { createBody, error, find } from "../utils.js";
 import { User } from "../db/entities/User.js";
 import { HttpStatus } from "../status_codes.js";
 import type { HauntingType } from "../types.js";
-import verifyToken from "../firebase/verify_token.js";
+import verifyToken from "../plugins/firebase/verify_token.js";
 import { uploadFile } from "../plugins/minio.js";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 

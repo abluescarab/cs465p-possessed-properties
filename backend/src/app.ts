@@ -4,8 +4,8 @@ import config from "./db/mikro-orm.config.js";
 import AppRoutes from "./routes/routes.js";
 import { FastifySearchHttpMethodPlugin } from "./plugins/http_search.js";
 import cors from "@fastify/cors";
-import { FastifyFirebasePlugin } from "./plugins/firebase.js";
-import firebaseConfig from "./firebase/firebase.config.js";
+import { FastifyFirebasePlugin } from "./plugins/firebase/firebase.js";
+import firebaseConfig from "./plugins/firebase/firebase.config.js";
 import multipart from "@fastify/multipart";
 
 const envToLogger = {
